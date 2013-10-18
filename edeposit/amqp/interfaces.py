@@ -84,9 +84,11 @@ class IRequestHandler(interface.Interface):
         The result will be sent by other interface.
         """
 
-class IResponseSender(interface.Interface):
-    response = interface.Attribute("response to be sent")
+class IMessageSender(interface.Interface):
+    msg = interface.Attribute("message to be sent")
     def send():
-        """ the response will be sent """
+        """ the response will be sent.
+        Message will be casted to an IResponse interface.o
+        """
         
     
