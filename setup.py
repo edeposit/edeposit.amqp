@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0'
+version = '0.9'
 
 setup(name='edeposit.amqp',
       version=version,
@@ -22,9 +22,14 @@ setup(name='edeposit.amqp',
       namespace_packages=['edeposit'],
       include_package_data=True,
       zip_safe=False,
+      test_suite='edeposit.amqp.tests',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
+          'zope.component',
+          'zope.schema',
+          'kombu',
+          'simplejson',
       ],
       entry_points="""
       # -*- Entry points: -*-

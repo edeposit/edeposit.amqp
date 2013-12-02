@@ -1,1 +1,5 @@
 setuptools
+zope.component
+zope.schema
+kombu
+simplejson
