@@ -21,8 +21,8 @@ InterfaceOfData = (
 )
 
 
-class IStringStream(interface.Interface):
-    """ marker interface for standard string type """
+class IJSONString(interface.Interface):
+    """ marker interface for string containg json data """
     stream = schema.ASCII(
         title = _(u'data of a string'),
         description = _(u''),
@@ -30,9 +30,10 @@ class IStringStream(interface.Interface):
     pass
 
 
-class StringStream(object):
-    interface.implements(IStringStream)
+class JSONString(object):
+    interface.implements(IJSONString)
 
     def __init__(self, stream):
         self.stream = stream
+
 

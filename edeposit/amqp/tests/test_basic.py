@@ -81,9 +81,9 @@ class BasicTestCase(unittest.TestCase):
         from edeposit.amqp import serializers
         
         data = message.Data()
-        serializer = getAdapter(data,serializers.ISerializer,'json')
+        serializer = getAdapter(data,serializers.ISerializer,'messages.IData')
         stream = serializer.serialize()
 
-        stringStream = types.StringStream(stream=stream)
-        deserializer = getAdapter(stringStream, serializers.IDeserializer,'json')
+        stream = types.JSONString(stream=stream)
+        deserializer = getAdapter(stream, serializers.IDeserializer,'messages.IData')
         data = deserializer.deserialize()

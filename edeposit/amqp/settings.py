@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from zope import component, interface
 from .config import ConnectionConfig, ExchangeConfig
-from .serializers import ISerializer, SimpleJSONSerializer, SimpleJSONDeserializer, IDeserializer
+from .serializers import ISerializer, DataJSONSerializer, DataJSONDeserializer, IDeserializer
 from .message import IData, IDataWithUrl
-from .types import IStringStream
+from .types import IJSONString
 from zope.component import getGlobalSiteManager
 
 gsm = getGlobalSiteManager()
 
-gsm.registerAdapter(SimpleJSONSerializer,(IData,),ISerializer,"json")
-gsm.registerAdapter(SimpleJSONSerializer,(IDataWithUrl,),ISerializer,"json")
-gsm.registerAdapter(SimpleJSONDeserializer,(IStringStream,),IDeserializer,"json")
+gsm.registerAdapter(DataJSONSerializer,(IData,),ISerializer,"messages.IData")
+gsm.registerAdapter(DataJSONSerializer,(IDataWithUrl,),ISerializer,"messages.IData")
+gsm.registerAdapter(DataJSONDeserializer,(IJSONString,),IDeserializer,"messages.IData")

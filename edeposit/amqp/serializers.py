@@ -16,10 +16,10 @@ class IDeserializer(interface.Interface):
         """ return serialized data """
         pass
 
-class SimpleJSONSerializer(object):
+class DataJSONSerializer(object):
     interface.implements(ISerializer)
     component.adapts(message.IData)
-
+    
     def __init__(self, data):
         self.data = data
 
@@ -27,13 +27,13 @@ class SimpleJSONSerializer(object):
         return simplejson.dumps({'uuid': str(self.data.uuid)})
 
 
-class SimpleJSONDeserializer(object):
+class DataJSONDeserializer(object):
     interface.implements(IDeserializer)
-    component.adapts(types.IStringStream)
+    component.adapts(types.IJSONString)
     
     def __init__(self, stream):
         self.stream = stream
 
     def deserialize(self):
         data = simplejson.loads(self.stream.stream)
-        return data
+        return message.Data(uuid=data)
