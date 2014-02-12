@@ -16,7 +16,7 @@ setup(name='edeposit.amqp',
       keywords='',
       author='',
       author_email='',
-      url='http://svn.plone.org/svn/collective/',
+      url='https://github.com/jstavel/edeposit.amqp/',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['edeposit'],
@@ -26,10 +26,6 @@ setup(name='edeposit.amqp',
       install_requires=[
           'setuptools',
           # -*- Extra requirements: -*-
-          'zope.component',
-          'zope.schema',
-          'kombu',
-          'simplejson',
       ],
       entry_points="""
       # -*- Entry points: -*-
