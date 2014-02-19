@@ -1,5 +1,5 @@
-from setuptools import setup, find_packages
 import os
+from setuptools import setup, find_packages
 
 version = '0.9'
 description = open("README.txt").read() + "\n"
@@ -16,10 +16,12 @@ setup(
     author_email='',
 
     classifiers=[
-        "Programming Language :: Python",
+        "Programming Language :: Python :: 2.7",
+        "License :: OSI Approved :: GNU General Public License (GPL)"
+        "Topic :: Software Development :: Libraries :: Python Modules"
     ],
 
-    keywords='',
+    # keywords='',
     license='GPL',
 
     packages=find_packages(exclude=['ez_setup']),
@@ -30,7 +32,8 @@ setup(
     test_suite='edeposit.amqp.tests',
     install_requires=[
         'setuptools',
-        "python-daemon>=1.5.5"
+        "python-daemon>=1.5.5",
+        "pika>=0.9.13",
     ],
     # entry_points="""
     # # -*- Entry points: -*-
