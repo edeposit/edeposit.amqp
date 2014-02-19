@@ -30,6 +30,7 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         self.queue = queue
         self.output_exchange = output_exchange
         self.routing_key = routing_key
+        self.virtual_host = virtual_host
 
         self.output_key = output_key
         if output_key is None:
