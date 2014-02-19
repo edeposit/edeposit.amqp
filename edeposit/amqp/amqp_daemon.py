@@ -15,6 +15,17 @@ import daemonwrapper
 class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
     def __init__(self, virtual_host, queue, output_exchange, routing_key,
                  output_key=None):
+        """
+        Pika daemon handling connections.
+
+        virtual_host -- rabbitmq's virtualhost
+        queue -- name of queue where the daemon should listen
+        output_exchange -- name of exchange where the daemon shoud put
+                           responses,
+        routing_key -- input routing key
+        output_key -- Output exchange routing key. If not set, routing_key is
+                      used.
+        """
         super(PikaDaemon, self).__init__(queue)
         self.queue = queue
         self.output_exchange = output_exchange
@@ -44,6 +55,11 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
             self.channel.basic_ack(method_frame.delivery_tag)
 
     def onMessageReceived(self, method_frame, properties, body):
+        """
+        Callback which is called everytime when message is received.
+
+        You should probably redefine this.
+        """
         print "method_frame:", method_frame
         print "properties:", properties
         print "body:", body
@@ -52,6 +68,9 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         print
 
     def sendMessage(self, message):
+        """
+        Callback which allows you to send message.
+        """
         self.channel.basic_publish(
             exchange=self.output_exchange,
             routing_key=self.routing_key,
@@ -63,8 +82,10 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         )
 
     def onExit(self):
-        print "Exit point reached."
-
+        """
+        Called when daemon is stopped. Basically just AMQP .close() functions
+        to ensure clean exit.
+        """
         try:
             if hasattr(self, "channel"):
                 self.channel.cancel()
