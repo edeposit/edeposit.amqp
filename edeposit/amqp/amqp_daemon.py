@@ -19,38 +19,51 @@ SERVER_TEMPLATE = "amqp://$USERNAME:$PASSWORD@$SERVER:$PORT/%2f"  # %2f = /
 
 
 #= Functions & objects ========================================================
-
-
-class App():
-    def __init__(self):
+class DaemonRunnerWrapper():
+    def __init__(self, name):
         self.stdin_path = '/dev/null'
         self.stdout_path = '/dev/tty'
         self.stderr_path = '/dev/tty'
-        self.pidfile_path = '/tmp/foo.pid'
+        self.pidfile_path = '/tmp/' + name + '.pid'
         self.pidfile_timeout = 5
 
-        if self.isRunning() and "stop" not in sys.argv:
-            print 'It looks like a daemon is already running!'
-            exit()
+        self.daemon_runner = runner.DaemonRunner(self)
+        if self.isRunning():
+            self.atIsRunning()
 
-    def start(self):
+    def start_daemon(self):
         try:
-            daemon_runner = runner.DaemonRunner(self)
-            daemon_runner.do_action()
+            self.daemon_runner.do_action()
         except daemon.runner.DaemonRunnerStopFailureError:
-            print "There is nothing to kill."
-            sys.exit(0)
+            self.atStopFail()
         except SystemExit:
-            self.at_exit()
+            self.atExit()
+
+    def body(self):
+        # self.connection = pika.BlockingConnection()
+        # self.channel = connection.channel()
+        while True:
+            print "xe"
+            time.sleep(5)
 
     def run(self):
-        while True:
-            print("Howdy!  Gig'em!  Whoop!")
-            time.sleep(10)
+        try:
+            self.body()
+        except:
+            pass
+        finally:            # this is called only if daemon was not started
+            self.atExit()  # and whole app runned on foreground
 
-        self.at_exit()  # this is run only if daemon was not started properly
+    def atStopFail(self):
+        print "There is no running instance to be stopped."
+        sys.exit(0)
 
-    def at_exit(self):
+    def atIsRunning(self):
+        if "stop" not in sys.argv:
+            print 'It looks like a daemon is already running!'
+            sys.exit(1)
+
+    def atExit(self):
         print "exiting"
 
     def isRunning(self):
@@ -61,8 +74,9 @@ class App():
 
 #= Main program ===============================================================
 if __name__ == '__main__':
-    a = App()
-    a.start()
+    a = DaemonRunnerWrapper("daemon")
+    a.start_daemon()
+    # a.run()
 
     # connection = pika.BlockingConnection(
     #     pika.URLParameters(
