@@ -47,7 +47,7 @@ class DaemonRunnerWrapper(object):
         sys.exit(0)
 
     def onIsRunning(self):
-        if "stop" not in sys.argv or "restart" not in sys.argv:
+        if "stop" not in sys.argv and "restart" not in sys.argv:
             print 'It looks like a daemon is already running!'
             sys.exit(1)
 
