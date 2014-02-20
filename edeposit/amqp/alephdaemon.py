@@ -29,11 +29,15 @@ class AlephDaemon(pikadaemon.PikaDaemon):
 
 #= Main program ===============================================================
 if __name__ == '__main__':
-    daemon = AlephDaemon("/", "daemon", "daemon", "test", "test")
+    daemon = AlephDaemon(
+        virtual_host="aleph",
+        queue="aleph-search",
+        output_exchange="aleph-search",
+        routing_key="search.request",
+        output_key="search.reponse"
+    )
 
-    # run at foreground
-    if "--foreground" in sys.argv:
+    if "--foreground" in sys.argv:  # run at foreground
         daemon.run()
-
-    # run as daemon
-    daemon.run_daemon()
+    else:
+        daemon.run_daemon()  # run as daemon
