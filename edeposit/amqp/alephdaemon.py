@@ -6,21 +6,34 @@
 # (http://creativecommons.org/licenses/by/3.0/).
 #
 #= Imports ====================================================================
+import sys
+
+
 import pikadaemon
-
-
-#= Variables ==================================================================
-
+from aleph import reactToAMQPMessage
 
 
 #= Functions & objects ========================================================
 class AlephDaemon(pikadaemon.PikaDaemon):
     def onMessageReceived(self, method_frame, properties, body):
-        print "AlephDaemon"
-        print body
+        try:
+            reactToAMQPMessage(body, self.sendResponse)
+            return True
+        except ValueError, e:
+            print e
+            return False  # TODO: add reactions to exceptions into protocol
+
+    def sendResponse(self, message):
+        print message
+
 
 #= Main program ===============================================================
 if __name__ == '__main__':
-    a = AlephDaemon("/", "daemon", "daemon", "test", "test")
-    a.run_daemon()
-    # a.run()
+    daemon = AlephDaemon("/", "daemon", "daemon", "test", "test")
+
+    # run at foreground
+    if "--foreground" in sys.argv:
+        daemon.run()
+
+    # run as daemon
+    daemon.run_daemon()
