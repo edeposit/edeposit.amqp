@@ -4,6 +4,13 @@
 # Interpreter version: python 2.7
 #
 #= Imports ====================================================================
+"""
+Generic AMQP blockin communication daemon.
+
+Usage is simple - just inherit the class and override onMessageReceived().
+
+You can send messages back with 
+"""
 import pika
 
 
@@ -13,11 +20,12 @@ import daemonwrapper
 
 #= Functions & objects ========================================================
 class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
+    """
+    Pika daemon handling connections.
+    """
     def __init__(self, virtual_host, queue, output_exchange, routing_key,
                  output_key=None):
         """
-        Pika daemon handling connections.
-
         virtual_host -- rabbitmq's virtualhost
         queue -- name of queue where the daemon should listen
         output_exchange -- name of exchange where the daemon shoud put
@@ -32,11 +40,16 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         self.routing_key = routing_key
         self.virtual_host = virtual_host
 
+        self.content_type = "application/json"
+
         self.output_key = output_key
         if output_key is None:
             self.output_key = self.routing_key
 
     def body(self):
+        """
+        This method just handles AMQP connection details and receive loop.
+        """
         self.connection = pika.BlockingConnection(  # set connection details
             pika.ConnectionParameters(
                 host=settings.RABBITMQ_HOST,
@@ -68,24 +81,47 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         print "---"
         print
 
-    def sendMessage(self, message):
+    def sendMessage(self, exchange, routing_key, message, properties=None):
         """
-        Callback which allows you to send message.
+        With this function, you can send message to `exchange`.
+
+        exchange -- name of exchange you want to message to be delivered
+        routing_key -- which routing key to use in headers of message
+        message -- body of message
+        properties -- properties of message - if not used, or set to None, 
+                      self.content_type and delivery_mode=1 is used
         """
-        self.channel.basic_publish(
-            exchange=self.output_exchange,
-            routing_key=self.routing_key,
-            properties=pika.BasicProperties(
-                content_type="application/json",
+        if properties is None:
+            properties = pika.BasicProperties(
+                content_type=self.content_type,
                 delivery_mode=1
-            ),
+            )
+
+        self.channel.basic_publish(
+            exchange=exchange,
+            routing_key=routing_key,
+            properties=properties,
             body=message
+        )
+
+    def sendResponse(self, message):
+        """
+        Send `message` to self.output_exchange with routing key self.output_key
+        and self.content_type in delivery_mode=1.
+        """
+        self.sendMessage(
+            self.output_exchange,
+            self.output_key,
+            message
         )
 
     def onExit(self):
         """
         Called when daemon is stopped. Basically just AMQP .close() functions
         to ensure clean exit.
+
+        You can override this, but don't forget to call it thru super(), or
+        AMQP communication wouldn't be closed properly!
         """
         try:
             if hasattr(self, "channel"):
@@ -94,10 +130,3 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
                 self.connection.close()
         except pika.exceptions.ChannelClosed:
             pass
-
-
-#= Main program ===============================================================
-if __name__ == "__main__":
-    a = PikaDaemon("daemon")
-    a.run_daemon()
-    # a.run()
