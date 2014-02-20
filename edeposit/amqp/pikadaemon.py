@@ -46,6 +46,9 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         if output_key is None:
             self.output_key = self.routing_key
 
+        self.ack_sent = False
+        self.ack_delivery_tag = None
+
     def body(self):
         """
         This method just handles AMQP connection details and receive loop.
@@ -65,14 +68,39 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
 
         # receive messages and put them to .onMessageReceived() callback
         for method_frame, properties, body in self.channel.consume(self.queue):
-            self.onMessageReceived(method_frame, properties, body)
-            self.channel.basic_ack(method_frame.delivery_tag)
+            self.ack_sent = False
+            self.ack_delivery_tag = method_frame.delivery_tag
+            if self.onMessageReceived(method_frame, properties, body):
+                self.ack()
+
+    def ack(self):
+        """
+        Acknowledge, that message was received. This will in some cases
+        (depends on settings of RabbitMQ) remove the message from the message
+        queue.
+        """
+        if self.ack_sent:
+            return
+
+        self.channel.basic_ack(self.ack_delivery_tag)
+        self.ack_sent = True
 
     def onMessageReceived(self, method_frame, properties, body):
         """
-        Callback which is called everytime when message is received.
+        Callback which is called every time when message is received.
 
         You should probably redefine this.
+
+        It is expected, that method returns True, if you want to automatically
+        ack the received message, which can be important in some situations,
+        because otherwise the message will be held in message queue until
+        someone will ack it.
+
+        You don't have to return True/False and just ack the message yourself,
+        by calling self.ack().
+
+        Good design choice is to ack the message AFTER you process it, to be
+        sure, that message is processed properly and can be removed from queue.
         """
         print "method_frame:", method_frame
         print "properties:", properties
