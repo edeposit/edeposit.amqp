@@ -17,12 +17,12 @@ setup(
 
     classifiers=[
         "Programming Language :: Python :: 2.7",
-        "License :: OSI Approved :: GNU General Public License (GPL)"
+        "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)"
         "Topic :: Software Development :: Libraries :: Python Modules"
     ],
 
     # keywords='',
-    license='GPL',
+    license='GPL2+',
 
     packages=find_packages(exclude=['ez_setup']),
 
@@ -34,8 +34,5 @@ setup(
         'setuptools',
         "python-daemon>=1.5.5",
         "pika>=0.9.13",
-    ],
-    # entry_points="""
-    # # -*- Entry points: -*-
-    # """,
+    ]
 )
