@@ -10,7 +10,7 @@ Generic AMQP blocking communication daemon server.
 Usage is simple - just inherit the class and override onMessageReceived().
 
 You can send messages back using either .sendMessage() or sendResponse(). Fist
-one allows you to send message everywhere, second one send meesage to the queue
+one allows you to send message everywhere, second one send message to the queue
 defined by constructor.
 """
 import pika
@@ -29,11 +29,9 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         """
         virtual_host -- rabbitmq's virtualhost
         queue -- name of queue where the daemon should listen
-        output_exchange -- name of exchange where the daemon shoud put
-                           responses,
-        routing_key -- input routing key
-        output_key -- Output exchange routing key. If not set, routing_key is
-                      used.
+        output_exchange -- name of exchange where the daemon should put
+                           responses
+        output_key -- routing key for output exchange
         """
         super(PikaDaemon, self).__init__(queue)
         self.queue = queue
