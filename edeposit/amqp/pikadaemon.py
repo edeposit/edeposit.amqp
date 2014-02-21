@@ -5,11 +5,13 @@
 #
 #= Imports ====================================================================
 """
-Generic AMQP blockin communication daemon.
+Generic AMQP blocking communication daemon server.
 
 Usage is simple - just inherit the class and override onMessageReceived().
 
-You can send messages back with 
+You can send messages back using either .sendMessage() or sendResponse(). Fist
+one allows you to send message everywhere, second one send meesage to the queue
+defined by constructor.
 """
 import pika
 
@@ -116,7 +118,7 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         exchange -- name of exchange you want to message to be delivered
         routing_key -- which routing key to use in headers of message
         message -- body of message
-        properties -- properties of message - if not used, or set to None, 
+        properties -- properties of message - if not used, or set to None,
                       self.content_type and delivery_mode=1 is used
         """
         if properties is None:
