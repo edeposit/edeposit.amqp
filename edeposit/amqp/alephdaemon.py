@@ -12,6 +12,8 @@ import sys
 import pikadaemon
 from aleph import reactToAMQPMessage
 
+import settings
+
 
 #= Functions & objects ========================================================
 class AlephDaemon(pikadaemon.PikaDaemon):
@@ -30,11 +32,11 @@ class AlephDaemon(pikadaemon.PikaDaemon):
 #= Main program ===============================================================
 if __name__ == '__main__':
     daemon = AlephDaemon(
-        virtual_host="aleph",
-        queue="aleph-search",
-        output_exchange="aleph-search",
-        routing_key="search.request",
-        output_key="search.reponse"
+        virtual_host=settings.RABBITMQ_ALEPH_VIRTUALHOST,
+        queue=settings.RABBITMQ_ALEPH_INPUT_QUEUE,
+        output_exchange=settings.RABBITMQ_ALEPH_OUTPUT_QUEUE,
+        routing_key=settings.RABBITMQ_ALEPH_INPUT_KEY,
+        output_key=settings.RABBITMQ_ALEPH_OUTPUT_KEY
     )
 
     if "--foreground" in sys.argv:  # run at foreground
