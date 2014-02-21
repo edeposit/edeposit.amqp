@@ -25,8 +25,7 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
     """
     Pika daemon handling connections.
     """
-    def __init__(self, virtual_host, queue, output_exchange, routing_key,
-                 output_key=None):
+    def __init__(self, virtual_host, queue, output_exchange, output_key):
         """
         virtual_host -- rabbitmq's virtualhost
         queue -- name of queue where the daemon should listen
@@ -39,14 +38,11 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         super(PikaDaemon, self).__init__(queue)
         self.queue = queue
         self.output_exchange = output_exchange
-        self.routing_key = routing_key
         self.virtual_host = virtual_host
 
         self.content_type = "application/json"
 
         self.output_key = output_key
-        if output_key is None:
-            self.output_key = self.routing_key
 
         self.ack_sent = False
         self.ack_delivery_tag = None
