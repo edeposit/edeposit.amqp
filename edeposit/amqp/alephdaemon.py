@@ -25,18 +25,15 @@ class AlephDaemon(pikadaemon.PikaDaemon):
             print e
             return False  # TODO: add reactions to exceptions into protocol
 
-    def sendResponse(self, message):
-        print message
-
 
 #= Main program ===============================================================
 if __name__ == '__main__':
+
     daemon = AlephDaemon(
         virtual_host=settings.RABBITMQ_ALEPH_VIRTUALHOST,
-        queue=settings.RABBITMQ_ALEPH_INPUT_QUEUE,
-        output_exchange=settings.RABBITMQ_ALEPH_OUTPUT_QUEUE,
-        routing_key=settings.RABBITMQ_ALEPH_INPUT_KEY,
-        output_key=settings.RABBITMQ_ALEPH_OUTPUT_KEY
+        queue=settings.RABBITMQ_ALEPH_DAEMON_QUEUE,
+        output_exchange=settings.RABBITMQ_ALEPH_EXCHANGE,
+        output_key=settings.RABBITMQ_ALEPH_PLONE_KEY
     )
 
     if "--foreground" in sys.argv:  # run at foreground

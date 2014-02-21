@@ -89,7 +89,8 @@ if __name__ == '__main__':
 
     properties = pika.BasicProperties(
         content_type="application/json",
-        delivery_mode=1
+        delivery_mode=1,
+        headers={"excepiton": "There was an exception"}
     )
 
     if "--create" in sys.argv:
