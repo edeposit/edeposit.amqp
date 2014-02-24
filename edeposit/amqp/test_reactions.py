@@ -5,12 +5,13 @@
 #
 #= Imports ====================================================================
 import sys
+import uuid
 
 
 import aleph
 import aleph.convertors
 
-import settings
+from settings import *
 
 import pika
 
@@ -18,19 +19,19 @@ import pika
 def createBlockingConnection():
     return pika.BlockingConnection(  # set connection details
         pika.ConnectionParameters(
-            host=settings.RABBITMQ_HOST,
-            port=int(settings.RABBITMQ_PORT),
-            virtual_host=settings.RABBITMQ_ALEPH_VIRTUALHOST,
+            host=RABBITMQ_HOST,
+            port=int(RABBITMQ_PORT),
+            virtual_host=RABBITMQ_ALEPH_VIRTUALHOST,
             credentials=pika.PlainCredentials(
-                settings.RABBITMQ_USER_NAME,
-                settings.RABBITMQ_USER_PASSWORD
+                RABBITMQ_USER_NAME,
+                RABBITMQ_USER_PASSWORD
             )
         )
     )
 
 
 def receive():
-    for method_frame, properties, body in channel.consume(settings.RABBITMQ_ALEPH_PLONE_QUEUE):
+    for method_frame, properties, body in channel.consume(RABBITMQ_ALEPH_PLONE_QUEUE):
         print "Message:"
         print method_frame
         print properties
@@ -48,8 +49,8 @@ def createSchema():
         "export"
     ]
     queues = {
-        "plone": "result",
-        "daemon": "request"
+        RABBITMQ_ALEPH_PLONE_QUEUE: RABBITMQ_ALEPH_PLONE_KEY,
+        RABBITMQ_ALEPH_DAEMON_QUEUE: RABBITMQ_ALEPH_DAEMON_KEY
     }
 
     connection = createBlockingConnection()
@@ -81,7 +82,7 @@ def createSchema():
 #= Main program ===============================================================
 if __name__ == '__main__':
     isbnq = aleph.ISBNQuery("80-251-0225-4")
-    request = aleph.SearchRequest(isbnq, "trololo")
+    request = aleph.SearchRequest(isbnq)
     json_data = aleph.convertors.toJSON(request)
 
     connection = createBlockingConnection()
@@ -90,7 +91,8 @@ if __name__ == '__main__':
     properties = pika.BasicProperties(
         content_type="application/json",
         delivery_mode=1,
-        headers={"excepiton": "There was an exception"}
+        # headers={"excepiton": "There was an exception"}
+        headers={"UUID": str(uuid.uuid4())}
     )
 
     if "--create" in sys.argv:
@@ -98,8 +100,8 @@ if __name__ == '__main__':
 
     if "--put" in sys.argv:
         channel.basic_publish(
-            exchange=settings.RABBITMQ_ALEPH_EXCHANGE,
-            routing_key=settings.RABBITMQ_ALEPH_DAEMON_KEY,
+            exchange=RABBITMQ_ALEPH_EXCHANGE,
+            routing_key=RABBITMQ_ALEPH_DAEMON_KEY,
             properties=properties,
             body=json_data
         )
