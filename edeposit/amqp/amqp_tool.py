@@ -48,20 +48,27 @@ def createSchema():
     connection = createBlockingConnection()
     channel = connection.channel()
 
+    print "Creating exchanges:"
     for exchange in exchanges:
         channel.exchange_declare(
             exchange=exchange,
             exchange_type="topic",
             durable=True
         )
+        print "\tCreated exchange '%s' of type 'topic'." % (exchange)
 
+    print
+    print "Creating queues:"
     for queue in queues.keys():
         channel.queue_declare(
             queue=queue,
             durable=True,
             # arguments={'x-message-ttl': int(1000 * 60 * 60 * 24)} # :S
         )
+        print "\tCreated durable queue '%s'." % (queue)
 
+    print
+    print "Routing exchanges using routing key to queues:"
     for exchange in exchanges:
         for queue in queues.keys():
             channel.queue_bind(
@@ -69,7 +76,9 @@ def createSchema():
                 exchange=exchange,
                 routing_key=queues[queue]
             )
+            print "\tRouting exchange %s['%s'] -> '%s'." % (exchange, queues[queue], queue)
 
+    print "\tRouting exchange search['%s'] -> '%s'." % (RABBITMQ_ALEPH_EXCEPTION_KEY, RABBITMQ_ALEPH_PLONE_QUEUE)
     channel.queue_bind(
         queue=RABBITMQ_ALEPH_PLONE_QUEUE,
         exchange="search",
