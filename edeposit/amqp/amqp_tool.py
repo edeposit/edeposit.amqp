@@ -19,10 +19,18 @@ from settings import *
 
 
 def createBlockingConnection():
+    """
+    Return properly created blocking connection.
+
+    Uses .getConnectionParameters() from alephdaemon.py.
+    """
     return pika.BlockingConnection(alephdaemon.getConnectionParameters())
 
 
 def receive():
+    """
+    Print all received messages.
+    """
     for method_frame, properties, body in channel.consume(RABBITMQ_ALEPH_PLONE_QUEUE):
         print "Message:"
         print method_frame
@@ -35,6 +43,9 @@ def receive():
 
 
 def createSchema():
+    """
+    Create the routing schema in rabbitmq's database.
+    """
     exchanges = [
         "search",
         "count",
