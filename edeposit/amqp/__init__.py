@@ -75,6 +75,7 @@ without UUID are thrown away without any warning.
 Notice also the `routing_key` parameter of channel.basic_publish(). It is used
 to determine into which queue will be message delivered.
 
+
 = Response ====================================================================
 Response message is sent into settings.RABBITMQ_ALEPH_EXCHANGE with routing key
 settings.RABBITMQ_ALEPH_PLONE_KEY.
@@ -98,4 +99,25 @@ for method_frame, properties, body in self.channel.consume(self.queue):
 Details of exception are contained in "exception", "exception_name" and
 "exception_type" keys. First is text of error message, second is the
 .__class__.__name__ of exception and thid is just output from type(exception).
+
+
+= Tips and tricks =============================================================
+Before you start sending the data, it is usually good idea to start the daemon.
+RabbitMQ will hold the data even when the daemon is not running, but you won't
+get the data back.
+
+To start the daemon, run:
+
+./alephdaemon.py start
+
+This will start the proper unix daemon listening for the requests at RabbitMQ's
+message queue defined by settings.RABBITMQ_ALEPH_DAEMON_QUEUE.
+
+Message queues, exchanges and routing keys have to be defined in RabbitMQ
+before you start the daemon.
+
+If you don't want to define all this by yourself, you can just run the
+amqp_tool.py, which can buld the schema:
+
+./amqp_tool.py --create
 """
