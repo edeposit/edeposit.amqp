@@ -78,6 +78,12 @@ def createSchema():
                 routing_key=queues[queue]
             )
 
+    channel.queue_bind(
+        queue=RABBITMQ_ALEPH_PLONE_QUEUE,
+        exchange="search",
+        routing_key=RABBITMQ_ALEPH_EXCEPTION_KEY
+    )
+
 
 #= Main program ===============================================================
 if __name__ == '__main__':
@@ -91,7 +97,6 @@ if __name__ == '__main__':
     properties = pika.BasicProperties(
         content_type="application/json",
         delivery_mode=1,
-        # headers={"excepiton": "There was an exception"}
         headers={"UUID": str(uuid.uuid4())}
     )
 
@@ -106,6 +111,14 @@ if __name__ == '__main__':
             body=json_data
         )
 
+    if "--put-bad" in sys.argv:
+        channel.basic_publish(
+            exchange=RABBITMQ_ALEPH_EXCHANGE,
+            routing_key=RABBITMQ_ALEPH_DAEMON_KEY,
+            properties=properties,
+            body="xex"
+        )
+
     if "--get" in sys.argv:
         try:
             receive()
@@ -114,4 +127,4 @@ if __name__ == '__main__':
             sys.exit(0)
 
     if len(sys.argv) == 1:
-        print "Usage " + sys.argv[0] + " [--get] [--put]"
+        print "Usage " + sys.argv[0] + " [--get] [--put] [--put-bad] [--create]"
