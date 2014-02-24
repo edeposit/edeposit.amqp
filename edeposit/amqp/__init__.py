@@ -1,6 +1,6 @@
 """
 Purpose of this module is to provide class for launching unix daemons
-(daemonwrapper.py), AMQP communication service based on rabbitmq's pika library
+(daemonwrapper.py), AMQP communication service based on RabbitMQ's pika library
 (pikadaemon.py) and also AMQP communication classes for specific modules used
 in edeposit project (so far, there is only communication with the Aleph in
 alephdaemon.py).
@@ -14,7 +14,7 @@ Aleph server are handled by edeposit.amqp.aleph module:
 
 = Request =====================================================================
 You just have to send serialized one of the Request classes, which are defined
-in aleph's __init__.py, into the rabbitmq's exchange defined in
+in aleph's __init__.py, into the RabbitMQ's exchange defined in
 settings.RABBITMQ_ALEPH_EXCHANGE. Serialization can be done by calling module's
 .serialize() property.
 
@@ -80,9 +80,9 @@ to determine into which queue will be message delivered.
 Response message is sent into settings.RABBITMQ_ALEPH_EXCHANGE with routing key
 settings.RABBITMQ_ALEPH_PLONE_KEY.
 
-Format of response is usually one of the Reponse classes from aleph.__init__.py
-In headers, there should always be the UUID parameter, even in case of some
-unexpected error.
+Format of response is usually one of the Response classes from 
+aleph.__init__.py. In headers, there should always be the UUID parameter, even
+in case of some unexpected error.
 
 You can detect errors by looking for "exception" key in parameters.headers
 dictionary:
@@ -98,7 +98,7 @@ for method_frame, properties, body in self.channel.consume(self.queue):
 
 Details of exception are contained in "exception", "exception_name" and
 "exception_type" keys. First is text of error message, second is the
-.__class__.__name__ of exception and thid is just output from type(exception).
+.__class__.__name__ of exception and third is just output from type(exception).
 
 
 = Tips and tricks =============================================================
@@ -117,7 +117,7 @@ Message queues, exchanges and routing keys have to be defined in RabbitMQ
 before you start the daemon.
 
 If you don't want to define all this by yourself, you can just run the
-amqp_tool.py, which can buld the schema:
+amqp_tool.py, which can build the schema:
 
 ./amqp_tool.py --create
 
