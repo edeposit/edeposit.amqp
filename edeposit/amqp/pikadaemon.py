@@ -16,7 +16,6 @@ defined by constructor.
 import pika
 
 
-import settings
 import daemonwrapper
 
 
