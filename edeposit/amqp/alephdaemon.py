@@ -29,7 +29,6 @@ class AlephDaemon(pikadaemon.PikaDaemon):
                 self.sendResponse,
                 properties.headers["UUID"]
             )
-            return True  # ack message
         except Exception, e:
             # get informations about message
             msg = e.message if hasattr(e, "message") else str(e)
@@ -50,7 +49,8 @@ class AlephDaemon(pikadaemon.PikaDaemon):
                     }
                 )
             )
-            return True  # ack message
+
+        return True  # ack message
 
 
 def getConnectionParameters():
