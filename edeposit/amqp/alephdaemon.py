@@ -53,8 +53,7 @@ class AlephDaemon(pikadaemon.PikaDaemon):
             return True  # ack message
 
 
-#= Main program ===============================================================
-if __name__ == '__main__':
+def main():
     daemon = AlephDaemon(
         connection_param=pika.ConnectionParameters(
             host=settings.RABBITMQ_HOST,
@@ -74,3 +73,8 @@ if __name__ == '__main__':
         daemon.run()
     else:
         daemon.run_daemon()         # run as daemon
+
+
+#= Main program ===============================================================
+if __name__ == '__main__':
+    main()
