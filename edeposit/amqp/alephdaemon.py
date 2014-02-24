@@ -9,6 +9,7 @@
 import sys
 
 
+import pika
 import pikadaemon
 from aleph import reactToAMQPMessage
 
@@ -20,8 +21,7 @@ class AlephDaemon(pikadaemon.PikaDaemon):
     def onMessageReceived(self, method_frame, properties, body):
         # if UUID is not in headers, just ack the message and ignore it
         if "UUID" not in properties.headers:
-            print "Ignored"
-            return True
+            return True  # ack message
 
         try:
             reactToAMQPMessage(
@@ -29,10 +29,28 @@ class AlephDaemon(pikadaemon.PikaDaemon):
                 self.sendResponse,
                 properties.headers["UUID"]
             )
-            return True
-        except ValueError, e:
-            print e
-            return False  # TODO: add reactions to exceptions into protocol
+            return True  # ack message
+        except Exception, e:
+            # get informations about message
+            msg = e.message if hasattr(e, "message") else str(e)
+            exception_type = str(e.__class__)
+            exception_name = str(e.__class__.__name__)
+
+            self.sendMessage(
+                self.output_exchange,
+                settings.RABBITMQ_ALEPH_EXCEPTION_KEY,
+                str(e),
+                properties=pika.BasicProperties(
+                    content_type="application/text",
+                    delivery_mode=1,
+                    headers={
+                        "exception": msg,
+                        "excaption_type": exception_type,
+                        "exception_name": exception_name
+                    }
+                )
+            )
+            return True  # ack message
 
 
 #= Main program ===============================================================
@@ -47,4 +65,4 @@ if __name__ == '__main__':
     if "--foreground" in sys.argv:  # run at foreground
         daemon.run()
     else:
-        daemon.run_daemon()  # run as daemon
+        daemon.run_daemon()         # run as daemon
