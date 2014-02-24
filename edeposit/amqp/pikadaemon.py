@@ -105,7 +105,8 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         print "---"
         print
 
-    def sendMessage(self, exchange, routing_key, message, properties=None):
+    def sendMessage(self, exchange, routing_key, message, properties=None,
+                    UUID=None):
         """
         With this function, you can send message to `exchange`.
 
@@ -118,8 +119,14 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         if properties is None:
             properties = pika.BasicProperties(
                 content_type=self.content_type,
-                delivery_mode=1
+                delivery_mode=1,
+                headers={}
             )
+
+        if UUID is not None:
+            if properties.headers is None:
+                properties.headers = {}
+            properties.headers["UUID"] = UUID
 
         self.channel.basic_publish(
             exchange=exchange,
@@ -128,15 +135,16 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
             body=message
         )
 
-    def sendResponse(self, message):
+    def sendResponse(self, message, UUID):
         """
         Send `message` to self.output_exchange with routing key self.output_key
         and self.content_type in delivery_mode=1.
         """
         self.sendMessage(
-            self.output_exchange,
-            self.output_key,
-            message
+            exchange=self.output_exchange,
+            routing_key=self.output_key,
+            message=message,
+            UUID=UUID
         )
 
     def onExit(self):

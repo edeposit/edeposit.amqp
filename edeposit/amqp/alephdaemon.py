@@ -18,8 +18,17 @@ import settings
 #= Functions & objects ========================================================
 class AlephDaemon(pikadaemon.PikaDaemon):
     def onMessageReceived(self, method_frame, properties, body):
+        # if UUID is not in headers, just ack the message and ignore it
+        if "UUID" not in properties.headers:
+            print "Ignored"
+            return True
+
         try:
-            reactToAMQPMessage(body, self.sendResponse)
+            reactToAMQPMessage(
+                body,
+                self.sendResponse,
+                properties.headers["UUID"]
+            )
             return True
         except ValueError, e:
             print e
@@ -28,7 +37,6 @@ class AlephDaemon(pikadaemon.PikaDaemon):
 
 #= Main program ===============================================================
 if __name__ == '__main__':
-
     daemon = AlephDaemon(
         virtual_host=settings.RABBITMQ_ALEPH_VIRTUALHOST,
         queue=settings.RABBITMQ_ALEPH_DAEMON_QUEUE,
