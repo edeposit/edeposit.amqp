@@ -25,18 +25,21 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
     """
     Pika daemon handling connections.
     """
-    def __init__(self, virtual_host, queue, output_exchange, output_key):
+    def __init__(self, connection_param, queue, output_exchange, output_key):
         """
-        virtual_host -- rabbitmq's virtualhost
+        connection_param -- pika.ConnectionParameters object setting the
+                            connection
         queue -- name of queue where the daemon should listen
         output_exchange -- name of exchange where the daemon should put
                            responses
         output_key -- routing key for output exchange
         """
         super(PikaDaemon, self).__init__(queue)
+
+        self.connection_param = connection_param
+
         self.queue = queue
         self.output_exchange = output_exchange
-        self.virtual_host = virtual_host
 
         self.content_type = "application/json"
 
@@ -49,17 +52,7 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         """
         This method just handles AMQP connection details and receive loop.
         """
-        self.connection = pika.BlockingConnection(  # set connection details
-            pika.ConnectionParameters(
-                host=settings.RABBITMQ_HOST,
-                port=int(settings.RABBITMQ_PORT),
-                virtual_host=self.virtual_host,
-                credentials=pika.PlainCredentials(
-                    settings.RABBITMQ_USER_NAME,
-                    settings.RABBITMQ_USER_PASSWORD
-                )
-            )
-        )
+        self.connection = pika.BlockingConnection(self.connection_param)
         self.channel = self.connection.channel()
 
         # receive messages and put them to .onMessageReceived() callback
