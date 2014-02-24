@@ -53,17 +53,21 @@ class AlephDaemon(pikadaemon.PikaDaemon):
             return True  # ack message
 
 
+def getConnectionParameters():
+    return pika.ConnectionParameters(
+        host=settings.RABBITMQ_HOST,
+        port=int(settings.RABBITMQ_PORT),
+        virtual_host=settings.RABBITMQ_ALEPH_VIRTUALHOST,
+        credentials=pika.PlainCredentials(
+            settings.RABBITMQ_USER_NAME,
+            settings.RABBITMQ_USER_PASSWORD
+        )
+    )
+
+
 def main():
     daemon = AlephDaemon(
-        connection_param=pika.ConnectionParameters(
-            host=settings.RABBITMQ_HOST,
-            port=int(settings.RABBITMQ_PORT),
-            virtual_host=settings.RABBITMQ_ALEPH_VIRTUALHOST,
-            credentials=pika.PlainCredentials(
-                settings.RABBITMQ_USER_NAME,
-                settings.RABBITMQ_USER_PASSWORD
-            )
-        ),
+        connection_param=getConnectionParameters(),
         queue=settings.RABBITMQ_ALEPH_DAEMON_QUEUE,
         output_exchange=settings.RABBITMQ_ALEPH_EXCHANGE,
         output_key=settings.RABBITMQ_ALEPH_PLONE_KEY

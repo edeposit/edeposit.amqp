@@ -8,26 +8,18 @@ import sys
 import uuid
 
 
-import aleph
-import aleph.convertors
-
-from settings import *
-
 import pika
 
 
+import aleph
+import aleph.convertors
+import alephdaemon
+
+from settings import *
+
+
 def createBlockingConnection():
-    return pika.BlockingConnection(  # set connection details
-        pika.ConnectionParameters(
-            host=RABBITMQ_HOST,
-            port=int(RABBITMQ_PORT),
-            virtual_host=RABBITMQ_ALEPH_VIRTUALHOST,
-            credentials=pika.PlainCredentials(
-                RABBITMQ_USER_NAME,
-                RABBITMQ_USER_PASSWORD
-            )
-        )
-    )
+    return pika.BlockingConnection(alephdaemon.getConnectionParameters())
 
 
 def receive():
