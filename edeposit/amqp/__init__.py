@@ -120,4 +120,25 @@ If you don't want to define all this by yourself, you can just run the
 amqp_tool.py, which can buld the schema:
 
 ./amqp_tool.py --create
+
+output example:
+---
+Creating exchanges:
+    Created exchange 'search' of type 'topic'.
+    Created exchange 'count' of type 'topic'.
+    Created exchange 'export' of type 'topic'.
+
+Creating queues:
+    Created durable queue 'daemon'.
+    Created durable queue 'plone'.
+
+Routing exchanges using routing key to queues:
+    Routing exchange search['request'] -> 'daemon'.
+    Routing exchange search['result'] -> 'plone'.
+    Routing exchange count['request'] -> 'daemon'.
+    Routing exchange count['result'] -> 'plone'.
+    Routing exchange export['request'] -> 'daemon'.
+    Routing exchange export['result'] -> 'plone'.
+    Routing exchange search['exception'] -> 'plone'.
+---
 """
