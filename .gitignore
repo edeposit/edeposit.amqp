@@ -2,3 +2,5 @@ _build
 *.egg
 *.pyc
 edeposit/amqp/aleph
+edeposit.amqp.egg-info
+dist
