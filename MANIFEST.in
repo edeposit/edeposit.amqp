@@ -1,2 +1,2 @@
-include docs/HISTORY.txt
+include docs/HISTORY.txt LICENCE
 recursive-exclude edeposit/amqp/aleph *
