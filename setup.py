@@ -11,7 +11,7 @@ long_description = "\n\n".join([
 setup(
     name='edeposit.amqp',
     version=version,
-    description="E-Deposit' AMQP definitions and common classes/patterns.",
+    description="E-Deposit's AMQP definitions and common classes/patterns.",
     long_description=long_description,
     url='https://github.com/jstavel/edeposit.amqp/',
 
@@ -23,7 +23,6 @@ setup(
         "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
         "Topic :: Software Development :: Libraries :: Python Modules"
     ],
-
     license='GPL2+',
 
     packages=find_packages(exclude=['ez_setup']),
