@@ -4,3 +4,7 @@ _build
 edeposit/amqp/aleph
 edeposit.amqp.egg-info
 dist
+docs/build
+log.html
+output.xml
+report.html
