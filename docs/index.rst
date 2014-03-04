@@ -29,5 +29,5 @@ Indices and tables
 
 
 
-:download:`test report <../../report.html>`
-:download:`test log <../../log.html>`
+:download:`test report <../report.html>`
+:download:`test log <../log.html>`
