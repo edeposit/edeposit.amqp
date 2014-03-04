@@ -51,7 +51,7 @@ edeposit/amqp/amqp\_tool.py
 +++++++++++++++++++++++++++
 
 Script for testing the communication and creating
-exchanges/queues/routes in RabbitMQ.
+exchanges/queues/routes in `RabbitMQ <https://www.rabbitmq.com/>`_.
 
 Acceptance tests
 ================
