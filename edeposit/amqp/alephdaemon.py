@@ -6,6 +6,18 @@
 # (http://creativecommons.org/licenses/by/3.0/).
 #
 #= Imports ====================================================================
+"""
+Standalone daemon providing AMQP communication with
+`Aleph module <https://github.com/jstavel/edeposit.amqp.aleph>`_.
+
+This script can be used as aplication, not just as module::
+
+    ./alephdaemon start/stop/restart [--foreground]
+
+If ``--foreground`` parameter is used, script will not run as daemon, but as
+normal script at foreground. Without that, only one (true unix) daemon instance
+will be running at the time.
+"""
 import sys
 
 
@@ -54,6 +66,11 @@ class AlephDaemon(pikadaemon.PikaDaemon):
 
 
 def getConnectionParameters():
+    """
+    Returns:
+        pika.ConnectionParameters: object set by variables from
+        :class:`edeposit.amqp.settings`.
+    """
     return pika.ConnectionParameters(
         host=settings.RABBITMQ_HOST,
         port=int(settings.RABBITMQ_PORT),
@@ -66,6 +83,9 @@ def getConnectionParameters():
 
 
 def main():
+    """
+    Arguments parsing, etc..
+    """
     daemon = AlephDaemon(
         connection_param=getConnectionParameters(),
         queue=settings.RABBITMQ_ALEPH_DAEMON_QUEUE,
