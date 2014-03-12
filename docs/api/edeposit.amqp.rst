@@ -1,14 +1,6 @@
 edeposit.amqp package
 =====================
 
-Subpackages
------------
-
-.. toctree::
-
-    edeposit.amqp.aleph
-    edeposit.amqp.tests
-
 Submodules
 ----------
 

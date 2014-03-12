@@ -1,25 +1,30 @@
-.. edeposit.amqp documentation master file, created by
-   sphinx-quickstart on Mon Mar  3 16:11:18 2014.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to edeposit.amqp's documentation!
 =========================================
 
-Contents:
+Welcome. This is documentation for the edeposit's AMQP module. The module is
+used in edeposit to provide and handle details of lowlevel AMQP communication.
+
+Project can be found at GitHub: https://github.com/jstavel/edeposit.amqp
+
+And installed from PYPI: https://pypi.python.org/pypi/edeposit.amqp
 
 .. toctree::
    :maxdepth: 2
 
+Source code documentation
+-------------------------
+.. toctree::
+    api/edeposit.amqp
 
+Acceptance tests
+----------------
+* :download:`test report <../report.html>`
+
+* :download:`test log <../log.html>`
 
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-
-:download:`test report <../report.html>`
-:download:`test log <../log.html>`
