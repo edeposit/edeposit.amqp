@@ -6,8 +6,8 @@
 """
 Module for creating generic, callback based wrappers.
 
-It is little bit easier (at least for me) to use than the original daemon
-module.
+It is little bit easier (at least for me) to use than the original `daemon
+module <https://pypi.python.org/pypi/python-daemon/>`_.
 """
 import sys
 
@@ -17,14 +17,15 @@ from daemon import runner
 
 
 class DaemonRunnerWrapper(object):
-    """
-    Generic daemon class, which allows you to daemonize your script and react
-    to events in simple callbacks.
-    """
     def __init__(self, pid_filename):
         """
-        pid_filename -- name of daemon's PID file, which is stored in /tmp
-                        class automatically adds .pid suffix
+        Generic daemon class, which allows you to daemonize your script and
+        react to events in simple callbacks.
+
+        Args:
+            pid_filename (str): name of daemon's PID file, which is stored in
+                                ``/tmp``. Class automatically adds ``.pid``
+                                suffix.
         """
         self.stdin_path = '/dev/null'
         self.stdout_path = '/dev/tty'
@@ -40,7 +41,10 @@ class DaemonRunnerWrapper(object):
 
     def run_daemon(self):
         """
-        Used as daemon starter. DO NOT OVERRIDE THIS.
+        Used as daemon starter.
+
+        Warning:
+            DO NOT OVERRIDE THIS.
         """
         try:
             self.daemon_runner.do_action()
@@ -51,10 +55,14 @@ class DaemonRunnerWrapper(object):
 
     def run(self):
         """
-        Used to handle some exceptions. No, this can't be named differently,
-        because it is defined in original DaemonRunner object.
+        Used to handle some exceptions.
 
-        DO NOT OVERRIDE THIS.
+        Note:
+            No, this can't be named differently, because it is defined in
+            original DaemonRunner object.
+
+        Warning:
+            DO NOT OVERRIDE THIS.
         """
         try:
             self.body()
@@ -67,8 +75,9 @@ class DaemonRunnerWrapper(object):
         """
         Here should be your code loop.
 
-        Loop is automatically break-ed when daemon receives one of the unix
-        signals. After that, .onExit() is called.
+        Note:
+            Loop is automatically break-ed when daemon receives one of the unix
+            signals. After that, :func:`onExit` is called.
         """
         pass
 
@@ -77,15 +86,15 @@ class DaemonRunnerWrapper(object):
         Called when it is not possible to stop the daemon.
 
         This kind of event typically occurs if there is no running instance of
-        daemon and script is called with "stop" parameter.
+        daemon and script is called with ``stop`` parameter.
         """
         print "There is no running instance to be stopped."
         sys.exit(0)
 
     def onIsRunning(self):
         """
-        Oposite of .onStopFail() - this callback is called if there is already
-        a running instance of daemon.
+        Oposite of :func:`onStopFail` - this callback is called if there is
+        already a running instance of daemon.
         """
         print 'It looks like a daemon is already running!'
         sys.exit(1)
@@ -94,8 +103,9 @@ class DaemonRunnerWrapper(object):
         """
         Called when the daemon received ?SIGTERM? and is shutting down.
 
-        You should probably put something here, by default is there only
-        shutdown message "DaemonRunnerWrapper is shutting down."
+        Warning:
+            You should probably put something here, by default is there only
+            shutdown message "DaemonRunnerWrapper is shutting down."
         """
         print "DaemonRunnerWrapper is shutting down."
 
@@ -104,6 +114,6 @@ class DaemonRunnerWrapper(object):
         Check PID and return true, if it looks like there is already a running
         instance of daemon.
 
-        PID timeout can be set thru .pidfile_timeout property.
+        PID timeout can be set thru :attr:`pidfile_timeout` property.
         """
         return runner.make_pidlockfile(self.pidfile_path, 1).is_locked()
