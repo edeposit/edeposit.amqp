@@ -4,6 +4,10 @@
 # Interpreter version: python 2.7
 #
 #= Imports ====================================================================
+"""
+Script which simplifies debugging and testing AMQP communication, routing, keys
+and so on.
+"""
 import sys
 import uuid
 
@@ -22,14 +26,15 @@ def createBlockingConnection():
     """
     Return properly created blocking connection.
 
-    Uses .getConnectionParameters() from alephdaemon.py.
+    Uses :func:`edeposit.amqp.alephdaemon.getConnectionParameters`.
     """
     return pika.BlockingConnection(alephdaemon.getConnectionParameters())
 
 
 def receive():
     """
-    Print all received messages.
+    Print all messages from :attr:`edeposit.amqp.settings`
+    ``RABBITMQ_ALEPH_PLONE_QUEUE``.
     """
     for method_frame, properties, body in channel.consume(RABBITMQ_ALEPH_PLONE_QUEUE):
         print "Message:"
@@ -45,6 +50,10 @@ def receive():
 def createSchema():
     """
     Create the routing schema in rabbitmq's database.
+
+    Note:
+        This is here mainly for testing purposes. Proper schema will require
+        more routing keys.
     """
     exchanges = [
         "search",
