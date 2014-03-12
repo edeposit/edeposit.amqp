@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
 """
 Purpose of this module is to provide class for launching unix daemons
 (daemonwrapper.py), AMQP communication service based on RabbitMQ's pika library
@@ -80,7 +82,7 @@ to determine into which queue will be message delivered.
 Response message is sent into settings.RABBITMQ_ALEPH_EXCHANGE with routing key
 settings.RABBITMQ_ALEPH_PLONE_KEY.
 
-Format of response is usually one of the Response classes from 
+Format of response is usually one of the Response classes from
 aleph.__init__.py. In headers, there should always be the UUID parameter, even
 in case of some unexpected error.
 

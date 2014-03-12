@@ -21,13 +21,5 @@ Indices and tables
 * :ref:`search`
 
 
-
-
-.. automodule:: pikadaemon
-   :members:
-   :special-members: __init__
-
-
-
 :download:`test report <../report.html>`
 :download:`test log <../log.html>`
