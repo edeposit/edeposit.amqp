@@ -39,6 +39,8 @@ extensions = [
     'sphinxcontrib.napoleon'
 ]
 
+autoclass_content = 'both'
+
 # Napoleon settings
 napoleon_google_docstring = True
 napoleon_numpy_docstring = False
