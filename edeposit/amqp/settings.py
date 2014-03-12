@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+"""
+Configuration variables for the edeposit.amqp module.
+
+For some reason, Sphinx wont list the variables in documentation (I've tried
+it, really!), so you will have to look into source code.
+"""
+
 RABBITMQ_HOST = '127.0.0.1'
 RABBITMQ_PORT = '5672'
 RABBITMQ_USER_NAME = 'guest'
