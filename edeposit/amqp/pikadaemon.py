@@ -7,11 +7,12 @@
 """
 Generic AMQP blocking communication daemon server.
 
-Usage is simple - just inherit the class and override onMessageReceived().
+Usage is simple - just inherit the class and override
+:func:`PikaDaemon.onMessageReceived`.
 
-You can send messages back using either .sendMessage() or sendResponse(). Fist
-one allows you to send message everywhere, second one send message to the queue
-defined by constructor.
+You can send messages back using either :func:`PikaDaemon.sendMessage` or
+:func:`PikaDaemon.sendResponse`. Fist one allows you to send message
+everywhere, second one send message to the queue defined by constructor.
 """
 import pika
 
@@ -21,17 +22,17 @@ import daemonwrapper
 
 #= Functions & objects ========================================================
 class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
-    """
-    Pika daemon handling connections.
-    """
     def __init__(self, connection_param, queue, output_exchange, output_key):
         """
-        connection_param -- pika.ConnectionParameters object setting the
-                            connection
-        queue -- name of queue where the daemon should listen
-        output_exchange -- name of exchange where the daemon should put
-                           responses
-        output_key -- routing key for output exchange
+        Pika and Daemon wrapper for handling AMQP connections.
+
+        Args:
+            connection_param (pika.ConnectionParameters): object setting the
+                             connection
+            queue (str): name of queue where the daemon should listen
+            output_exchange (str): name of exchange where the daemon should put
+                                   responses
+            output_key (str): routing key for output exchange
         """
         super(PikaDaemon, self).__init__(queue)
 
@@ -50,6 +51,9 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
     def body(self):
         """
         This method just handles AMQP connection details and receive loop.
+
+        Warning:
+            Don't override this method!
         """
         self.connection = pika.BlockingConnection(self.connection_param)
         self.channel = self.connection.channel()
@@ -63,9 +67,11 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
 
     def ack(self):
         """
-        Acknowledge, that message was received. This will in some cases
-        (depends on settings of RabbitMQ) remove the message from the message
-        queue.
+        Acknowledge, that message was received.
+
+        Note:
+            This will in some cases (depends on settings of RabbitMQ) remove
+            the message from the message queue.
         """
         if self.ack_sent:
             return
@@ -77,18 +83,22 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         """
         Callback which is called every time when message is received.
 
-        You should probably redefine this.
+        Warning:
+            You SHOULD override this.
 
-        It is expected, that method returns True, if you want to automatically
-        ack the received message, which can be important in some situations,
-        because otherwise the message will be held in message queue until
-        someone will ack it.
+        Note:
+            It is expected, that method returns True, if you want to
+            automatically ack the received message, which can be important in
+            some situations, because otherwise the message will be held in
+            message queue until someone will ack it.
 
-        You don't have to return True/False and just ack the message yourself,
-        by calling self.ack().
+            You don't have to return True/False - you can ack the message
+            yourself, by calling :func:`ack`.
 
-        Good design choice is to ack the message AFTER you process it, to be
-        sure, that message is processed properly and can be removed from queue.
+        Note:
+            Good design choice is to ack the message AFTER you process it, to
+            be sure, that message is processed properly and can be removed from
+            queue.
         """
         print "method_frame:", method_frame
         print "properties:", properties
@@ -102,11 +112,16 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         """
         With this function, you can send message to `exchange`.
 
-        exchange -- name of exchange you want to message to be delivered
-        routing_key -- which routing key to use in headers of message
-        message -- body of message
-        properties -- properties of message - if not used, or set to None,
-                      self.content_type and delivery_mode=1 is used
+        Args:
+            exchange (str): name of exchange you want to message to be
+                            delivered
+            routing_key (str): which routing key to use in headers of message
+            message (str): body of message
+            properties (dict ,optional): properties of message - if not used,
+                                      or set to ``None``, ``self.content_type``
+                                      and ``delivery_mode=1`` is used
+            UUID (str, optional): UUID of the message. If set, it is included
+                                  into ``properties`` of the message.
         """
         if properties is None:
             properties = pika.BasicProperties(
@@ -129,8 +144,12 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
 
     def sendResponse(self, message, UUID):
         """
-        Send `message` to self.output_exchange with routing key self.output_key
-        and self.content_type in delivery_mode=1.
+        Send `message` to ``self.output_exchange`` with routing key
+        ``self.output_key``, ``self.content_type`` in ``delivery_mode=1``.
+
+        Args:
+            message (str): message which will be sent
+            UUID: unique identification of message
         """
         self.sendMessage(
             exchange=self.output_exchange,
@@ -141,11 +160,11 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
 
     def onExit(self):
         """
-        Called when daemon is stopped. Basically just AMQP .close() functions
-        to ensure clean exit.
+        Called when daemon is stopped. Basically just AMQP's ``.close()``
+        functions to ensure clean exit.
 
-        You can override this, but don't forget to call it thru super(), or
-        AMQP communication wouldn't be closed properly!
+        You can override this, but don't forget to call it thru ``super()``, or
+        the AMQP communication won't be closed properly!
         """
         try:
             if hasattr(self, "channel"):
