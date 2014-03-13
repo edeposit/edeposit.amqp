@@ -4,8 +4,8 @@ from setuptools import setup, find_packages
 version = '1.1.4'
 long_description = "\n\n".join([
     open('README.rst').read(),
-    open('CONTRIBUTORS.txt').read(),
-    open('CHANGES.txt').read()
+    open('CONTRIBUTORS.rst').read(),
+    open('CHANGES.rst').read()
 ])
 
 setup(
@@ -35,5 +35,6 @@ setup(
         'setuptools',
         "python-daemon>=1.5.5",
         "pika>=0.9.13",
+        "edeposit.amqp.aleph>=1.2.3"
     ]
 )
