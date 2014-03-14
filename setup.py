@@ -36,10 +36,6 @@ class BuildSphinx(sdist):
                 shutil.rmtree(DOCS_OUT)
 
             shutil.copytree(DOCS_IN, DOCS_OUT)
-
-            global DOCS_GENERATED
-            DOCS_GENERATED = True
-
             os.chdir(d)
 
         sdist.run(self)
