@@ -10,6 +10,7 @@ and so on.
 """
 import sys
 import uuid
+import argparse
 
 
 import pika
@@ -108,11 +109,51 @@ def createSchema():
 
 #= Main program ===============================================================
 if __name__ == '__main__':
+    # parse arguments
+    parser = argparse.ArgumentParser(description="AMQP debugger.")
+    parser.add_argument(
+        '--put',
+        action='store_true',
+        help="Put one message into queue %s." % (RABBITMQ_ALEPH_DAEMON_QUEUE)
+    )
+    parser.add_argument(
+        '--put-bad',
+        action='store_true',
+        help="Put error message into queue %s." % (RABBITMQ_ALEPH_DAEMON_QUEUE)
+    )
+    parser.add_argument(
+        '--get',
+        action='store_true',
+        help="Get one message from queue %s." % (RABBITMQ_ALEPH_DAEMON_QUEUE)
+    )
+    parser.add_argument(
+        '--create',
+        action='store_true',
+        help="Create the schema in RabbitMQ."
+    )
+    parser.add_argument(
+        '--timeout',
+        metavar="N",
+        type=int,
+        default=-1,
+        help="Wait for message only N seconds."
+    )
+    args = parser.parse_args()
+
+    # variable initialization
     isbnq = aleph.ISBNQuery("80-251-0225-4")
     request = aleph.SearchRequest(isbnq)
     json_data = aleph.convertors.toJSON(request)
 
     connection = createBlockingConnection()
+
+    # register timeout
+    if args.timeout > 0:
+        connection.add_timeout(
+            args.timeout,
+            lambda: sys.stderr.write("Timeouted\n") or sys.exit(1)
+        )
+
     channel = connection.channel()
 
     properties = pika.BasicProperties(
@@ -121,10 +162,11 @@ if __name__ == '__main__':
         headers={"UUID": str(uuid.uuid4())}
     )
 
-    if "--create" in sys.argv:
+    # react to parameters
+    if args.create:
         createSchema()
 
-    if "--put" in sys.argv:
+    if args.put:
         channel.basic_publish(
             exchange=RABBITMQ_ALEPH_EXCHANGE,
             routing_key=RABBITMQ_ALEPH_DAEMON_KEY,
@@ -132,7 +174,7 @@ if __name__ == '__main__':
             body=json_data
         )
 
-    if "--put-bad" in sys.argv:
+    if args.put_bad:
         channel.basic_publish(
             exchange=RABBITMQ_ALEPH_EXCHANGE,
             routing_key=RABBITMQ_ALEPH_DAEMON_KEY,
@@ -140,12 +182,9 @@ if __name__ == '__main__':
             body="xex"
         )
 
-    if "--get" in sys.argv:
+    if args.get:
         try:
             receive()
         except KeyboardInterrupt:
             print
             sys.exit(0)
-
-    if len(sys.argv) == 1:
-        print "Usage " + sys.argv[0] + " [--get] [--put] [--put-bad] [--create]"
