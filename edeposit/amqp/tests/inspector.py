@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
-
 #
 # library for Robot Framework to inspect python modules
 #
-
 import imp
-import edeposit.amqp as amqp
-
 import os.path
 
 
