@@ -1,0 +1,31 @@
+*** Settings ***
+Library     inspector.Inspector
+Library     OperatingSystem
+Variables   inspector.py
+
+
+
+*** Variables ***
+${ALEPH_DAEMON}           edeposit/amqp/alephdaemon.py
+
+
+
+*** Keywords ***
+Spust prikaz
+    [Documentation]       Spusti zadany prikaz (uvedeny i s parametry), vrati a zaloguje vysledek.
+    [Arguments]           ${prikaz}
+    ${rc}   ${output} =   Run and Return RC and Output   ${prikaz}
+    Log                   ${output}
+    Log                   ${rc}
+    [Return]              ${output}
+
+
+*** Test Cases ***
+alephdaemon existuje
+    Should Exist          ${ALEPH_DAEMON}
+
+Spust aleph daemona
+    Spust prikaz          ${ALEPH_DAEMON} stop
+    Spust prikaz          ${ALEPH_DAEMON} start
+
+
