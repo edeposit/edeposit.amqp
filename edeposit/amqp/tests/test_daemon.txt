@@ -47,5 +47,6 @@ Prijmi testovaci zpravu z daemona
     Should contain             ${vystup}                 zpracovatelZaznamu
     Should contain             ${vystup}                 UNIXu
 
-# Prijmi testovaci zpravu z daemona
-#     Spust prikaz vrat vystup   ${AMQP_TOOL} --put
+Hraj ruskou hymnu
+    [Documentation] (09:58:28) Jan Stavel: Ahoj, divam se na testy co jsi napsal - v edeposit.amqp. Diky. Usetri to hodne prace. Da se to cist, da se to pustit, jeste by to mohlo hrat. Treba ruskou hymnu.
+    Spust prikaz vrat hodnotu  xdg-open http://www.youtube.com/watch?v=Ct3pMWmok-Y
