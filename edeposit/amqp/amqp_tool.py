@@ -59,7 +59,8 @@ def createSchema():
     exchanges = [
         "search",
         "count",
-        "export"
+        "export",
+        "validate"
     ]
     queues = {
         RABBITMQ_ALEPH_PLONE_QUEUE: RABBITMQ_ALEPH_PLONE_KEY,
