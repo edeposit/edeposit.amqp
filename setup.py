@@ -51,7 +51,7 @@ setup(
     version=version,
     description="E-Deposit's AMQP definitions and common classes/patterns.",
     long_description=long_description,
-    url='https://github.com/jstavel/edeposit.amqp/',
+    url='https://github.com/edeposit/edeposit.amqp/',
 
     author='Edeposit team',
     author_email='edeposit@email.cz',
