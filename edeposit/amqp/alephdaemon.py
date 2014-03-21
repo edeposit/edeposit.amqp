@@ -23,17 +23,20 @@ import sys
 
 import pika
 import pikadaemon
-import settings
 
 try:
-    from edeposit.amqp.aleph import reactToAMQPMessage
+    from edeposit.amqp.aleph import *
+    from edeposit.amqp.aleph.datastructures import *  # for serializers
 except ImportError:
-    from aleph import reactToAMQPMessage
+    from aleph import *
+    from aleph.datastructures import *
 
 try:
     from edeposit.amqp.serializers import serializers
 except ImportError:
     from serializers import serializers
+
+import settings
 
 
 #= Functions & objects ========================================================
@@ -64,7 +67,7 @@ class AlephDaemon(pikadaemon.PikaDaemon):
                     delivery_mode=1,
                     headers={
                         "exception": msg,
-                        "excaption_type": exception_type,
+                        "exception_type": exception_type,
                         "exception_name": exception_name
                     }
                 )
@@ -100,6 +103,10 @@ def main():
     """
     Arguments parsing, etc..
     """
+    # initialize globals in `serializers` module (this is very important,
+    # it won't have access to datastructures authomatically)
+    serializers.init_globals(globals())
+
     daemon = AlephDaemon(
         connection_param=getConnectionParameters(),
         queue=settings.RABBITMQ_ALEPH_DAEMON_QUEUE,
