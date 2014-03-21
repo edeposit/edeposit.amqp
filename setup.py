@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 from distutils.command.sdist import sdist
 
 
-version = '1.1.7'
+version = '1.2.0'
 long_description = "\n\n".join([
     open('README.rst').read(),
     open('CONTRIBUTORS.rst').read(),
@@ -73,7 +73,8 @@ setup(
         'setuptools',
         "python-daemon>=1.5.5",
         "pika>=0.9.13",
-        "edeposit.amqp.aleph>=1.2.3"
+        "edeposit.amqp.aleph>=1.3.0",
+        "edeposit.amqp.serializers>=1.0"
     ],
 
     cmdclass={'sdist': BuildSphinx}

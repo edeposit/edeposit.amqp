@@ -17,10 +17,15 @@ import pika
 
 
 import aleph
-import aleph.convertors
 import alephdaemon
 
 from settings import *
+
+
+try:
+    from edeposit.amqp.serializers import serializers
+except ImportError:
+    from serializers import serializers
 
 
 def createBlockingConnection():
@@ -144,7 +149,7 @@ if __name__ == '__main__':
     # variable initialization
     isbnq = aleph.ISBNQuery("80-251-0225-4")
     request = aleph.SearchRequest(isbnq)
-    json_data = aleph.convertors.toJSON(request)
+    json_data = serializers.serialize(request)
 
     connection = createBlockingConnection()
 

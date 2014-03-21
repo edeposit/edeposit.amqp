@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.2.0
+-----
+    - Serialization is now handled (but not stored) in this module, instead of aleph. It will be used in other modules too.
+    - Added dependency to edeposit.amqp.serializers.
+
 1.1.6
 -----
     - Documentation is now even for settings.py's attributes.

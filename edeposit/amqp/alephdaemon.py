@@ -23,9 +23,17 @@ import sys
 
 import pika
 import pikadaemon
-from aleph import reactToAMQPMessage
-
 import settings
+
+try:
+    from edeposit.amqp.aleph import reactToAMQPMessage
+except ImportError:
+    from aleph import reactToAMQPMessage
+
+try:
+    from edeposit.amqp.serializers import serializers
+except ImportError:
+    from serializers import serializers
 
 
 #= Functions & objects ========================================================
@@ -37,7 +45,7 @@ class AlephDaemon(pikadaemon.PikaDaemon):
 
         try:
             reactToAMQPMessage(
-                body,
+                serializers.deserialize(body),
                 self.sendResponse,
                 properties.headers["UUID"]
             )
@@ -63,6 +71,12 @@ class AlephDaemon(pikadaemon.PikaDaemon):
             )
 
         return True  # ack message
+
+    def sendResponse(self, message, UUID):
+        super(AlephDaemon, self).sendResponse(
+            serializers.serialize(message),
+            UUID
+        )
 
 
 def getConnectionParameters():
