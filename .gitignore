@@ -2,6 +2,7 @@ _build
 *.egg
 *.pyc
 edeposit/amqp/aleph
+edeposit/amqp/serializers
 edeposit.amqp.egg-info
 dist
 docs/build
