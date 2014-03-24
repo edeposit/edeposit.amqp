@@ -64,7 +64,7 @@ class AlephDaemon(pikadaemon.PikaDaemon):
                 str(e),
                 properties=pika.BasicProperties(
                     content_type="application/text",
-                    delivery_mode=1,
+                    delivery_mode=2,
                     headers={
                         "exception": msg,
                         "exception_type": exception_type,
