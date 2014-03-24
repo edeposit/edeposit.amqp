@@ -32,9 +32,9 @@ except ImportError:
     from aleph.datastructures import *
 
 try:
-    from edeposit.amqp.serializers import serializers
+    import edeposit.amqp.serializers as serializers
 except ImportError:
-    from serializers import serializers
+    import serializers
 
 import settings
 
