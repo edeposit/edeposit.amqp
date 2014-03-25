@@ -3,7 +3,7 @@ Introduction
 
 This module contains common parts shared with other AMQP modules from
 `Edeposit <http://edeposit.nkp.cz/>`_ project. Main purpose is to provide
-configuration data to AMQP server and generic daemons, to run the modules.    
+configuration data to AMQP server and generic daemons, to run the modules.
 
 Installation
 ------------
@@ -16,9 +16,13 @@ installed using `PIP <http://en.wikipedia.org/wiki/Pip_%28package_manager%29>`_:
 
 Source code can be found at `GitHub <https://github.com/>`_: https://github.com/jstavel/edeposit.amqp
 
+Documentation
+-------------
+Full module documentation can be found here: http://edeposit-amqp.readthedocs.org
+
 Content
 =======
-Content can be divided between generic modules to support AMQP communcation and scripts, which provides ability to testn and tweak AMQP communication.
+Content can be divided between generic modules to support AMQP communication and scripts, which provides ability to test and tweak AMQP communication.
 
 Modules
 -------
@@ -26,13 +30,13 @@ Modules
 edeposit.amqp.settings
 ++++++++++++++++++++++
 
-Configuration for RabbitMQ server and Edeposit client modules connecting
+Configuration for RabbitMQ server and E-deposit client modules connecting
 into it.
 
 edeposit.amqp.daemonwrapper
 +++++++++++++++++++++++++++
 
-Class for spawning true unix daemons.
+Class for spawning Unix daemons.
 
 edeposit.amqp.pikadaemon
 ++++++++++++++++++++++++
