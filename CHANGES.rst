@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.2.1
+-----
+    - edeposit.amqp.serializers API changed, so this module needed to be adjusted.
+
 1.2.0
 -----
     - Serialization is now handled (but not stored) in this module, instead of aleph. It will be used in other modules too.
