@@ -18,7 +18,7 @@ Source code can be found at `GitHub <https://github.com/>`_: https://github.com/
 
 Documentation
 -------------
-Full module documentation can be found here: http://edeposit-amqp.readthedocs.org
+Full module documentation is hosted at ReadTheDocs: http://edeposit-amqp.readthedocs.org
 
 Content
 =======
