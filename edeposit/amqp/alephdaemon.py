@@ -48,7 +48,7 @@ class AlephDaemon(pikadaemon.PikaDaemon):
 
         try:
             reactToAMQPMessage(
-                serializers.deserialize(body),
+                serializers.deserialize(body, globals()),
                 self.sendResponse,
                 properties.headers["UUID"]
             )
@@ -103,10 +103,6 @@ def main():
     """
     Arguments parsing, etc..
     """
-    # initialize globals in `serializers` module (this is very important,
-    # it won't have access to datastructures authomatically)
-    serializers.init_globals(globals())
-
     daemon = AlephDaemon(
         connection_param=getConnectionParameters(),
         queue=settings.RABBITMQ_ALEPH_DAEMON_QUEUE,
