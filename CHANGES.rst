@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.2.2
+-----
+    - Documentation updated. Added intersphinx links to edeposit.amqp.serializers.
+
 1.2.1
 -----
     - edeposit.amqp.serializers API changed, so this module needed to be adjusted.

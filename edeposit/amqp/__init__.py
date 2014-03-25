@@ -2,16 +2,18 @@
 # -*- coding: utf-8 -*-
 """
 Purpose of this module is to provide class for launching unix daemons
-(:class:`edeposit.amqp.daemonwrapper`), AMQP communication service based on
-RabbitMQ's pika library (:class:`edeposit.amqp.pikadaemon`) and also AMQP
-communication classes for specific modules used in edeposit project (so far,
-there is only communication with the Aleph in
-:class:`edeposit.amqp.alephdaemon`).
+(:class:`daemonwrapper <edeposit.amqp.daemonwrapper>`), AMQP communication
+service based on RabbitMQ's pika library
+(:class:`pikadaemon <edeposit.amqp.pikadaemon>`) and also AMQP communication
+classes for specific modules used in edeposit project (so far, there is only
+communication with the Aleph in
+:class:`alephdaemon <edeposit.amqp.alephdaemon>`).
 
-:class:`edeposit.amqp.alephdaemon` module allows you to send simple requests to
-get data from Aleph (system used in libraries all around the world) and in
-later versions also requests to put data into Aleph. Details of protocol and
-communication with Aleph server are handled by `edeposit.amqp.aleph`_ module
+:class:`alephdaemon <edeposit.amqp.alephdaemon>` module allows you to send
+simple requests to get data from Aleph (system used in libraries all around
+the world) and in later versions also requests to put data into Aleph. Details
+of protocol and communication with Aleph server are handled by
+`edeposit.amqp.aleph`_ module.
 
 .. _edeposit.amqp.aleph: https://github.com/jstavel/edeposit.amqp.aleph
 
@@ -19,10 +21,15 @@ communication with Aleph server are handled by `edeposit.amqp.aleph`_ module
 Request
 =======
 
-You just have to send serialized one of the Request classes, which are defined
-in aleph's ``__init__.py``, into the RabbitMQ's exchange defined in
-``settings.RABBITMQ_ALEPH_EXCHANGE``. Serialization can be done by calling
-module's ``.serialize()`` method.
+For request, you just need to send serialized one of the Request classes, which
+are defined in aleph's ``__init__.py``, into the RabbitMQ's exchange defined in
+``settings.RABBITMQ_ALEPH_EXCHANGE``.
+
+Serialization can be done by calling
+:func:`~edeposit.amqp.serializers.serializers.serialize` function from
+`edeposit.amqp.serializers`_.
+
+.. _edeposit.amqp.serializers: http://edepositamqpserializers.readthedocs.org
 
 Example showing how to send data to proper exchange::
 
@@ -30,6 +37,7 @@ Example showing how to send data to proper exchange::
 
     import settings
     from alephdaemon import getConnectionParameters
+    from edeposit.amqp.serializers import serialize
 
     connection = pika.BlockingConnection(alephdaemon.getConnectionParameters())
     channel = connection.channel()
@@ -37,7 +45,7 @@ Example showing how to send data to proper exchange::
     UUID = uuid.uuid4()  # this will be used to pair request with response
 
     # put request together
-    json_data = aleph.serialize(
+    json_data = serialize(
         aleph.SearchRequest(
             aleph.ISBNQuery("80-251-0225-4")
         )
@@ -61,7 +69,9 @@ Example showing how to send data to proper exchange::
 It looks kinda long, but it is really simple and the most important thing in
 respect to communication with module is::
 
-    json_data = aleph.serialize(
+    from edeposit.amqp.serializers import serialize
+
+    json_data = serialize(
         aleph.SearchRequest(
             aleph.ISBNQuery("80-251-0225-4")
         )
@@ -85,8 +95,9 @@ Response message is sent into ``settings.RABBITMQ_ALEPH_EXCHANGE`` with routing
 key ``settings.RABBITMQ_ALEPH_PLONE_KEY``.
 
 Format of response is usually one of the `*Response` classes from
-``aleph.__init__.py``. In headers, there should always be the `UUID` parameter,
-even in case of some unexpected error.
+``aleph.__init__.py`` serialized to JSON, so you may need to
+:func:`~edeposit.amqp.serializers.serializers.deserialize` it. In headers, there should always be the
+`UUID` parameter, even in case of some unexpected error.
 
 You can detect errors by looking for ``exception`` key in ``parameters.headers``
 dictionary::
@@ -123,7 +134,7 @@ Note:
     before you start the daemon.
 
 If you don't want to define all details of AMQP communication by yourself, you
-can just run the :class:`edeposit.amqp.amqp_tool`, which can build the schema::
+can just run the :class:`amqp_tool <edeposit.amqp.amqp_tool>`, which can build the schema::
 
     ./amqp_tool.py --create
 

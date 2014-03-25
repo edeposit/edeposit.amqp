@@ -119,7 +119,8 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
             message (str): body of message
             properties (dict ,optional): properties of message - if not used,
                                       or set to ``None``, ``self.content_type``
-                                      and ``delivery_mode=1`` is used
+                                      and ``delivery_mode=2`` (persistent) is
+                                      used
             UUID (str, optional): UUID of the message. If set, it is included
                                   into ``properties`` of the message.
         """
@@ -145,7 +146,7 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
     def sendResponse(self, message, UUID):
         """
         Send `message` to ``self.output_exchange`` with routing key
-        ``self.output_key``, ``self.content_type`` in ``delivery_mode=1``.
+        ``self.output_key``, ``self.content_type`` in ``delivery_mode=2``.
 
         Args:
             message (str): message which will be sent
