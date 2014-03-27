@@ -12,7 +12,7 @@ Standalone daemon providing AMQP communication with
 
 This script can be used as aplication, not just as module::
 
-    ./alephdaemon start/stop/restart [--foreground]
+    ./alephdaemon.py start/stop/restart [--foreground]
 
 If ``--foreground`` parameter is used, script will not run as daemon, but as
 normal script at foreground. Without that, only one (true unix) daemon instance
@@ -20,9 +20,8 @@ will be running at the time.
 """
 import sys
 
+from amqpdaemon import AMQPDaemon, getConParams
 
-import pika
-import pikadaemon
 
 try:
     from edeposit.amqp.aleph import *
@@ -31,83 +30,23 @@ except ImportError:
     from aleph import *
     from aleph.datastructures import *
 
-try:
-    import edeposit.amqp.serializers as serializers
-except ImportError:
-    import serializers
-
 import settings
 
 
 #= Functions & objects ========================================================
-class AlephDaemon(pikadaemon.PikaDaemon):
-    def onMessageReceived(self, method_frame, properties, body):
-        # if UUID is not in headers, just ack the message and ignore it
-        if "UUID" not in properties.headers:
-            return True  # ack message
-
-        try:
-            reactToAMQPMessage(
-                serializers.deserialize(body, globals()),
-                self.sendResponse,
-                properties.headers["UUID"]
-            )
-        except Exception, e:
-            # get informations about message
-            msg = e.message if hasattr(e, "message") else str(e)
-            exception_type = str(e.__class__)
-            exception_name = str(e.__class__.__name__)
-
-            self.sendMessage(
-                self.output_exchange,
-                settings.RABBITMQ_ALEPH_EXCEPTION_KEY,
-                str(e),
-                properties=pika.BasicProperties(
-                    content_type="application/text",
-                    delivery_mode=2,
-                    headers={
-                        "exception": msg,
-                        "exception_type": exception_type,
-                        "exception_name": exception_name
-                    }
-                )
-            )
-
-        return True  # ack message
-
-    def sendResponse(self, message, UUID):
-        super(AlephDaemon, self).sendResponse(
-            serializers.serialize(message),
-            UUID
-        )
-
-
-def getConnectionParameters():
-    """
-    Returns:
-        pika.ConnectionParameters: object set by variables from
-        :class:`edeposit.amqp.settings`.
-    """
-    return pika.ConnectionParameters(
-        host=settings.RABBITMQ_HOST,
-        port=int(settings.RABBITMQ_PORT),
-        virtual_host=settings.RABBITMQ_ALEPH_VIRTUALHOST,
-        credentials=pika.PlainCredentials(
-            settings.RABBITMQ_USER_NAME,
-            settings.RABBITMQ_USER_PASSWORD
-        )
-    )
-
-
 def main():
     """
     Arguments parsing, etc..
     """
-    daemon = AlephDaemon(
-        connection_param=getConnectionParameters(),
+    daemon = AMQPDaemon(
+        con_param=getConParams(
+            settings.RABBITMQ_ALEPH_VIRTUALHOST
+        ),
         queue=settings.RABBITMQ_ALEPH_DAEMON_QUEUE,
-        output_exchange=settings.RABBITMQ_ALEPH_EXCHANGE,
-        output_key=settings.RABBITMQ_ALEPH_PLONE_KEY
+        out_exch=settings.RABBITMQ_ALEPH_EXCHANGE,
+        out_key=settings.RABBITMQ_ALEPH_PLONE_KEY,
+        react_fn=reactToAMQPMessage,
+        glob=globals()                # used in deserializer
     )
 
     if "--foreground" in sys.argv:  # run at foreground
