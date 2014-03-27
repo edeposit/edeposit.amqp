@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 #
 # Interpreter version: python 2.7
-# This work is licensed under a Creative Commons 3.0 Unported License
-# (http://creativecommons.org/licenses/by/3.0/).
 #
 #= Imports ====================================================================
 """

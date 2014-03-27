@@ -1,13 +1,16 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Purpose of this module is to provide class for launching unix daemons
-(:class:`daemonwrapper <edeposit.amqp.daemonwrapper>`), AMQP communication
-service based on RabbitMQ's pika library
-(:class:`pikadaemon <edeposit.amqp.pikadaemon>`) and also AMQP communication
-classes for specific modules used in edeposit project (so far, there is only
-communication with the Aleph in
-:class:`alephdaemon <edeposit.amqp.alephdaemon>`).
+Purpose of this module is to provide class for launching Unix daemons
+(:class:`daemonwrapper <edeposit.amqp.daemonwrapper>`), generict AMQP
+communication service based on RabbitMQ's pika library
+(:class:`pikadaemon <edeposit.amqp.pikadaemon>`), specific AMQP communication
+service for edeposit project (:class:`amqpdaemon <edeposit.amqp.amqpdaemon>`)
+and also AMQP communication classes for sub-modules used in edeposit
+project:
+
+- :class:`alephdaemon <edeposit.amqp.alephdaemon>`
+- :class:`calibredaemon <edeposit.amqp.calibredaemon>`
 
 :class:`alephdaemon <edeposit.amqp.alephdaemon>` module allows you to send
 simple requests to get data from Aleph (system used in libraries all around
@@ -18,10 +21,21 @@ of protocol and communication with Aleph server are handled by
 .. _edeposit.amqp.aleph: https://github.com/jstavel/edeposit.amqp.aleph
 
 
-Request
-=======
+Communication with sub-modules
+------------------------------
+From **user perspective**, communication is very similar to RPC - to each
+`Request` is returned `Response`.
 
-For request, you just need to send serialized one of the Request classes, which
+Note:
+    `Requests` and `Responses` are identified and paired by `UUID`, which is
+    transported in headers of AMQP message.
+
+Request
++++++++
+To send a request, you just need to send serialized structure (``namedtuple``)
+to the input queue of the daemon.
+
+For example - for querying Aleph, take one of the Request classes, which
 are defined in aleph's ``__init__.py``, into the RabbitMQ's exchange defined in
 ``settings.RABBITMQ_ALEPH_EXCHANGE``.
 
@@ -89,15 +103,15 @@ used to determine into which queue will be message delivered.
 
 
 Response
-========
-
+++++++++
 Response message is sent into ``settings.RABBITMQ_ALEPH_EXCHANGE`` with routing
 key ``settings.RABBITMQ_ALEPH_PLONE_KEY``.
 
 Format of response is usually one of the `*Response` classes from
 ``aleph.__init__.py`` serialized to JSON, so you may need to
-:func:`~edeposit.amqp.serializers.serializers.deserialize` it. In headers, there should always be the
-`UUID` parameter, even in case of some unexpected error.
+:func:`~edeposit.amqp.serializers.serializers.deserialize` it. In headers,
+there should always be the `UUID` parameter, even in case of some unexpected
+error.
 
 You can detect errors by looking for ``exception`` key in ``parameters.headers``
 dictionary::
@@ -114,10 +128,15 @@ Details of exception are contained in ``exception``, ``exception_name`` and
 message, second is the ``.__class__.__name__`` property of exception and third
 is just output from ``type(exception)``.
 
+Programmers perspective
+-----------------------
+If you wan't to add new module, you will have to create your own instance of
+the :class:`.AMQPDaemon` and your module has to have some warriant of the
+``reactToAMQP()`` function. See :class:`.AMQPDaemon` docstring for details.
+
 
 Tips and tricks
-===============
-
+---------------
 Before you start sending the data, it is usually good idea to start the daemon.
 RabbitMQ will hold the data even when the daemon is not running, but you won't
 get the data back.
