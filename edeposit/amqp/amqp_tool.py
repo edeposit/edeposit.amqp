@@ -17,7 +17,7 @@ import pika
 
 
 import aleph
-import alephdaemon
+import amqpdaemon
 
 from settings import *
 
@@ -32,9 +32,11 @@ def createBlockingConnection():
     """
     Return properly created blocking connection.
 
-    Uses :func:`edeposit.amqp.alephdaemon.getConnectionParameters`.
+    Uses :func:`edeposit.amqp.amqpdaemon.getConParams`.
     """
-    return pika.BlockingConnection(alephdaemon.getConnectionParameters())
+    return pika.BlockingConnection(
+        amqpdaemon.getConParams(RABBITMQ_ALEPH_VIRTUALHOST)
+    )
 
 
 def receive():
