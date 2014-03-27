@@ -130,9 +130,9 @@ is just output from ``type(exception)``.
 
 Programmers perspective
 -----------------------
-If you wan't to add new module, you will have to create your own instance of
-the :class:`.AMQPDaemon` and your module has to have some warriant of the
-``reactToAMQP()`` function. See :class:`.AMQPDaemon` docstring for details.
+If you want to add new module, you will have to create your own instance of
+the :class:`.AMQPDaemon` and your module has to have some variant of the
+``reactToAMQP()`` function. See :class:`.AMQPDaemon` doc-string for details.
 
 
 Tips and tricks
@@ -153,7 +153,8 @@ Note:
     before you start the daemon.
 
 If you don't want to define all details of AMQP communication by yourself, you
-can just run the :class:`amqp_tool <edeposit.amqp.amqp_tool>`, which can build the schema::
+can just run the :class:`amqp_tool <edeposit.amqp.amqp_tool>`, which can build
+the schema::
 
     ./amqp_tool.py --create
 
