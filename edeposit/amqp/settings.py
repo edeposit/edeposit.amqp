@@ -38,6 +38,13 @@ RABBITMQ_ALEPH_DAEMON_KEY = "request"  #:
 RABBITMQ_ALEPH_PLONE_KEY = "result"  #:
 RABBITMQ_ALEPH_EXCEPTION_KEY = "exception"  #:
 
+RABBITMQ_CALIBRE_VIRTUALHOST = "calibre"  #:
+RABBITMQ_CALIBRE_DAEMON_QUEUE = "daemon"  #:
+RABBITMQ_CALIBRE_PLONE_QUEUE = "plone"  #:
+RABBITMQ_CALIBRE_EXCHANGE = "convert"  #:
+RABBITMQ_CALIBRE_DAEMON_KEY = "request"  #:
+RABBITMQ_CALIBRE_PLONE_KEY = "result"  #:
+
 
 #= user configuration reader ==================================================
 _ALLOWED = [str, int, float]
