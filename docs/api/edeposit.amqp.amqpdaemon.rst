@@ -1,5 +1,5 @@
-edeposit.amqp.amqpdaemon module
-===============================
+AMQPDaemon
+==========
 
 .. automodule:: edeposit.amqp.amqpdaemon
     :members:

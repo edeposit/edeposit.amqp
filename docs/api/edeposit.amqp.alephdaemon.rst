@@ -1,5 +1,5 @@
-edeposit.amqp.alephdaemon module
-================================
+alephdaemon.py script
+=====================
 
 .. automodule:: edeposit.amqp.alephdaemon
     :members:

@@ -1,5 +1,5 @@
-edeposit.amqp.daemonwrapper module
-==================================
+DaemonRunnerWrapper
+===================
 
 .. automodule:: edeposit.amqp.daemonwrapper
     :members:

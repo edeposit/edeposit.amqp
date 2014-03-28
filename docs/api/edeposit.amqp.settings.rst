@@ -1,5 +1,5 @@
-edeposit.amqp.settings module
-=============================
+Settings
+========
 
 .. automodule:: edeposit.amqp.settings
     :members:

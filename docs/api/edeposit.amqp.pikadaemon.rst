@@ -1,5 +1,5 @@
-edeposit.amqp.pikadaemon module
-===============================
+PikaDaemon
+==========
 
 .. automodule:: edeposit.amqp.pikadaemon
     :members:

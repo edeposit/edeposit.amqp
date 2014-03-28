@@ -1,5 +1,5 @@
-edeposit.amqp.amqp_tool module
-==============================
+amqp_tool.py script
+===================
 
 .. automodule:: edeposit.amqp.amqp_tool
     :members:

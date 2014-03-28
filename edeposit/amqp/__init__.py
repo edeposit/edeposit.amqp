@@ -26,6 +26,8 @@ Communication with sub-modules
 From **user perspective**, communication is very similar to RPC - to each
 `Request` is returned `Response`.
 
+.. image:: http://bit.ly/1jYapVn
+
 Note:
     `Requests` and `Responses` are identified and paired by `UUID`, which is
     transported in headers of AMQP message.
@@ -96,11 +98,14 @@ Here you say, that you want to perform `SearchRequest` and specifically search
 for ISBN.
 
 Another important thing is to send and save for later use the `UUID`. You want
-to do this to be able to pair the response with request. Also messages received
-without `UUID` are thrown away without any warning.
+to do this to be able to pair the response with request.
 
-Notice also the `routing_key` parameter of ``channel.basic_publish()``. It is
-used to determine into which queue will be message delivered.
+Warning:
+    Messages received without `UUID` are thrown away without any warning.
+
+Note:
+    Notice also the `routing_key` parameter of ``channel.basic_publish()``. It
+    is used to determine into which queue will be message delivered.
 
 
 Response
