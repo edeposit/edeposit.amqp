@@ -54,10 +54,10 @@ copyright = u'2014 E-deposit team'
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
-# The short X.Y version.
-version = '1.2'
 # The full version, including alpha/beta/rc tags.
-release = '1.2.2'
+release = '1.3.0'
+# The short X.Y version.
+version = ".".join(release.split(".")[:2])
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
