@@ -73,7 +73,7 @@ setup(
         'setuptools',
         "python-daemon>=1.5.5",
         "pika>=0.9.13",
-        "edeposit.amqp.aleph>=1.3.0",
+        "edeposit.amqp.aleph>=1.4.0",
         "edeposit.amqp.serializers>=1.0"
     ],
 
