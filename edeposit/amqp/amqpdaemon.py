@@ -61,37 +61,26 @@ class AMQPDaemon(pikadaemon.PikaDaemon):
                             available in this namespace of this package
 
         Note:
-            ``react_fn`` parameter is expected to be function, which gets three
+            ``react_fn`` parameter is expected to be function, which gets two
             parameters - `message` (some form of message, it can be also
-            namedtuple), `response_callback` (function expecting `message` and
-            `UUID` parameters which is used to send response) and `UUID`.
+            namedtuple), and `UUID` containing unique identificator of the
+            message.
 
         Example of function used as `react_fn` parameter::
 
-            def reactToAMQPMessage(message, response_callback, UUID):
+            def reactToAMQPMessage(message, UUID):
                 response = None
                 if message == 1:
-                    response = 2
+                    return 2
                 elif message == "Hello":
-                    response = "Hi"
+                    return "Hi"
                 elif type(message) == dict:
-                    reponse = {1: 2}
+                    return {1: 2}
 
-                if not reponse:
-                    raise UserWarning("Unrecognized message")
+                raise UserWarning("Unrecognized message")
 
-                return response_callback(response, UUID)
-
-        As you can see, protocol is pretty easy. You get `message`, you
-        create `response`, in which you react to `message` and you send
-        it back using `response_callback` parameter.
-
-        Note:
-            It is better if you ``return`` value from `response_callback` call
-            back. You will appreciate this during debugging phase of you
-            project.
-
-
+        As you can see, protocol is pretty easy. You get `message`, to which you
+        react somehow and return `response`. Thats all.
         """
         super(AMQPDaemon, self).__init__(
             con_param, queue, out_exch, out_key
@@ -121,13 +110,14 @@ class AMQPDaemon(pikadaemon.PikaDaemon):
         # if UUID is not in headers, just ack the message and ignore it
         if "UUID" not in properties.headers:
             return True  # ack message
+        uuid = properties.headers["UUID"]
 
         try:
-            self.react_fn(
+            result = self.react_fn(
                 serializers.deserialize(body, self.globals),
-                self.sendResponse,
-                properties.headers["UUID"]
+                uuid
             )
+            self.sendResponse(serializers.serialize(result), uuid)
         except Exception, e:
             # get informations about message
             msg = e.message if hasattr(e, "message") else str(e)
@@ -144,19 +134,10 @@ class AMQPDaemon(pikadaemon.PikaDaemon):
                     headers={
                         "exception": msg,
                         "exception_type": exception_type,
-                        "exception_name": exception_name
+                        "exception_name": exception_name,
+                        "UUID": uuid
                     }
                 )
             )
 
         return True  # ack message
-
-    def sendResponse(self, message, UUID):
-        """
-        Send `message` with given `UUID` back to the queue defined in
-        `self.output_exchange` with `self.output_key`.
-        """
-        super(AMQPDaemon, self).sendResponse(
-            serializers.serialize(message),
-            UUID
-        )
