@@ -3,23 +3,23 @@
 """
 Purpose of this module is to provide class for launching Unix daemons
 (:class:`daemonwrapper <edeposit.amqp.daemonwrapper>`), generict AMQP
-communication service based on RabbitMQ's pika library
+communication service based on RabbitMQ's `pika
+<http://pika.readthedocs.org/en/latest/>`_ library
 (:class:`pikadaemon <edeposit.amqp.pikadaemon>`), specific AMQP communication
 service for edeposit project (:class:`amqpdaemon <edeposit.amqp.amqpdaemon>`)
 and also AMQP communication classes for sub-modules used in edeposit
 project:
 
-- :class:`alephdaemon <edeposit.amqp.alephdaemon>`
-- :class:`calibredaemon <edeposit.amqp.calibredaemon>`
+- :class:`alephdaemon <edeposit.amqp.alephdaemon>` (wrapper for the
+  `edeposit.amqp.aleph <http://edeposit-amqp-aleph.readthedocs.org>`_)
+- :class:`calibredaemon <edeposit.amqp.calibredaemon>` (wrapper for the
+  `edeposit.amqp.calibre <https://github.com/edeposit/edeposit.amqp.calibre>`_)
 
 :class:`alephdaemon <edeposit.amqp.alephdaemon>` module allows you to send
 simple requests to get data from Aleph (system used in libraries all around
 the world) and in later versions also requests to put data into Aleph. Details
 of protocol and communication with Aleph server are handled by
-`edeposit.amqp.aleph`_ module.
-
-.. _edeposit.amqp.aleph: https://github.com/jstavel/edeposit.amqp.aleph
-
+`edeposit.amqp.aleph <https://github.com/jstavel/edeposit.amqp.aleph>`_ module.
 
 Communication with sub-modules
 ------------------------------
@@ -32,7 +32,8 @@ Note:
 
 Request
 +++++++
-To send a request, you just need to send serialized structure (``namedtuple``)
+To send a request, you just need to send serialized structure (
+:py:func:`collections.namedtuple`)
 to the input queue of the daemon.
 
 For example - for querying Aleph, take one of the Request classes, which

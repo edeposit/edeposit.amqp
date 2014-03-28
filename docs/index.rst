@@ -8,13 +8,7 @@ Project can be found at GitHub: https://github.com/jstavel/edeposit.amqp
 
 And installed from PYPI: https://pypi.python.org/pypi/edeposit.amqp
 
-.. toctree::
-   :maxdepth: 2
-
-Source code documentation
--------------------------
-.. toctree::
-    api/edeposit.amqp
+.. include:: api/edeposit.amqp.rst
 
 Acceptance tests
 ----------------

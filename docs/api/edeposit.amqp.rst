@@ -11,10 +11,9 @@ Submodules
 ----------
 
 .. toctree::
-
-   edeposit.amqp.daemonwrapper
-   edeposit.amqp.pikadaemon
-   edeposit.amqp.amqpdaemon
-   edeposit.amqp.alephdaemon
-   edeposit.amqp.settings
-   edeposit.amqp.amqp_tool
+   ../api/edeposit.amqp.daemonwrapper.rst
+   ../api/edeposit.amqp.pikadaemon.rst
+   ../api/edeposit.amqp.amqpdaemon.rst
+   ../api/edeposit.amqp.alephdaemon.rst
+   ../api/edeposit.amqp.settings.rst
+   ../api/edeposit.amqp.amqp_tool.rst

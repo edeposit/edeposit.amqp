@@ -17,11 +17,10 @@ extensions = [
     'sphinx.ext.intersphinx'
 ]
 
-intersphinx_mapping = {}
-intersphinx_mapping['ser'] = (
-    'http://edepositamqpserializers.readthedocs.org/en/latest/',
-    None
-)
+intersphinx_mapping = {
+    "ser": ('http://edepositamqpserializers.readthedocs.org/en/latest/', None),
+    'python': ('http://docs.python.org/2.7', None)
+}
 
 intersphinx_cache_limit = 0
 
