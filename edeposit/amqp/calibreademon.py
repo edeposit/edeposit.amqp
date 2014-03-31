@@ -6,7 +6,7 @@
 #= Imports ====================================================================
 """
 Standalone daemon providing AMQP communication with
-`Calibre module <https://github.com/edeposit/edeposit.amqp.calibre>`_.
+`Calibre module <http://edeposit-amqp-calibre.readthedocs.org>`_.
 
 This script can be used as aplication, not just as module::
 
