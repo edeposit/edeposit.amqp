@@ -26,7 +26,7 @@ Communication with sub-modules
 From **user perspective**, communication is very similar to RPC - to each
 `Request` is returned `Response`.
 
-.. image:: http://bit.ly/1jYapVn
+.. image:: /_static/communication.png
 
 Note:
     `Requests` and `Responses` are identified and paired by `UUID`, which is
