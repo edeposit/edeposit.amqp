@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.3.1
+-----
+    - Added dependency to edeposit.amqp.calibre.
+    - Version of package and documentation is now automatically parsed from this file.
+    - Images in documentation were downloaded to _static.
+
 1.3.0
 -----
     - Changed internal way of handling AMQP communication. This shouldn't change user API.

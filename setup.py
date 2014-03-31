@@ -7,12 +7,14 @@ import shutil
 from setuptools import setup, find_packages
 from distutils.command.sdist import sdist
 
+from docs import getVersion
 
-version = '1.3.0'
+
+changelog = open('CHANGES.rst').read()
 long_description = "\n\n".join([
     open('README.rst').read(),
     open('CONTRIBUTORS.rst').read(),
-    open('CHANGES.rst').read()
+    changelog
 ])
 
 
@@ -48,7 +50,7 @@ class BuildSphinx(sdist):
 
 setup(
     name='edeposit.amqp',
-    version=version,
+    version=getVersion(changelog),
     description="E-Deposit's AMQP definitions and common classes/patterns.",
     long_description=long_description,
     url='https://github.com/edeposit/edeposit.amqp/',
@@ -74,7 +76,8 @@ setup(
         "python-daemon>=1.5.5",
         "pika>=0.9.13",
         "edeposit.amqp.aleph>=1.4.0",
-        "edeposit.amqp.serializers>=1.0"
+        "edeposit.amqp.serializers>=1.0.0",
+        "edeposit.amqp.calibre>=1.0.0"
     ],
 
     cmdclass={'sdist': BuildSphinx}
