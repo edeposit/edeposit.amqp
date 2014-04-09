@@ -14,7 +14,7 @@ installed using `PIP <http://en.wikipedia.org/wiki/Pip_%28package_manager%29>`_:
 
     pip install edeposit.amqp
 
-Source code can be found at `GitHub <https://github.com/>`_: https://github.com/jstavel/edeposit.amqp
+Source code can be found at `GitHub <https://github.com/>`_: https://github.com/edeposit/edeposit.amqp
 
 Documentation
 -------------
