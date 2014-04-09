@@ -30,4 +30,5 @@ List of scripts
    :maxdepth: 1
 
    /api/edeposit.amqp.alephdaemon.rst
+   /api/edeposit.amqp.calibredaemon.rst
    /api/edeposit.amqp.amqp_tool.rst
