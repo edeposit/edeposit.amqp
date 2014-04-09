@@ -10,10 +10,10 @@ service for edeposit project (:class:`amqpdaemon <edeposit.amqp.amqpdaemon>`)
 and also AMQP communication classes for sub-modules used in edeposit
 project:
 
-- :class:`alephdaemon <edeposit.amqp.alephdaemon>` (wrapper for the
+- :mod:`.alephdaemon` (wrapper for the
   `edeposit.amqp.aleph <http://edeposit-amqp-aleph.readthedocs.org>`_)
-- :class:`calibredaemon <edeposit.amqp.calibredaemon>` (wrapper for the
-  `edeposit.amqp.calibre <https://github.com/edeposit/edeposit.amqp.calibre>`_)
+- :mod:`.calibredaemon` (wrapper for the
+  `edeposit.amqp.calibre <http://edeposit-amqp-calibre.readthedocs.org>`_)
 
 :class:`alephdaemon <edeposit.amqp.alephdaemon>` module allows you to send
 simple requests to get data from Aleph (system used in libraries all around

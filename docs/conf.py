@@ -20,7 +20,8 @@ extensions = [
 
 intersphinx_mapping = {
     "ser": ('http://edepositamqpserializers.readthedocs.org/en/latest/', None),
-    'python': ('http://docs.python.org/2.7', None)
+    'python': ('http://docs.python.org/2.7', None),
+    "calibre": ('http://edeposit-amqp-calibre.readthedocs.org/en/latest/', None)
 }
 
 # Napoleon settings
