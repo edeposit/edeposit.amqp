@@ -73,11 +73,9 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
             This will in some cases (depends on settings of RabbitMQ) remove
             the message from the message queue.
         """
-        if self.ack_sent:
-            return
-
-        self.channel.basic_ack(self.ack_delivery_tag)
-        self.ack_sent = True
+        if not self.ack_sent:
+            self.channel.basic_ack(self.ack_delivery_tag)
+            self.ack_sent = True
 
     def onMessageReceived(self, method_frame, properties, body):
         """
@@ -143,7 +141,7 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
             body=message
         )
 
-    def sendResponse(self, message, UUID):
+    def sendResponse(self, message, UUID, routing_key):
         """
         Send `message` to ``self.output_exchange`` with routing key
         ``self.output_key``, ``self.content_type`` in ``delivery_mode=2``.
@@ -151,10 +149,11 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         Args:
             message (str): message which will be sent
             UUID: unique identification of message
+            routing_key (str): which routing key to use to send message back
         """
         self.sendMessage(
             exchange=self.output_exchange,
-            routing_key=self.output_key,
+            routing_key=routing_key,
             message=message,
             UUID=UUID
         )
@@ -167,10 +166,13 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         You can override this, but don't forget to call it thru ``super()``, or
         the AMQP communication won't be closed properly!
         """
-        try:
-            if hasattr(self, "channel"):
-                self.channel.cancel()
-                self.channel.close()
-                self.connection.close()
-        except pika.exceptions.ChannelClosed:
-            pass
+        def try_call(fn):
+            try:
+                fn()
+            except (pika.exceptions.ChannelClosed, AttributeError):
+                return
+
+        if hasattr(self, "channel"):
+            try_call(self.channel.cancel)
+            try_call(self.channel.close)
+            try_call(self.connection.close)
