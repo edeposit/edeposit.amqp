@@ -30,18 +30,22 @@ RABBITMQ_PORT = '5672'  #:
 RABBITMQ_USER_NAME = 'guest'  #:
 RABBITMQ_USER_PASSWORD = 'guest'  #:
 
+# aleph's settings
 RABBITMQ_ALEPH_VIRTUALHOST = "aleph"  #:
 RABBITMQ_ALEPH_DAEMON_QUEUE = "daemon"  #:
 RABBITMQ_ALEPH_PLONE_QUEUE = "plone"  #:
 RABBITMQ_ALEPH_EXCHANGE = "search"  #:
 RABBITMQ_ALEPH_DAEMON_KEY = "request"  #:
+
 RABBITMQ_ALEPH_PLONE_KEY = "result"  #:
 RABBITMQ_ALEPH_EXCEPTION_KEY = "exception"  #:
 
+# calibre's settings
 RABBITMQ_CALIBRE_VIRTUALHOST = "calibre"  #:
 RABBITMQ_CALIBRE_DAEMON_QUEUE = "daemon"  #:
 RABBITMQ_CALIBRE_PLONE_QUEUE = "plone"  #:
 RABBITMQ_CALIBRE_EXCHANGE = "convert"  #:
+
 RABBITMQ_CALIBRE_DAEMON_KEY = "request"  #:
 RABBITMQ_CALIBRE_PLONE_KEY = "result"  #:
 
