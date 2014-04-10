@@ -39,12 +39,12 @@ def createBlockingConnection():
     )
 
 
-def receive():
+def receive(queue):
     """
     Print all messages from :attr:`edeposit.amqp.settings`
-    ``RABBITMQ_ALEPH_PLONE_QUEUE``.
+    ``RABBITMQ_ALEPH_OUTPUT_QUEUE``.
     """
-    for method_frame, properties, body in channel.consume(RABBITMQ_ALEPH_PLONE_QUEUE):
+    for method_frame, properties, body in channel.consume(queue):
         print "Message:"
         print method_frame
         print properties
@@ -70,8 +70,8 @@ def createSchema():
         "validate"
     ]
     queues = {
-        RABBITMQ_ALEPH_PLONE_QUEUE: RABBITMQ_ALEPH_PLONE_KEY,
-        RABBITMQ_ALEPH_DAEMON_QUEUE: RABBITMQ_ALEPH_DAEMON_KEY
+        RABBITMQ_ALEPH_OUTPUT_QUEUE: RABBITMQ_ALEPH_PLONE_KEY,
+        RABBITMQ_ALEPH_INPUT_QUEUE: RABBITMQ_ALEPH_DAEMON_KEY
     }
 
     connection = createBlockingConnection()
@@ -107,9 +107,9 @@ def createSchema():
             )
             print "\tRouting exchange %s['%s'] -> '%s'." % (exchange, queues[queue], queue)
 
-    print "\tRouting exchange search['%s'] -> '%s'." % (RABBITMQ_ALEPH_EXCEPTION_KEY, RABBITMQ_ALEPH_PLONE_QUEUE)
+    print "\tRouting exchange search['%s'] -> '%s'." % (RABBITMQ_ALEPH_EXCEPTION_KEY, RABBITMQ_ALEPH_OUTPUT_QUEUE)
     channel.queue_bind(
-        queue=RABBITMQ_ALEPH_PLONE_QUEUE,
+        queue=RABBITMQ_ALEPH_OUTPUT_QUEUE,
         exchange="search",
         routing_key=RABBITMQ_ALEPH_EXCEPTION_KEY
     )
@@ -122,17 +122,17 @@ if __name__ == '__main__':
     parser.add_argument(
         '--put',
         action='store_true',
-        help="Put one message into queue %s." % (RABBITMQ_ALEPH_DAEMON_QUEUE)
+        help="Put one message into queue %s." % (RABBITMQ_ALEPH_INPUT_QUEUE)
     )
     parser.add_argument(
         '--put-bad',
         action='store_true',
-        help="Put error message into queue %s." % (RABBITMQ_ALEPH_DAEMON_QUEUE)
+        help="Put error message into queue %s." % (RABBITMQ_ALEPH_INPUT_QUEUE)
     )
     parser.add_argument(
         '--get',
         action='store_true',
-        help="Get one message from queue %s." % (RABBITMQ_ALEPH_DAEMON_QUEUE)
+        help="Get one message from queue %s." % (RABBITMQ_ALEPH_INPUT_QUEUE)
     )
     parser.add_argument(
         '--create',
@@ -192,7 +192,7 @@ if __name__ == '__main__':
 
     if args.get:
         try:
-            receive()
+            receive(RABBITMQ_ALEPH_OUTPUT_QUEUE)
         except KeyboardInterrupt:
             print
             sys.exit(0)

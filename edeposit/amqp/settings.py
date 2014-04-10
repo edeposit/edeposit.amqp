@@ -32,8 +32,8 @@ RABBITMQ_USER_PASSWORD = 'guest'  #:
 
 # aleph's settings
 RABBITMQ_ALEPH_VIRTUALHOST = "aleph"  #:
-RABBITMQ_ALEPH_DAEMON_QUEUE = "daemon"  #:
-RABBITMQ_ALEPH_PLONE_QUEUE = "plone"  #:
+RABBITMQ_ALEPH_INPUT_QUEUE = "daemon"  #:
+RABBITMQ_ALEPH_OUTPUT_QUEUE = "plone"  #:
 RABBITMQ_ALEPH_EXCHANGE = "search"  #:
 RABBITMQ_ALEPH_DAEMON_KEY = "request"  #:
 

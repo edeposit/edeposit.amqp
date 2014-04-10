@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.3.2
+-----
+    - ``RABBITMQ_ALEPH_DAEMON_QUEUE`` renamed to ``RABBITMQ_ALEPH_INPUT_QUEUE``
+    - ``RABBITMQ_ALEPH_PLONE_QUEUE`` renamed to ``RABBITMQ_ALEPH_OUTPUT_QUEUE``
+
 1.3.1
 -----
     - Added dependency to edeposit.amqp.calibre.

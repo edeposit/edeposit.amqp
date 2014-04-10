@@ -15,8 +15,8 @@ Nastavení Aleph virtualhostu
     Variable Presented     ${SETTINGS_PATH}     RABBITMQ_ALEPH_VIRTUALHOST
 
 Nastavení Aleph front
-    Variable Presented     ${SETTINGS_PATH}     RABBITMQ_ALEPH_DAEMON_QUEUE
-    Variable Presented     ${SETTINGS_PATH}     RABBITMQ_ALEPH_PLONE_QUEUE
+    Variable Presented     ${SETTINGS_PATH}     RABBITMQ_ALEPH_INPUT_QUEUE
+    Variable Presented     ${SETTINGS_PATH}     RABBITMQ_ALEPH_OUTPUT_QUEUE
 
 Nastavení Aleph Exchange
     Variable Presented     ${SETTINGS_PATH}     RABBITMQ_ALEPH_EXCHANGE

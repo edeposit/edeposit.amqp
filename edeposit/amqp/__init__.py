@@ -152,7 +152,7 @@ To start the daemon, run::
     ./alephdaemon.py start
 
 This will start the proper unix daemon listening for the requests at RabbitMQ's
-message queue defined by ``settings.RABBITMQ_ALEPH_DAEMON_QUEUE``.
+message queue defined by ``settings.RABBITMQ_ALEPH_INPUT_QUEUE``.
 
 Note:
     Message queues, exchanges and routing keys have to be defined in RabbitMQ

@@ -40,7 +40,7 @@ def main():
         con_param=getConParams(
             settings.RABBITMQ_ALEPH_VIRTUALHOST
         ),
-        queue=settings.RABBITMQ_ALEPH_DAEMON_QUEUE,
+        queue=settings.RABBITMQ_ALEPH_INPUT_QUEUE,
         out_exch=settings.RABBITMQ_ALEPH_EXCHANGE,
         out_key=settings.RABBITMQ_ALEPH_PLONE_KEY,
         react_fn=reactToAMQPMessage,
