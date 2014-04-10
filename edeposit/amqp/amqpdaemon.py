@@ -89,6 +89,18 @@ class AMQPDaemon(pikadaemon.PikaDaemon):
         self.react_fn = react_fn
         self.globals = glob
 
+    def parseKey(self, method_frame):
+        key = ""
+        if hasattr(method_frame, "routing_key"):
+            key = method_frame.routing_key
+
+        if "." in key:
+            key = key.rsplit(".", 1)[0] + "." + self.output_key
+        else:
+            key = self.output_key
+
+        return key
+
     def onMessageReceived(self, method_frame, properties, body):
         """
         React to received message - deserialize it, add it to users reaction
@@ -109,35 +121,49 @@ class AMQPDaemon(pikadaemon.PikaDaemon):
         """
         # if UUID is not in headers, just ack the message and ignore it
         if "UUID" not in properties.headers:
+            self.process_exception(
+                e=ValueError("No UUID provided, message ignored."),
+                uuid="",
+                routing_key=self.parseKey(method_frame),
+                body=body
+            )
             return True  # ack message
-        uuid = properties.headers["UUID"]
 
+        uuid = properties.headers["UUID"]
         try:
             result = self.react_fn(
                 serializers.deserialize(body, self.globals),
                 uuid
             )
-            self.sendResponse(serializers.serialize(result), uuid)
-        except Exception, e:
-            # get informations about message
-            msg = e.message if hasattr(e, "message") else str(e)
-            exception_type = str(e.__class__)
-            exception_name = str(e.__class__.__name__)
-
-            self.sendMessage(
-                self.output_exchange,
-                settings.RABBITMQ_ALEPH_EXCEPTION_KEY,
-                str(e),
-                properties=pika.BasicProperties(
-                    content_type="application/text",
-                    delivery_mode=2,
-                    headers={
-                        "exception": msg,
-                        "exception_type": exception_type,
-                        "exception_name": exception_name,
-                        "UUID": uuid
-                    }
-                )
+            print "sending response", self.parseKey(method_frame)
+            self.sendResponse(
+                serializers.serialize(result),
+                uuid,
+                self.parseKey(method_frame)
             )
+        except Exception, e:
+            self.process_exception(e, uuid, self.parseKey(method_frame), str(e))
 
         return True  # ack message
+
+    def process_exception(self, e, uuid, routing_key, body):
+        # get informations about message
+        msg = e.message if hasattr(e, "message") else str(e)
+        exception_type = str(e.__class__)
+        exception_name = str(e.__class__.__name__)
+
+        self.sendMessage(
+            self.output_exchange,
+            routing_key,
+            str(body),
+            properties=pika.BasicProperties(
+                content_type="application/text",
+                delivery_mode=2,
+                headers={
+                    "exception": msg,
+                    "exception_type": exception_type,
+                    "exception_name": exception_name,
+                    "UUID": uuid
+                }
+            )
+        )
