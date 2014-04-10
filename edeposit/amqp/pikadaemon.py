@@ -169,7 +169,8 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         def try_call(fn):
             try:
                 fn()
-            except (pika.exceptions.ChannelClosed, AttributeError):
+            except (pika.exceptions.ChannelClosed, AttributeError,
+                    pika.exceptions.ConnectionClosed):
                 return
 
         if hasattr(self, "channel"):
