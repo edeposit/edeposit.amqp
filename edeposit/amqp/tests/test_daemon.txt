@@ -27,6 +27,8 @@ Spust prikaz vrat hodnotu
     Log                   ${rc}
     [Return]              ${rc}
 
+
+
 *** Test Cases ***
 alephdaemon existuje
     Should Exist          ${ALEPH_DAEMON}
@@ -41,11 +43,16 @@ Posli testovaci zpravu do daemona
 
 Prijmi testovaci zpravu z daemona
     ${vystup} =                Spust prikaz vrat vystup  ${AMQP_TOOL} --get --timeout 2
+    Log                        ${vystup}
     ${delka} =                 Length                    ${vystup}
+    Log                        ${delka}
 
     Should Be True             ${delka} > 100
     Should contain             ${vystup}                 zpracovatelZaznamu
     Should contain             ${vystup}                 UNIXu
+
+Ukonci aleph daemona
+    Spust prikaz vrat vystup   ${ALEPH_DAEMON} stop
 
 # Hraj ruskou hymnu
 #     [Documentation]  (09:58:28) Jan Stavel: Ahoj, divam se na testy co jsi napsal - v edeposit.amqp. Diky. Usetri to hodne prace.
