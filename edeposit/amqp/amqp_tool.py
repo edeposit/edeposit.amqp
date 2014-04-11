@@ -70,8 +70,8 @@ def createSchema():
         "validate"
     ]
     queues = {
-        RABBITMQ_ALEPH_OUTPUT_QUEUE: RABBITMQ_ALEPH_PLONE_KEY,
-        RABBITMQ_ALEPH_INPUT_QUEUE: RABBITMQ_ALEPH_DAEMON_KEY
+        RABBITMQ_ALEPH_OUTPUT_QUEUE: RABBITMQ_ALEPH_OUTPUT_KEY,
+        RABBITMQ_ALEPH_INPUT_QUEUE: RABBITMQ_ALEPH_INPUT_KEY
     }
 
     connection = createBlockingConnection()
@@ -177,7 +177,7 @@ if __name__ == '__main__':
     if args.put:
         channel.basic_publish(
             exchange=RABBITMQ_ALEPH_EXCHANGE,
-            routing_key=RABBITMQ_ALEPH_DAEMON_KEY,
+            routing_key=RABBITMQ_ALEPH_INPUT_KEY,
             properties=properties,
             body=json_data
         )
@@ -185,7 +185,7 @@ if __name__ == '__main__':
     if args.put_bad:
         channel.basic_publish(
             exchange=RABBITMQ_ALEPH_EXCHANGE,
-            routing_key=RABBITMQ_ALEPH_DAEMON_KEY,
+            routing_key=RABBITMQ_ALEPH_INPUT_KEY,
             properties=properties,
             body="xex"
         )

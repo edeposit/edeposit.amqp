@@ -35,9 +35,9 @@ RABBITMQ_ALEPH_VIRTUALHOST = "aleph"  #:
 RABBITMQ_ALEPH_INPUT_QUEUE = "daemon"  #:
 RABBITMQ_ALEPH_OUTPUT_QUEUE = "plone"  #:
 RABBITMQ_ALEPH_EXCHANGE = "search"  #:
-RABBITMQ_ALEPH_DAEMON_KEY = "request"  #:
 
-RABBITMQ_ALEPH_PLONE_KEY = "result"  #:
+RABBITMQ_ALEPH_INPUT_KEY = "request"  #:
+RABBITMQ_ALEPH_OUTPUT_KEY = "result"  #:
 RABBITMQ_ALEPH_EXCEPTION_KEY = "exception"  #:
 
 # calibre's settings

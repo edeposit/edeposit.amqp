@@ -42,7 +42,7 @@ def main():
         ),
         queue=settings.RABBITMQ_ALEPH_INPUT_QUEUE,
         out_exch=settings.RABBITMQ_ALEPH_EXCHANGE,
-        out_key=settings.RABBITMQ_ALEPH_PLONE_KEY,
+        out_key=settings.RABBITMQ_ALEPH_OUTPUT_KEY,
         react_fn=reactToAMQPMessage,
         glob=globals()                # used in deserializer
     )

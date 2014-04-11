@@ -78,7 +78,7 @@ Example showing how to send data to proper exchange::
     # send the message to proper exchange with proper routing key
     channel.basic_publish(
         exchange=settings.RABBITMQ_ALEPH_EXCHANGE,
-        routing_key=settings.RABBITMQ_ALEPH_DAEMON_KEY,
+        routing_key=settings.RABBITMQ_ALEPH_INPUT_KEY,
         properties=properties,
         body=json_data
     )
@@ -111,7 +111,7 @@ Note:
 Response
 ++++++++
 Response message is sent into ``settings.RABBITMQ_ALEPH_EXCHANGE`` with routing
-key ``settings.RABBITMQ_ALEPH_PLONE_KEY``.
+key ``settings.RABBITMQ_ALEPH_OUTPUT_KEY``.
 
 Format of response is usually one of the `*Response` classes from
 ``aleph.__init__.py`` serialized to JSON, so you may need to

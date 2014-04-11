@@ -22,8 +22,8 @@ Nastavení Aleph Exchange
     Variable Presented     ${SETTINGS_PATH}     RABBITMQ_ALEPH_EXCHANGE
 
 Nastavení Alephovských routovacích klíčů
-    Variable Presented     ${SETTINGS_PATH}     RABBITMQ_ALEPH_DAEMON_KEY
-    Variable Presented     ${SETTINGS_PATH}     RABBITMQ_ALEPH_PLONE_KEY
+    Variable Presented     ${SETTINGS_PATH}     RABBITMQ_ALEPH_INPUT_KEY
+    Variable Presented     ${SETTINGS_PATH}     RABBITMQ_ALEPH_OUTPUT_KEY
     Variable Presented     ${SETTINGS_PATH}     RABBITMQ_ALEPH_EXCEPTION_KEY
 
 
