@@ -7,6 +7,7 @@ Changelog
     - ``RABBITMQ_ALEPH_PLONE_QUEUE`` renamed to ``RABBITMQ_ALEPH_OUTPUT_QUEUE``
     - ``RABBITMQ_ALEPH_DAEMON_KEY`` renamed to ``RABBITMQ_ALEPH_INPUT_KEY``.
     - ``RABBITMQ_ALEPH_PLONE_KEY`` renamed to ``RABBITMQ_ALEPH_OUTPUT_KEY``.
+    - Unicode added to allowed types in settings.py.
 
 
 1.3.1
