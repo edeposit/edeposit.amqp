@@ -51,7 +51,7 @@ RABBITMQ_CALIBRE_PLONE_KEY = "result"  #:
 
 
 #= user configuration reader ==================================================
-_ALLOWED = [str, int, float]
+_ALLOWED = [unicode, str, int, float]
 
 SETTINGS_PATH = "/edeposit/amqp.json"
 """
