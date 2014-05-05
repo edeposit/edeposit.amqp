@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.3.3
+-----
+    - Added tracebacks to the headers, if the exception is thrown.
+
 1.3.2
 -----
     - ``RABBITMQ_ALEPH_DAEMON_QUEUE`` renamed to ``RABBITMQ_ALEPH_INPUT_QUEUE``
@@ -8,7 +12,6 @@ Changelog
     - ``RABBITMQ_ALEPH_DAEMON_KEY`` renamed to ``RABBITMQ_ALEPH_INPUT_KEY``.
     - ``RABBITMQ_ALEPH_PLONE_KEY`` renamed to ``RABBITMQ_ALEPH_OUTPUT_KEY``.
     - Unicode added to allowed types in settings.py.
-
 
 1.3.1
 -----

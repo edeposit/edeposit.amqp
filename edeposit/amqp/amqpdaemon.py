@@ -11,6 +11,8 @@ informations, which are defined as constants in :mod:`edeposit.amqp.settings`.
 Daemon is used by :mod:`edeposit.amqp.alephdaemon` and
 :mod:`edeposit.amqp.calibredaemon`.
 """
+import traceback
+
 import pika
 
 try:
@@ -106,15 +108,18 @@ class AMQPDaemon(pikadaemon.PikaDaemon):
         React to received message - deserialize it, add it to users reaction
         function stored in ``self.react_fn`` and send back result.
 
-        If `Exception` is thrown during process, it is sen't back instead of
+        If `Exception` is thrown during process, it is sent back instead of
         message.
 
         Note:
             In case of `Exception`, response message doesn't have useful `body`,
-            but in headers is stored this parameters: `exception`, where the
-            Exception's message is stored, `exception_type`, where
-            ``e.__class__`` is stored and ``exception_name``, where
-            ``e.__class__.__name__`` is stored.
+            but in headers is stored following (string) parameters:
+
+            - ``exception``, where the Exception's message is stored
+            - ``exception_type``, where ``e.__class__`` is stored
+            - ``exception_name``, where ``e.__class__.__name__`` is stored
+            - ``traceback`` where the full traceback is stored (contains line
+              number)
 
             This allows you to react to unexpected cases at the other end of
             the AMQP communication.
@@ -142,11 +147,16 @@ class AMQPDaemon(pikadaemon.PikaDaemon):
                 self.parseKey(method_frame)
             )
         except Exception, e:
-            self.process_exception(e, uuid, self.parseKey(method_frame), str(e))
+            self.process_exception(
+                e,
+                uuid,
+                self.parseKey(method_frame),
+                str(e),
+                tb=traceback.format_exc().strip())
 
         return True  # ack message
 
-    def process_exception(self, e, uuid, routing_key, body):
+    def process_exception(self, e, uuid, routing_key, body, tb=None):
         # get informations about message
         msg = e.message if hasattr(e, "message") else str(e)
         exception_type = str(e.__class__)
@@ -163,6 +173,7 @@ class AMQPDaemon(pikadaemon.PikaDaemon):
                     "exception": msg,
                     "exception_type": exception_type,
                     "exception_name": exception_name,
+                    "traceback": tb,
                     "UUID": uuid
                 }
             )
