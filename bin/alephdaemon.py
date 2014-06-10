@@ -19,6 +19,8 @@ import os.path
 import sys
 
 
+from pika.exceptions import ConnectionClosed
+
 from edeposit.amqp.aleph import *
 from edeposit.amqp.aleph.datastructures import *  # for serializers
 
@@ -59,4 +61,10 @@ def main():
 
 # Main program ================================================================
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except ConnectionClosed as e:
+        sys.stderr.write(
+            e.message + " - is the RabbitMQ queues properly set?\n"
+        )
+        sys.exit(1)

@@ -3,7 +3,7 @@
 #
 # Interpreter version: python 2.7
 #
-#= Imports ====================================================================
+# Imports =====================================================================
 """
 Standalone daemon providing AMQP communication with
 `Calibre module <http://edeposit-amqp-calibre.readthedocs.org>`_.
@@ -21,6 +21,8 @@ import os.path
 import sys
 
 
+from pika.exceptions import ConnectionClosed
+
 from edeposit.amqp.calibre import *
 
 
@@ -37,7 +39,7 @@ from edeposit.amqp.amqpdaemon import AMQPDaemon, getConParams
 from edeposit.amqp import settings
 
 
-#= Functions & objects ========================================================
+# Functions & objects =========================================================
 def main():
     """
     Arguments parsing, etc..
@@ -59,6 +61,12 @@ def main():
         daemon.run_daemon()         # run as daemon
 
 
-#= Main program ===============================================================
+# Main program ================================================================
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except ConnectionClosed as e:
+        sys.stderr.write(
+            e.message + " - is the RabbitMQ queues properly set?\n"
+        )
+        sys.exit(1)
