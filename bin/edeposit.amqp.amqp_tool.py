@@ -3,11 +3,13 @@
 #
 # Interpreter version: python 2.7
 #
-#= Imports ====================================================================
 """
 Script which simplifies debugging and testing AMQP communication, routing, keys
 and so on.
 """
+# Imports =====================================================================
+import os
+import os.path
 import sys
 import uuid
 import argparse
@@ -15,19 +17,24 @@ import argparse
 
 import pika
 
-
-import aleph
-import amqpdaemon
-
-from settings import *
+import edeposit.amqp.aleph as aleph
+from edeposit.amqp.serializers import serializers
 
 
+# if the module wasn't yet installed at this system, load it from package
 try:
-    from edeposit.amqp.serializers import serializers
+    from edeposit.amqp.settings import *
 except ImportError:
-    from serializers import serializers
+    sys.path.insert(0, os.path.abspath('../edeposit/'))
+    import amqp
+    sys.modules["edeposit.amqp"] = amqp
 
 
+from edeposit.amqp import amqpdaemon
+from edeposit.amqp.settings import *
+
+
+# Functions ===================================================================
 def createBlockingConnection():
     """
     Return properly created blocking connection.
@@ -105,9 +112,16 @@ def createSchema():
                 exchange=exchange,
                 routing_key=queues[queue]
             )
-            print "\tRouting exchange %s['%s'] -> '%s'." % (exchange, queues[queue], queue)
+            print "\tRouting exchange %s['%s'] -> '%s'." % (
+                exchange,
+                queues[queue],
+                queue
+            )
 
-    print "\tRouting exchange search['%s'] -> '%s'." % (RABBITMQ_ALEPH_EXCEPTION_KEY, RABBITMQ_ALEPH_OUTPUT_QUEUE)
+    print "\tRouting exchange search['%s'] -> '%s'." % (
+        RABBITMQ_ALEPH_EXCEPTION_KEY,
+        RABBITMQ_ALEPH_OUTPUT_QUEUE
+    )
     channel.queue_bind(
         queue=RABBITMQ_ALEPH_OUTPUT_QUEUE,
         exchange="search",
@@ -115,7 +129,7 @@ def createSchema():
     )
 
 
-#= Main program ===============================================================
+# Main program ================================================================
 if __name__ == '__main__':
     # parse arguments
     parser = argparse.ArgumentParser(description="AMQP debugger.")
