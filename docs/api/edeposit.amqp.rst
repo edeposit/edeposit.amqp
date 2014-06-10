@@ -14,6 +14,8 @@ project:
   `edeposit.amqp.aleph <http://edeposit-amqp-aleph.readthedocs.org>`_)
 - :mod:`edeposit_amqp_calibredaemon` (wrapper for the
   `edeposit.amqp.calibre <http://edeposit-amqp-calibre.readthedocs.org>`_)
+- :mod:`edeposit_amqp_ftp_managerd` (user management wrapper for the
+  `edeposit.amqp.ftp <http://edeposit-amqp-ftp.readthedocs.org>`_)
 
 For example :mod:`edeposit_amqp_alephdaemon` script allows 
 you to send simple requests to get data from Aleph (system used in libraries
@@ -211,3 +213,4 @@ List of scripts
    /api/edeposit.amqp.alephdaemon.rst
    /api/edeposit.amqp.calibredaemon.rst
    /api/edeposit.amqp.amqp_tool.rst
+   /api/ftp_managerd.rst

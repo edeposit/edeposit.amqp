@@ -4,7 +4,7 @@
 # Interpreter version: python 2.7
 #
 """
-Standalone daemon providing AMQP communication with
+Standalone daemon allowing AMQP communication user-management part of the
 `FTP module <https://github.com/edeposit/edeposit.amqp.ftp>`_.
 
 ::
