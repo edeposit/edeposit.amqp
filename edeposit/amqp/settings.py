@@ -49,6 +49,15 @@ RABBITMQ_CALIBRE_EXCHANGE = "convert"  #:
 RABBITMQ_CALIBRE_DAEMON_KEY = "request"  #:
 RABBITMQ_CALIBRE_PLONE_KEY = "result"  #:
 
+# settings for edeposit.amqp.ftp daemon
+RABBITMQ_FTP_VIRTUALHOST = "ftp"  #: Virtualhost for FTP module.
+RABBITMQ_FTP_INPUT_QUEUE = "daemon"  #: Input Queue for FTP AMQP daemon.
+RABBITMQ_FTP_OUTPUT_QUEUE = "plone"  #: Queue to put responses from daemon
+RABBITMQ_FTP_EXCHANGE = "manage"  #: Daemon 
+
+RABBITMQ_FTP_INPUT_KEY = "request"  #:
+RABBITMQ_FTP_OUTPUT_KEY = "result"  #:
+
 
 #= user configuration reader ==================================================
 _ALLOWED = [unicode, str, int, float]

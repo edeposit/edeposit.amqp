@@ -87,7 +87,8 @@ setup(
         "pika>=0.9.13",
         "edeposit.amqp.aleph>=1.4.1",
         "edeposit.amqp.serializers>=1.1.1",
-        "edeposit.amqp.calibre>=1.0.1"
+        "edeposit.amqp.calibre>=1.0.1",
+        "edeposit.amqp.ftp>=0.6.4"
     ],
 
     cmdclass={'sdist': BuildSphinx}

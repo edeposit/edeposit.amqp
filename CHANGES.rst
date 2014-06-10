@@ -5,6 +5,7 @@ Changelog
 1.4.0
 -----
     - Scripts moved to /bin directory. They will be put to $PATH when package is installed, so users won't need too call them by full path.
+    - Added bindings to edeposit.amqp.ftp.
 
 1.3.3
 -----
