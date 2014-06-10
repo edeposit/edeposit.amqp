@@ -24,6 +24,25 @@ Content
 =======
 Content can be divided between generic modules to support AMQP communication and scripts, which provides ability to test and tweak AMQP communication.
 
+Scripts
+-------
+Scripts should be automatically installed to your ``$PATH``.
+
+edeposit_amqp_alephdaemon.py
+++++++++++++++++++++++++++++
+
+Daemon providing AMQP communication with the `edeposit.amqp.aleph <https://github.com/edeposit/edeposit.amqp.aleph>`_ module.
+
+edeposit_amqp_calibre.py
+++++++++++++++++++++++++
+Daemon providing AMQP communication with the `edeposit.amqp.calibre  <https://github.com/edeposit/edeposit.amqp.calibre>`_ module.
+
+edeposit_amqp_amqp_tool.py
+++++++++++++++++++++++++++
+
+Script for testing the communication and creating
+exchanges/queues/routes in `RabbitMQ <https://www.rabbitmq.com/>`_.
+
 Modules
 -------
 
@@ -42,20 +61,6 @@ edeposit.amqp.pikadaemon
 ++++++++++++++++++++++++
 
 Generic AMQP blocking communication daemon server.
-
-Scripts
--------
-
-edeposit/amqp/alephdaemon.py
-++++++++++++++++++++++++++++
-
-Daemon providing AMQP communication with the `edeposit.amqp.aleph <https://github.com/jstavel/edeposit.amqp.aleph>`_ module.
-
-edeposit/amqp/amqp\_tool.py
-+++++++++++++++++++++++++++
-
-Script for testing the communication and creating
-exchanges/queues/routes in `RabbitMQ <https://www.rabbitmq.com/>`_.
 
 Acceptance tests
 ================
