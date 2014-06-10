@@ -8,8 +8,8 @@
 This module provides generic AMQP daemon and builder of common connection
 informations, which are defined as constants in :mod:`edeposit.amqp.settings`.
 
-Daemon is used by :mod:`edeposit.amqp.alephdaemon` and
-:mod:`edeposit.amqp.calibredaemon`.
+Daemon is used by :mod:`edeposit_amqp_alephdaemon` and
+:mod:`edeposit_amqp_calibredaemon`.
 """
 import traceback
 

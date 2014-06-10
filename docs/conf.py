@@ -5,7 +5,8 @@ import sys
 import urllib
 import os.path
 
-sys.path.insert(0, os.path.normpath(os.path.abspath('.') + '/..'))
+sys.path.insert(0, os.path.abspath('../'))
+sys.path.insert(0, os.path.abspath('../bin'))
 
 extensions = [
     'sphinx.ext.autodoc',

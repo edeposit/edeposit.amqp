@@ -1,7 +1,7 @@
-amqp_tool.py script
-===================
+edeposit_amqp_amqp_tool.py script
+=================================
 
-.. automodule:: edeposit.amqp.amqp_tool
+.. automodule:: edeposit_amqp_amqp_tool
     :members:
     :undoc-members:
     :show-inheritance:

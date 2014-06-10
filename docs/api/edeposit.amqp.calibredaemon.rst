@@ -1,7 +1,7 @@
-calibredaemon.py script
-=======================
+edeposit_amqp_calibredaemon.py script
+=====================================
 
-.. automodule:: edeposit.amqp.calibredaemon
+.. automodule:: edeposit_amqp_calibredaemon
     :members:
     :undoc-members:
     :show-inheritance:
