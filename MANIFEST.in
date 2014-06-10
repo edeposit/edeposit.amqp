@@ -2,3 +2,4 @@ include LICENSE CONTRIBUTORS.rst CHANGES.rst README.rst
 recursive-exclude edeposit/amqp/aleph *
 recursive-include html_docs *
 recursive-include edeposit/amqp/tests *
+recursive-include bin *
