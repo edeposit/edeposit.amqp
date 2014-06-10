@@ -3,12 +3,9 @@
 #
 # Interpreter version: python 2.7
 #
-#= Imports ====================================================================
 """
 Standalone daemon providing AMQP communication with
 `Aleph module <https://github.com/jstavel/edeposit.amqp.aleph>`_.
-
-This script can be used as aplication, not just as module::
 
     ./alephdaemon.py start/stop/restart [--foreground]
 
@@ -16,22 +13,29 @@ If ``--foreground`` parameter is used, script will not run as daemon, but as
 normal script at foreground. Without that, only one (true unix) daemon instance
 will be running at the time.
 """
+# Imports =====================================================================
+import os
+import os.path
 import sys
 
-from amqpdaemon import AMQPDaemon, getConParams
+
+from edeposit.amqp.aleph import *
+from edeposit.amqp.aleph.datastructures import *  # for serializers
 
 
+# if the module wasn't yet installed at this system, load it from package
 try:
-    from edeposit.amqp.aleph import *
-    from edeposit.amqp.aleph.datastructures import *  # for serializers
+    from edeposit.amqp import settings
 except ImportError:
-    from aleph import *
-    from aleph.datastructures import *
+    sys.path.insert(0, os.path.abspath('../edeposit/'))
+    import amqp
+    sys.modules["edeposit.amqp"] = amqp
 
-import settings
+from edeposit.amqp import settings
+from edeposit.amqp.amqpdaemon import AMQPDaemon, getConParams
 
 
-#= Functions & objects ========================================================
+# Functions & objects =========================================================
 def main():
     """
     Arguments parsing, etc..
@@ -53,6 +57,6 @@ def main():
         daemon.run_daemon()         # run as daemon
 
 
-#= Main program ===============================================================
+# Main program ================================================================
 if __name__ == '__main__':
     main()

@@ -16,9 +16,9 @@ import traceback
 import pika
 
 try:
-    import edeposit.amqp.serializers as serializers
-except ImportError:
     import serializers
+except ImportError:
+    import edeposit.amqp.serializers as serializers
 
 import pikadaemon
 import settings
