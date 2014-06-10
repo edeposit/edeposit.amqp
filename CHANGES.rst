@@ -1,6 +1,11 @@
 Changelog
 =========
 
+
+1.4.0
+-----
+    - Scripts moved to /bin directory. They will be put to $PATH when package is installed, so users won't need too call them by full path.
+
 1.3.3
 -----
     - Added tracebacks to the headers, if the exception is thrown.
