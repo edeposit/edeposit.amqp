@@ -72,9 +72,9 @@ setup(
     packages=find_packages(exclude=['ez_setup']),
 
     scripts=[
-        "bin/edeposit.amqp.amqp_tool.py",
-        "bin/edeposit.amqp.alephdaemon.py",
-        "bin/edeposit.amqp.calibredaemon.py"
+        "bin/edeposit_amqp_amqp_tool.py",
+        "bin/edeposit_amqp_alephdaemon.py",
+        "bin/edeposit_amqp_calibredaemon.py"
     ],
 
     namespace_packages=['edeposit'],

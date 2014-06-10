@@ -3,17 +3,19 @@
 #
 # Interpreter version: python 2.7
 #
+# Imports =====================================================================
 """
 Standalone daemon providing AMQP communication with
-`Aleph module <https://github.com/jstavel/edeposit.amqp.aleph>`_.
+`Calibre module <http://edeposit-amqp-calibre.readthedocs.org>`_.
 
-    ./alephdaemon.py start/stop/restart [--foreground]
+::
+
+    ./calibredaemon.py start/stop/restart [--foreground]
 
 If ``--foreground`` parameter is used, script will not run as daemon, but as
 normal script at foreground. Without that, only one (true unix) daemon instance
 will be running at the time.
 """
-# Imports =====================================================================
 import os
 import os.path
 import sys
@@ -21,8 +23,7 @@ import sys
 
 from pika.exceptions import ConnectionClosed
 
-from edeposit.amqp.aleph import *
-from edeposit.amqp.aleph.datastructures import *  # for serializers
+from edeposit.amqp.calibre import *
 
 
 # if the module wasn't yet installed at this system, load it from package
@@ -33,8 +34,9 @@ except ImportError:
     import amqp
     sys.modules["edeposit.amqp"] = amqp
 
-from edeposit.amqp import settings
+
 from edeposit.amqp.amqpdaemon import AMQPDaemon, getConParams
+from edeposit.amqp import settings
 
 
 # Functions & objects =========================================================
@@ -44,13 +46,13 @@ def main():
     """
     daemon = AMQPDaemon(
         con_param=getConParams(
-            settings.RABBITMQ_ALEPH_VIRTUALHOST
+            settings.RABBITMQ_CALIBRE_VIRTUALHOST
         ),
-        queue=settings.RABBITMQ_ALEPH_INPUT_QUEUE,
-        out_exch=settings.RABBITMQ_ALEPH_EXCHANGE,
-        out_key=settings.RABBITMQ_ALEPH_OUTPUT_KEY,
+        queue=settings.RABBITMQ_CALIBRE_DAEMON_QUEUE,
+        out_exch=settings.RABBITMQ_CALIBRE_EXCHANGE,
+        out_key=settings.RABBITMQ_CALIBRE_PLONE_KEY,
         react_fn=reactToAMQPMessage,
-        glob=globals()                # used in deserializer
+        glob=globals()              # used in deserializer
     )
 
     if "--foreground" in sys.argv:  # run at foreground
