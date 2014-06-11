@@ -85,6 +85,7 @@ setup(
         'setuptools',
         "python-daemon>=1.5.5",
         "pika>=0.9.13",
+        "sh",  # by edeposit.amqp.ftp
         "edeposit.amqp.aleph>=1.4.1",
         "edeposit.amqp.serializers>=1.1.1",
         "edeposit.amqp.calibre>=1.0.1",

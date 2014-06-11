@@ -152,7 +152,8 @@ class AMQPDaemon(pikadaemon.PikaDaemon):
                 uuid,
                 self.parseKey(method_frame),
                 str(e),
-                tb=traceback.format_exc().strip())
+                tb=traceback.format_exc().strip()
+            )
 
         return True  # ack message
 
