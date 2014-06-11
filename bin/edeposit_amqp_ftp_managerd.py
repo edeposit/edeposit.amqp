@@ -39,10 +39,6 @@ def main(args, stop=False):
     """
     Arguments parsing, etc..
     """
-    if not stop and not os.path.exists(args.filename):
-        sys.stderr.write("'%s' doesn't exists!\n" % args.filename)
-        sys.exit(1)
-
     daemon = AMQPDaemon(
         con_param=getConParams(
             settings.RABBITMQ_FTP_VIRTUALHOST
@@ -69,7 +65,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         usage='%(prog)s start/stop/restart [-f] FN',
         description="""ProFTPD user manager. This script allows you to add/
-                       remove/change users in ProFTPD over AMQP API."""
+                       remove/change users in ProFTPD server over AMQP API."""
     )
     parser.add_argument(
         "-f",
@@ -78,13 +74,6 @@ if __name__ == '__main__':
         required=False,
         help="""Run at foreground, not as daemon. If not set, script is will
                 run at background as unix daemon."""
-    )
-    parser.add_argument(
-        "-n",
-        "--filename",
-        required=True,
-        type=str,
-        help="Path to the log file (usually " + LOG_FILE + ")."
     )
     parser.add_argument(
         "action",
