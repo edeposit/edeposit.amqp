@@ -4,21 +4,16 @@
 # Interpreter version: python 2.7
 #
 """
-Standalone daemon allowing AMQP communication user-management part of the
-`FTP module <https://github.com/edeposit/edeposit.amqp.ftp>`_.
+ProFTPD user manager. This script allows you to add/remove/change users in
+ProFTPD server over AMQP API.
 
-::
-
-    ./edeposit_amqp_ftpdaemon.py start/stop/restart [--foreground]
-
-If ``--foreground`` parameter is used, script will not run as daemon, but as
-normal script at foreground. Without that, only one (true unix) daemon instance
-will be running at the time.
+For structure of the messages, please look at :mod:`ftp` module.
 """
 # Imports =====================================================================
 import os
-import os.path
 import sys
+import os.path
+import argparse
 
 
 from pika.exceptions import ConnectionClosed
@@ -40,10 +35,14 @@ from edeposit.amqp.amqpdaemon import AMQPDaemon, getConParams
 
 
 # Functions & objects =========================================================
-def main():
+def main(args, stop=False):
     """
     Arguments parsing, etc..
     """
+    if not stop and not os.path.exists(args.filename):
+        sys.stderr.write("'%s' doesn't exists!\n" % args.filename)
+        sys.exit(1)
+
     daemon = AMQPDaemon(
         con_param=getConParams(
             settings.RABBITMQ_FTP_VIRTUALHOST
@@ -55,18 +54,54 @@ def main():
         glob=globals()                # used in deserializer
     )
 
-    if "--foreground" in sys.argv:  # run at foreground
+    if not stop and args.foreground:  # run at foreground
         daemon.run()
     else:
-        daemon.run_daemon()         # run as daemon
+        daemon.run_daemon()           # run as daemon
 
 
 # Main program ================================================================
 if __name__ == '__main__':
+    if len(sys.argv) > 1 and sys.argv[1] == "stop":
+        main(None, stop=True)
+        sys.exit(0)
+
+    parser = argparse.ArgumentParser(
+        usage='%(prog)s start/stop/restart [-f] FN',
+        description="""ProFTPD user manager. This script allows you to add/
+                       remove/change users in ProFTPD over AMQP API."""
+    )
+    parser.add_argument(
+        "-f",
+        '--foreground',
+        action="store_true",
+        required=False,
+        help="""Run at foreground, not as daemon. If not set, script is will
+                run at background as unix daemon."""
+    )
+    parser.add_argument(
+        "-n",
+        "--filename",
+        required=True,
+        type=str,
+        help="Path to the log file (usually " + LOG_FILE + ")."
+    )
+    parser.add_argument(
+        "action",
+        metavar="start/stop/restart",
+        type=str,
+        default=None,
+        help="Start/stop/restart the daemon."
+    )
+    args = parser.parse_args()
+
     try:
-        main()
+        main(args)
     except ConnectionClosed as e:
         sys.stderr.write(
-            e.message + " - is the RabbitMQ queues properly set?\n"
+            e.message +
+            "\nConnectionClosed: Are the RabbitMQ queues properly set?\n"
         )
         sys.exit(1)
+    except KeyboardInterrupt:
+        pass
