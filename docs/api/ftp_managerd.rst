@@ -1,7 +1,7 @@
 edeposit_amqp_ftp_monitord.py script
 ====================================
 
-.. automodule::
+.. automodule:: edeposit_amqp_ftp_managerd
 
 Help
 ----
