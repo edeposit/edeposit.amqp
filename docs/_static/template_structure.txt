@@ -1,0 +1,27 @@
+package Pika {}
+package "Daemon module" as Daemon {
+    class DaemonRunner <<(M, green)>> {
+    }
+}
+
+class AMQPDaemon 
+class FTPMonitorDaemon
+
+AMQPDaemon -r-> FTPMonitorDaemon
+
+package "Scritps in bin/" as Scripts {
+    class "alephdaemon.py" as alephdaemon <<(S, orchid)>> 
+    class "calibredaemon.py" as calibredaemon <<(S, orchid)>> 
+    class "ftp_managerd.py" as ftp_managerd <<(S, orchid)>> 
+    class "ftp_monitord.py" as ftp_monitord <<(S, orchid)>> 
+}
+
+DaemonRunner ..> DaemonRunnerWrapper
+DaemonRunnerWrapper -> PikaDaemon
+Pika ..> PikaDaemon
+
+PikaDaemon --> AMQPDaemon
+AMQPDaemon --* alephdaemon
+AMQPDaemon --* calibredaemon
+AMQPDaemon --* ftp_managerd
+FTPMonitorDaemon --* ftp_monitord
