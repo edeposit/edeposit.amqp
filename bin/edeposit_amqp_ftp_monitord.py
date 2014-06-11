@@ -9,6 +9,7 @@
 # Imports =====================================================================
 import os
 import sys
+import uuid
 import os.path
 import argparse
 import traceback
@@ -57,24 +58,19 @@ class FTPMonitorDaemon(AMQPDaemon):
         Warning:
             Don't override this method!
         """
-        # self.connection = pika.BlockingConnection(self.connection_param)
-        # self.channel = self.connection.channel()
+        self.connection = pika.BlockingConnection(self.connection_param)
+        self.channel = self.connection.channel()
 
         file_iter = process_log(
             sh.tail("-f", self.ftp_extended_log, _iter=True)
         )
         for import_request in file_iter:
-            print import_request
-
-        # receive messages and put them to .onMessageReceived() callback
-        # for method_frame, properties, body in self.channel.consume(self.queue):
-        #     self.ack_sent = False
-        #     self.ack_delivery_tag = method_frame.delivery_tag
-        #     if self.onMessageReceived(method_frame, properties, body):
-        #         self.ack()
-
-
-
+            self.sendMessage(
+                exchange=self.output_exchange,
+                routing_key=self.output_key,
+                message=serializers.serialize(import_request),
+                UUID=str(uuid.uuid1())
+            )
 
 
 def main(args):
@@ -84,6 +80,8 @@ def main(args):
     if not os.path.exists(args.filename):
         sys.stderr.write("'%s' doesn't exists!\n" % args.filename)
         sys.exit(1)
+    else:
+        print "Monitoring file '%s'." % args.filename
 
     daemon = FTPMonitorDaemon(
         con_param=getConParams(
