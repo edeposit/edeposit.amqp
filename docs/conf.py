@@ -5,6 +5,7 @@ import sys
 import urllib
 import os.path
 
+sys.path.insert(0, os.path.abspath('../edeposit'))
 sys.path.insert(0, os.path.abspath('../'))
 sys.path.insert(0, os.path.abspath('../bin'))
 
@@ -20,8 +21,9 @@ extensions = [
 ]
 
 intersphinx_mapping = {
-    "ser": ('http://edepositamqpserializers.readthedocs.org/en/latest/', None),
     'python': ('http://docs.python.org/2.7', None),
+    "ser": ('http://edepositamqpserializers.readthedocs.org/en/latest/', None),
+    "ftp": ('http://edeposit-amqp-ftp.readthedocs.org/en/latest/', None),
     "calibre": ('http://edeposit-amqp-calibre.readthedocs.org/en/latest/', None)
 }
 
