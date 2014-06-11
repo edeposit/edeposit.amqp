@@ -216,4 +216,8 @@ List of scripts
    /api/edeposit.amqp.calibredaemon.rst
    /api/ftp_managerd.rst
    /api/ftp_monitord.rst
+
+.. toctree::
+   :maxdepth: 1
+
    /api/edeposit.amqp.amqp_tool.rst

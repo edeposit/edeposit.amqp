@@ -23,6 +23,7 @@ extensions = [
 intersphinx_mapping = {
     'python': ('http://docs.python.org/2.7', None),
     "ser": ('http://edepositamqpserializers.readthedocs.org/en/latest/', None),
+    "aleph": ('http://edeposit-amqp-aleph.readthedocs.org/en/latest/', None),
     "ftp": ('http://edeposit-amqp-ftp.readthedocs.org/en/latest/', None),
     "calibre": ('http://edeposit-amqp-calibre.readthedocs.org/en/latest/', None)
 }
@@ -52,7 +53,7 @@ copyright = u'2014 E-deposit team'
 # The full version, including alpha/beta/rc tags.
 try:
     # read data from CHANGES.rst
-    from __init__ import getVersion
+    from docs import getVersion
     release = getVersion(open("../CHANGES.rst").read())
 except:
     # this is here specially for readthedocs, which downloads only docs, not
