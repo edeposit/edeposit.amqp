@@ -42,18 +42,18 @@ RABBITMQ_ALEPH_EXCEPTION_KEY = "exception"  #:
 
 # calibre's settings
 RABBITMQ_CALIBRE_VIRTUALHOST = "calibre"  #:
-RABBITMQ_CALIBRE_DAEMON_QUEUE = "daemon"  #:
-RABBITMQ_CALIBRE_PLONE_QUEUE = "plone"  #:
+RABBITMQ_CALIBRE_INPUT_QUEUE = "daemon"  #:
+RABBITMQ_CALIBRE_OUTPUT_QUEUE = "plone"  #:
 RABBITMQ_CALIBRE_EXCHANGE = "convert"  #:
 
-RABBITMQ_CALIBRE_DAEMON_KEY = "request"  #:
-RABBITMQ_CALIBRE_PLONE_KEY = "result"  #:
+RABBITMQ_CALIBRE_INPUT_KEY = "request"  #:
+RABBITMQ_CALIBRE_OUTPUT_KEY = "result"  #:
 
 # settings for edeposit.amqp.ftp daemon
 RABBITMQ_FTP_VIRTUALHOST = "ftp"  #: Virtualhost for FTP module.
 RABBITMQ_FTP_INPUT_QUEUE = "daemon"  #: Input Queue for FTP AMQP daemon.
 RABBITMQ_FTP_OUTPUT_QUEUE = "plone"  #: Queue to put responses from daemon
-RABBITMQ_FTP_EXCHANGE = "ftp"  #: Daemon 
+RABBITMQ_FTP_EXCHANGE = "ftp"
 
 RABBITMQ_FTP_INPUT_KEY = "request"  #:
 RABBITMQ_FTP_OUTPUT_KEY = "result"  #:

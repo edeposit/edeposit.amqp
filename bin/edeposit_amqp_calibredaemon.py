@@ -41,9 +41,9 @@ def main(args, stop=False):
         con_param=getConParams(
             settings.RABBITMQ_CALIBRE_VIRTUALHOST
         ),
-        queue=settings.RABBITMQ_CALIBRE_DAEMON_QUEUE,
+        queue=settings.RABBITMQ_CALIBRE_INPUT_QUEUE,
         out_exch=settings.RABBITMQ_CALIBRE_EXCHANGE,
-        out_key=settings.RABBITMQ_CALIBRE_PLONE_KEY,
+        out_key=settings.RABBITMQ_CALIBRE_OUTPUT_KEY,
         react_fn=reactToAMQPMessage,
         glob=globals()                # used in deserializer
     )
