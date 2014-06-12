@@ -5,20 +5,13 @@
 #
 # Imports =====================================================================
 """
-Standalone daemon providing AMQP communication with
-`Calibre module <http://edeposit-amqp-calibre.readthedocs.org>`_.
-
-::
-
-    ./calibredaemon.py start/stop/restart [--foreground]
-
-If ``--foreground`` parameter is used, script will not run as daemon, but as
-normal script at foreground. Without that, only one (true unix) daemon instance
-will be running at the time.
+Standalone daemon providing AMQP API for `Calibre module
+<http://edeposit-amqp-calibre.readthedocs.org>`_.
 """
 import os
-import os.path
 import sys
+import os.path
+import argparse
 
 
 from pika.exceptions import ConnectionClosed
@@ -40,7 +33,7 @@ from edeposit.amqp import settings
 
 
 # Functions & objects =========================================================
-def main():
+def main(args, stop=False):
     """
     Arguments parsing, etc..
     """
@@ -52,21 +45,49 @@ def main():
         out_exch=settings.RABBITMQ_CALIBRE_EXCHANGE,
         out_key=settings.RABBITMQ_CALIBRE_PLONE_KEY,
         react_fn=reactToAMQPMessage,
-        glob=globals()              # used in deserializer
+        glob=globals()                # used in deserializer
     )
 
-    if "--foreground" in sys.argv:  # run at foreground
+    if not stop and args.foreground:  # run at foreground
         daemon.run()
     else:
-        daemon.run_daemon()         # run as daemon
+        daemon.run_daemon()           # run as daemon
 
 
 # Main program ================================================================
 if __name__ == '__main__':
+    if len(sys.argv) > 1 and sys.argv[1] == "stop":
+        main(None, stop=True)
+        sys.exit(0)
+
+    parser = argparse.ArgumentParser(
+        usage='%(prog)s start/stop/restart [-f] FN',
+        description="""Calibre daemon, providing AMQP interface for
+                       edeposit.amqp.calibre."""
+    )
+    parser.add_argument(
+        "-f",
+        '--foreground',
+        action="store_true",
+        required=False,
+        help="""Run at foreground, not as daemon. If not set, script is will
+                run at background as unix daemon."""
+    )
+    parser.add_argument(
+        "action",
+        metavar="start/stop/restart",
+        type=str,
+        default=None,
+        help="Start/stop/restart the daemon."
+    )
+    args = parser.parse_args()
+
     try:
-        main()
+        main(args)
     except ConnectionClosed as e:
         sys.stderr.write(
             e.message + " - is the RabbitMQ queues properly set?\n"
         )
         sys.exit(1)
+    except KeyboardInterrupt:
+        pass
