@@ -25,3 +25,15 @@ AMQPDaemon --* alephdaemon
 AMQPDaemon --* calibredaemon
 AMQPDaemon --* ftp_managerd
 FTPMonitorDaemon --* ftp_monitord
+
+package "edeposit.amqp.ftp" as ftp {
+}
+package "edeposit.amqp.aleph" as aleph {
+}
+package "edeposit.amqp.calibre" as calibre {
+}
+
+ftp_managerd -> ftp
+ftp_monitord -> ftp
+alephdaemon -> aleph
+calibredaemon -> calibre
