@@ -31,32 +31,66 @@ RABBITMQ_USER_NAME = 'guest'  #:
 RABBITMQ_USER_PASSWORD = 'guest'  #:
 
 # aleph's settings
-RABBITMQ_ALEPH_VIRTUALHOST = "aleph"  #:
+RABBITMQ_ALEPH_VIRTUALHOST = "aleph"   #:
 RABBITMQ_ALEPH_INPUT_QUEUE = "daemon"  #:
 RABBITMQ_ALEPH_OUTPUT_QUEUE = "plone"  #:
-RABBITMQ_ALEPH_EXCHANGE = "search"  #:
+RABBITMQ_ALEPH_EXCHANGE = "search"     #:
 
-RABBITMQ_ALEPH_INPUT_KEY = "request"  #:
-RABBITMQ_ALEPH_OUTPUT_KEY = "result"  #:
+RABBITMQ_ALEPH_INPUT_KEY = "request"   #:
+RABBITMQ_ALEPH_OUTPUT_KEY = "result"   #:
 RABBITMQ_ALEPH_EXCEPTION_KEY = "exception"  #:
 
 # calibre's settings
 RABBITMQ_CALIBRE_VIRTUALHOST = "calibre"  #:
-RABBITMQ_CALIBRE_INPUT_QUEUE = "daemon"  #:
-RABBITMQ_CALIBRE_OUTPUT_QUEUE = "plone"  #:
-RABBITMQ_CALIBRE_EXCHANGE = "convert"  #:
+RABBITMQ_CALIBRE_INPUT_QUEUE = "daemon"   #:
+RABBITMQ_CALIBRE_OUTPUT_QUEUE = "plone"   #:
+RABBITMQ_CALIBRE_EXCHANGE = "convert"     #:
 
 RABBITMQ_CALIBRE_INPUT_KEY = "request"  #:
 RABBITMQ_CALIBRE_OUTPUT_KEY = "result"  #:
 
 # settings for edeposit.amqp.ftp daemon
-RABBITMQ_FTP_VIRTUALHOST = "ftp"  #: Virtualhost for FTP module.
+RABBITMQ_FTP_VIRTUALHOST = "ftp"     #: Virtualhost for FTP module.
 RABBITMQ_FTP_INPUT_QUEUE = "daemon"  #: Input Queue for FTP AMQP daemon.
 RABBITMQ_FTP_OUTPUT_QUEUE = "plone"  #: Queue to put responses from daemon
 RABBITMQ_FTP_EXCHANGE = "ftp"
 
 RABBITMQ_FTP_INPUT_KEY = "request"  #:
 RABBITMQ_FTP_OUTPUT_KEY = "result"  #:
+
+
+def get_amqp_settings():
+    """
+    Return all settings in dict in following format::
+
+        {
+            "submodule_name": {
+                "vhost": VIRTUALHOST,
+                "exchange": EXCHANGE,
+                "queues": {
+                    QUEUE_NAME: ROUTING_KEY,
+                    QUEUE_NAME: ROUTING_KEY
+                }
+            },
+            ...
+        }
+    """
+    amqp_settings = {}
+    for vhost in filter(lambda x: x.endswith("VIRTUALHOST"), globals().keys()):
+        vhost = "RABBITMQ_" + vhost.split("_")[1]
+
+        queues = {
+            globals()[vhost + "_INPUT_QUEUE"]: globals()[vhost + "_INPUT_KEY"],
+            globals()[vhost + "_OUTPUT_QUEUE"]: globals()[vhost + "_OUTPUT_KEY"]
+        }
+
+        amqp_settings[vhost.split("_")[-1].lower()] = {
+            "vhost": globals()[vhost + "_VIRTUALHOST"],
+            "exchange": globals()[vhost + "_EXCHANGE"],
+            "queues": queues
+        }
+
+    return amqp_settings
 
 
 #= user configuration reader ==================================================
