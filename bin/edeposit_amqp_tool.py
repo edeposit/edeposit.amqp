@@ -14,15 +14,16 @@ import pika
 
 # if the module wasn't yet installed at this system, load it from package
 try:
-    from edeposit.amqp.settings import *
+    import edeposit.amqp.settings as settings
+    import edeposit.amqp.amqpdaemon as amqpdaemon
 except ImportError:
-    sys.path.insert(0, os.path.abspath('../edeposit/'))
-    import amqp
-    sys.modules["edeposit.amqp"] = amqp
+    sys.path.insert(0, os.path.abspath('../edeposit/amqp'))
+    # import amqp
+    # sys.modules["edeposit.amqp"] = amqp
 
 
-from edeposit.amqp import settings
-from edeposit.amqp import amqpdaemon
+import settings
+import amqpdaemon
 
 
 # Variables ===================================================================
@@ -120,6 +121,13 @@ if __name__ == '__main__':
         "--list",
         action='store_true',
         help="List all possible hosts."
+    )
+    parser.add_argument(
+        "-g",
+        "--host",
+        choices=get_hosts() + ["all"],
+        help="""Specify host. You can get list of valid host by using --list
+                swith or use 'all' for all hosts."""
     )
     args = parser.parse_args()
 
