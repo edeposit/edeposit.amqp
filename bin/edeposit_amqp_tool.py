@@ -44,21 +44,6 @@ def create_blocking_connection(host):
     )
 
 
-def receive(channel, queue):
-    """
-    Print all messages in queue.
-    """
-    for method_frame, properties, body in channel.consume(queue):
-        print "Message:"
-        print method_frame
-        print properties
-        print body
-        print "---"
-        print
-
-        channel.basic_ack(method_frame.delivery_tag)
-
-
 def create_schema(host):
     """
     Create exchanges, queues and route them.
@@ -104,14 +89,16 @@ def create_schema(host):
         )
 
 
-def send_message(host, data, timeout=None):
+def _get_channel(host, timeout):
     """
-    Send message to given `host`.
+    Create communication channel for given `host`.
 
     Args:
-        host (str): Specified host: aleph/ftp/whatever available host.
-        data (str): JSON data.
-        timeout (int, default None): How much time wait for connection.
+        host (str): Specified --host.
+        timeout (int): Set `timeout` for returned `channel`.
+
+    Returns:
+        Object: Pika channel object.
     """
     connection = create_blocking_connection(host)
 
@@ -122,7 +109,45 @@ def send_message(host, data, timeout=None):
             lambda: sys.stderr.write("Timeouted!\n") or sys.exit(1)
         )
 
-    channel = connection.channel()
+    return connection.channel()
+
+
+def receive(host, timeout):
+    """
+    Print all messages in queue.
+
+    Args:
+        host (str): Specified --host.
+        timeout (int): How log should script wait for message.
+    """
+    parameters = settings.get_amqp_settings()[host]
+
+    queues = parameters["queues"]
+    queues = dict(map(lambda (x, y): (y, x), queues.items()))  # reverse items
+    queue = queues[parameters["out_key"]]
+
+    channel = _get_channel(host, timeout)
+    for method_frame, properties, body in channel.consume(queue):
+        print "Message:"
+        print method_frame
+        print properties
+        print body
+        print "---"
+        print
+
+        channel.basic_ack(method_frame.delivery_tag)
+
+
+def send_message(host, data, timeout=None):
+    """
+    Send message to given `host`.
+
+    Args:
+        host (str): Specified host: aleph/ftp/whatever available host.
+        data (str): JSON data.
+        timeout (int, default None): How much time wait for connection.
+    """
+    channel = _get_channel(host, timeout)
 
     properties = pika.BasicProperties(
         content_type="application/json",
@@ -140,7 +165,7 @@ def send_message(host, data, timeout=None):
     )
 
 
-def get_hosts():
+def get_list_of_hosts():
     """
     Returns:
         list: List of strings with names of possible hosts.
@@ -173,7 +198,7 @@ if __name__ == '__main__':
     parser.add_argument(
         "-g",
         "--host",
-        choices=get_hosts() + ["all"],
+        choices=get_list_of_hosts() + ["all"],
         help="""Specify host. You can get list of valid host by using --list
                 switch or use 'all' for all hosts."""
     )
@@ -192,6 +217,11 @@ if __name__ == '__main__':
                 input."""
     )
     parser.add_argument(
+        "-g",
+        "--get",
+        help="Get messages from --host output queue."
+    )
+    parser.add_argument(
         '--timeout',
         metavar="N",
         type=int,
@@ -201,19 +231,19 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.list:
-        print "\n".join(get_hosts())
+        print "\n".join(get_list_of_hosts())
         sys.exit(0)
 
     if args.create:
         _require_host_parameter(args)
 
         if args.host == "all":
-            for host in get_hosts():
+            for host in get_list_of_hosts():
                 create_schema(host)
         else:
             create_schema(args.host)
 
-    elif args.put:
+    if args.put:
         _require_host_parameter(args)
 
         data = None
@@ -227,4 +257,17 @@ if __name__ == '__main__':
             with open(args.put) as f:
                 data = f.read()
 
-        send_message(host, data, args.timeout)
+        send_message(args.host, data, args.timeout)
+
+    if args.get:
+        _require_host_parameter(args)
+
+        if args.host == "all":
+            sys.stderr.write("Can't receive all hosts!\n")
+            sys.exit(1)
+
+        try:
+            receive(args.host, args.timeout)
+        except KeyboardInterrupt:
+            print
+            sys.exit(0)
