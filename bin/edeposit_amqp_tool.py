@@ -66,16 +66,16 @@ def create_schema(host):
     connection = create_blocking_connection(host)
     channel = connection.channel()
 
-    exchange = settings.get_amqp_settings()[vhost]["exchange"]
+    exchange = settings.get_amqp_settings()[host]["exchange"]
     channel.exchange_declare(
         exchange=exchange,
         exchange_type="topic",
         durable=True
     )
     print "Created exchange '%s'." % exchange
-
     print "Creating queues:"
-    queues = settings.get_amqp_settings()[vhost]["queues"]
+
+    queues = settings.get_amqp_settings()[host]["queues"]
     for queue in queues.keys():
         channel.queue_declare(
             queue=queue,
@@ -129,8 +129,26 @@ if __name__ == '__main__':
         help="""Specify host. You can get list of valid host by using --list
                 swith or use 'all' for all hosts."""
     )
+    parser.add_argument(
+        "-c",
+        "--create",
+        action='store_true',
+        help="""Create exchanges/queues/routes for given host. --host is
+                required."""
+    )
     args = parser.parse_args()
 
     if args.list:
         print "\n".join(get_hosts())
         sys.exit(0)
+
+    if args.create:
+        if not args.host:
+            sys.stderr.write("--host is required parameter to --create!\n")
+            sys.exit(1)
+
+        if args.gost == "all":
+            for host in get_hosts():
+                create_schema(host)
+        else:
+            create_schema(args.host)
