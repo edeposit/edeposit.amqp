@@ -105,6 +105,14 @@ def create_schema(host):
 
 
 def send_message(host, data, timeout=None):
+    """
+    Send message to given `host`.
+
+    Args:
+        host (str): Specified host: aleph/ftp/whatever available host.
+        data (str): JSON data.
+        timeout (int, default None): How much time wait for connection.
+    """
     connection = create_blocking_connection(host)
 
     # register timeout
@@ -140,7 +148,10 @@ def get_hosts():
     return settings.get_amqp_settings().keys()
 
 
-def require_host_parameter(args):
+def _require_host_parameter(args):
+    """
+    Make sure, that user specified --host argument.
+    """
     if not args.host:
         sys.stderr.write("--host is required parameter to --create!\n")
         sys.exit(1)
@@ -194,7 +205,7 @@ if __name__ == '__main__':
         sys.exit(0)
 
     if args.create:
-        require_host_parameter(args)
+        _require_host_parameter(args)
 
         if args.host == "all":
             for host in get_hosts():
@@ -203,7 +214,7 @@ if __name__ == '__main__':
             create_schema(args.host)
 
     elif args.put:
-        require_host_parameter(args)
+        _require_host_parameter(args)
 
         data = None
         if args.put == "-":
