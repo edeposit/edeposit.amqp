@@ -70,7 +70,9 @@ def get_amqp_settings():
                 "queues": {
                     QUEUE_NAME: ROUTING_KEY,
                     QUEUE_NAME: ROUTING_KEY
-                }
+                },
+                "in_key": INPUT_KEY,
+                "out_key": OUTPUT_KEY
             },
             ...
         }
@@ -87,7 +89,9 @@ def get_amqp_settings():
         amqp_settings[vhost.split("_")[-1].lower()] = {
             "vhost": globals()[vhost + "_VIRTUALHOST"],
             "exchange": globals()[vhost + "_EXCHANGE"],
-            "queues": queues
+            "queues": queues,
+            "in_key": globals()[vhost + "_INPUT_KEY"],
+            "out_key": globals()[vhost + "_OUTPUT_KEY"]
         }
 
     return amqp_settings
