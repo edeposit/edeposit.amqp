@@ -99,6 +99,15 @@ def create_schema(host):
             queue
         )
 
+
+def get_hosts():
+    """
+    Returns:
+        list: List of strings with names of possible hosts.
+    """
+    return settings.get_amqp_settings().keys()
+
+
 # Main program ================================================================
 if __name__ == '__main__':
     # parse arguments
@@ -113,3 +122,7 @@ if __name__ == '__main__':
         help="List all possible hosts."
     )
     args = parser.parse_args()
+
+    if args.list:
+        print "\n".join(get_hosts())
+        sys.exit(0)
