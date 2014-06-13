@@ -4,6 +4,12 @@
 # Interpreter version: python 2.7
 #
 # Imports =====================================================================
+import os
+import sys
+import os.path
+import argparse
+
+
 import pika
 
 # if the module wasn't yet installed at this system, load it from package
@@ -95,4 +101,15 @@ def create_schema(host):
 
 # Main program ================================================================
 if __name__ == '__main__':
-    pass
+    # parse arguments
+    parser = argparse.ArgumentParser(
+        description="""AMQP tool used for debugging and automatic RabbitMQ
+                       schema making."""
+    )
+    parser.add_argument(
+        "-l",
+        "--list",
+        action='store_true',
+        help="List all possible hosts."
+    )
+    args = parser.parse_args()
