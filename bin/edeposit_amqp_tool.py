@@ -3,9 +3,13 @@
 #
 # Interpreter version: python 2.7
 #
+"""
+AMQP tool used for debugging and automatic RabbitMQ schema making.
+"""
 # Imports =====================================================================
 import os
 import sys
+import uuid
 import os.path
 import argparse
 
@@ -18,16 +22,9 @@ try:
     import edeposit.amqp.amqpdaemon as amqpdaemon
 except ImportError:
     sys.path.insert(0, os.path.abspath('../edeposit/amqp'))
-    # import amqp
-    # sys.modules["edeposit.amqp"] = amqp
 
-
-import settings
-import amqpdaemon
-
-
-# Variables ===================================================================
-
+    import settings
+    import amqpdaemon
 
 
 # Functions & objects =========================================================
@@ -63,6 +60,12 @@ def receive(channel, queue):
 
 
 def create_schema(host):
+    """
+    Create exchanges, queues and route them.
+
+    Args:
+        host (str): One of the possible hosts.
+    """
     connection = create_blocking_connection(host)
     channel = connection.channel()
 
@@ -101,12 +104,46 @@ def create_schema(host):
         )
 
 
+def send_message(host, data, timeout=None):
+    connection = create_blocking_connection(host)
+
+    # register timeout
+    if timeout >= 0:
+        connection.add_timeout(
+            timeout,
+            lambda: sys.stderr.write("Timeouted!\n") or sys.exit(1)
+        )
+
+    channel = connection.channel()
+
+    properties = pika.BasicProperties(
+        content_type="application/json",
+        delivery_mode=1,
+        headers={"UUID": str(uuid.uuid4())}
+    )
+
+    parameters = settings.get_amqp_settings()[host]
+
+    channel.basic_publish(
+        exchange=parameters["exchange"],
+        routing_key=parameters["in_key"],
+        properties=properties,
+        body=data
+    )
+
+
 def get_hosts():
     """
     Returns:
         list: List of strings with names of possible hosts.
     """
     return settings.get_amqp_settings().keys()
+
+
+def require_host_parameter(args):
+    if not args.host:
+        sys.stderr.write("--host is required parameter to --create!\n")
+        sys.exit(1)
 
 
 # Main program ================================================================
@@ -127,7 +164,7 @@ if __name__ == '__main__':
         "--host",
         choices=get_hosts() + ["all"],
         help="""Specify host. You can get list of valid host by using --list
-                swith or use 'all' for all hosts."""
+                switch or use 'all' for all hosts."""
     )
     parser.add_argument(
         "-c",
@@ -136,6 +173,20 @@ if __name__ == '__main__':
         help="""Create exchanges/queues/routes for given host. --host is
                 required."""
     )
+    parser.add_argument(
+        "-p",
+        "--put",
+        help="""Put message into input queue at given host. --put argument
+                expects file with JSON data or - as indication of stdin data
+                input."""
+    )
+    parser.add_argument(
+        '--timeout',
+        metavar="N",
+        type=int,
+        default=-1,
+        help="Wait for message only N seconds."
+    )
     args = parser.parse_args()
 
     if args.list:
@@ -143,12 +194,26 @@ if __name__ == '__main__':
         sys.exit(0)
 
     if args.create:
-        if not args.host:
-            sys.stderr.write("--host is required parameter to --create!\n")
-            sys.exit(1)
+        require_host_parameter(args)
 
-        if args.gost == "all":
+        if args.host == "all":
             for host in get_hosts():
                 create_schema(host)
         else:
             create_schema(args.host)
+
+    elif args.put:
+        require_host_parameter(args)
+
+        data = None
+        if args.put == "-":
+            data = sys.stdin.read()
+        else:
+            if not os.path.exists(args.put):
+                sys.stderr.write("Can't open '%s'!\n" % args.put)
+                sys.exit(1)
+
+            with open(args.put) as f:
+                data = f.read()
+
+        send_message(host, data, args.timeout)
