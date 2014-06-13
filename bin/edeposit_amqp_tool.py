@@ -55,6 +55,44 @@ def receive(channel, queue):
         channel.basic_ack(method_frame.delivery_tag)
 
 
+def create_schema(host):
+    connection = create_blocking_connection(host)
+    channel = connection.channel()
+
+    exchange = settings.get_amqp_settings()[vhost]["exchange"]
+    channel.exchange_declare(
+        exchange=exchange,
+        exchange_type="topic",
+        durable=True
+    )
+    print "Created exchange '%s'." % exchange
+
+    print "Creating queues:"
+    queues = settings.get_amqp_settings()[vhost]["queues"]
+    for queue in queues.keys():
+        channel.queue_declare(
+            queue=queue,
+            durable=True,
+            # arguments={'x-message-ttl': int(1000 * 60 * 60 * 24)} # :S
+        )
+        print "\tCreated durable queue '%s'." % queue
+
+    print
+    print "Routing exchanges using routing key to queues:"
+
+    for queue in queues.keys():
+        channel.queue_bind(
+            queue=queue,
+            exchange=exchange,
+            routing_key=queues[queue]
+        )
+
+        print "\tRouting exchange %s['%s'] -> '%s'." % (
+            exchange,
+            queues[queue],
+            queue
+        )
+
 # Main program ================================================================
 if __name__ == '__main__':
     pass
