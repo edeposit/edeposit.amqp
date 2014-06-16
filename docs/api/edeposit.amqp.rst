@@ -143,7 +143,7 @@ Programmers perspective
 -----------------------
 If you want to add new module, you will have to create your own instance of
 the :class:`.AMQPDaemon` and your module has to have some variant of the
-``reactToAMQP()`` function. See :class:`.AMQPDaemon` doc-string for details.
+:func:`.reactToAMQP` function. See :class:`.AMQPDaemon` doc-string for details.
 
 
 Tips and tricks
@@ -154,41 +154,32 @@ get the data back.
 
 To start the daemon, run::
 
-    ./alephdaemon.py start
+    edeposit_amqp_alephdaemon.py start
 
 This will start the proper unix daemon listening for the requests at RabbitMQ's
-message queue defined by ``settings.RABBITMQ_ALEPH_INPUT_QUEUE``.
+message queue defined by :attr:`settings.RABBITMQ_ALEPH_INPUT_QUEUE
+<edeposit.amqp.settings.RABBITMQ_ALEPH_INPUT_QUEUE>`.
 
 Note:
     Message queues, exchanges and routing keys have to be defined in RabbitMQ
     before you start the daemon.
 
 If you don't want to define all details of AMQP communication by yourself, you
-can just run the :class:`amqp_tool <edeposit.amqp.amqp_tool>`, which can build
-the schema::
+can just run the :class:`edeposit_amqp_tool.py <edeposit_amqp_tool>`, which can
+build the schema::
 
-    ./amqp_tool.py --create
+    edeposit_amqp_tool.py --host ftp --create
 
 output example::
 
-    Creating exchanges:
-        Created exchange 'search' of type 'topic'.
-        Created exchange 'count' of type 'topic'.
-        Created exchange 'export' of type 'topic'.
+  Created exchange 'ftp'.
+  Creating queues:
+    Created durable queue 'daemon'.
+    Created durable queue 'plone'.
 
-    Creating queues:
-        Created durable queue 'daemon'.
-        Created durable queue 'plone'.
-
-    Routing exchanges using routing key to queues:
-        Routing exchange search['request'] -> 'daemon'.
-        Routing exchange search['result'] -> 'plone'.
-        Routing exchange count['request'] -> 'daemon'.
-        Routing exchange count['result'] -> 'plone'.
-        Routing exchange export['request'] -> 'daemon'.
-        Routing exchange export['result'] -> 'plone'.
-        Routing exchange search['exception'] -> 'plone'.
-
+  Routing exchanges using routing key to queues:
+    Routing exchange ftp['request'] -> 'daemon'.
+    Routing exchange ftp['result'] -> 'plone'.
 
 Project structure
 -----------------
@@ -220,4 +211,4 @@ List of scripts
 .. toctree::
    :maxdepth: 1
 
-   /api/edeposit.amqp.amqp_tool.rst
+   /api/edeposit.amqp.tool.rst
