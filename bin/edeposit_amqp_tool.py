@@ -12,6 +12,7 @@ import sys
 import uuid
 import os.path
 import argparse
+from functools import wraps
 
 
 import pika
@@ -28,6 +29,20 @@ except ImportError:
 
 
 # Functions & objects =========================================================
+def test_virtualhost(fn):
+    @wraps(fn)
+    def catch_exception(*args, **kwargs):
+        try:
+            return fn(*args, **kwargs)
+        except pika.exceptions.ConnectionClosed:
+            sys.stderr.write("Can't connect to virtuahost!\n")
+            sys.stderr.write("Make sure, that virtualhost is created.\n")
+            sys.exit()
+
+    return catch_exception
+
+
+@test_virtualhost
 def create_blocking_connection(host):
     """
     Return properly created blocking connection.
@@ -196,7 +211,7 @@ if __name__ == '__main__':
         help="List all possible hosts."
     )
     parser.add_argument(
-        "-g",
+        "-s",
         "--host",
         choices=get_list_of_hosts() + ["all"],
         help="""Specify host. You can get list of valid host by using --list
