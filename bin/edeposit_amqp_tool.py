@@ -9,6 +9,7 @@ AMQP tool used for debugging and automatic RabbitMQ schema making.
 # Imports =====================================================================
 import os
 import sys
+import json
 import uuid
 import os.path
 import argparse
@@ -143,11 +144,12 @@ def receive(host, timeout):
 
     channel = _get_channel(host, timeout)
     for method_frame, properties, body in channel.consume(queue):
-        print "Message:"
-        print method_frame
-        print properties
-        print body
-        print "---"
+        print json.dumps({
+            "method_frame": str(method_frame),
+            "properties": str(properties),
+            "body": body
+        })
+        print "-" * 79
         print
 
         channel.basic_ack(method_frame.delivery_tag)
@@ -188,12 +190,12 @@ def get_list_of_hosts():
     return settings.get_amqp_settings().keys()
 
 
-def _require_host_parameter(args):
+def _require_host_parameter(args, to):
     """
     Make sure, that user specified --host argument.
     """
     if not args.host:
-        sys.stderr.write("--host is required parameter to --create!\n")
+        sys.stderr.write("--host is required parameter to --%s\n" % to)
         sys.exit(1)
 
 
@@ -234,9 +236,11 @@ if __name__ == '__main__':
     parser.add_argument(
         "-g",
         "--get",
+        action='store_true',
         help="Get messages from --host output queue."
     )
     parser.add_argument(
+        '-t',
         '--timeout',
         metavar="N",
         type=int,
@@ -250,7 +254,7 @@ if __name__ == '__main__':
         sys.exit(0)
 
     if args.create:
-        _require_host_parameter(args)
+        _require_host_parameter(args, "create")
 
         if args.host == "all":
             for host in get_list_of_hosts():
@@ -259,7 +263,7 @@ if __name__ == '__main__':
             create_schema(args.host)
 
     if args.put:
-        _require_host_parameter(args)
+        _require_host_parameter(args, "put")
 
         data = None
         if args.put == "-":
@@ -275,7 +279,7 @@ if __name__ == '__main__':
         send_message(args.host, data, args.timeout)
 
     if args.get:
-        _require_host_parameter(args)
+        _require_host_parameter(args, "get")
 
         if args.host == "all":
             sys.stderr.write("Can't receive all hosts!\n")
