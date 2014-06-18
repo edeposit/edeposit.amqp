@@ -62,19 +62,25 @@ edeposit.amqp.pikadaemon
 
 Generic AMQP blocking communication daemon server.
 
-Acceptance tests
+Unittests
 ================
-`Robot Framework <http://robotframework.org/>`__ is used to test the code.
-You can find the tests in ``src/edeposit/amqp/aleph/tests`` directory.
+`pytest <http://pytest.org/>`__ is used to test the code.
+You can find the tests in ``edeposit/amqp/tests`` directory.
 
-Tests can be invoked manually (from the root of the package):
+Tests can be invoked by running ``./run_tests.sh`` script::
 
-::
+    $ ./run_tests.sh -a
+    ============================= test session starts ==============================
+    platform linux2 -- Python 2.7.5 -- py-1.4.20 -- pytest-2.5.2
+    collected 8 items 
 
-    $ pybot -W 80 --pythonpath edeposit/amqp/tests/:src edeposit/amqp/tests/; (cd docs/; make html)
+    edeposit/amqp/tests/test_daemon.txt .
+    edeposit/amqp/tests/integration/test_aleph.py started with pid 18108
+    sending response result
+    ..No handlers could be found for logger "pika.adapters.base_connection"
 
-Or continuously using nosier:
+    edeposit/amqp/tests/integration/test_daemons.py .
+    edeposit/amqp/tests/integration/test_package.py ..
+    edeposit/amqp/tests/unittests/test_settings.py ..
 
-::
-
-    $ nosier -p edeposit -b 'export' "pybot -W 80 --pythonpath edeposit/amqp/tests/:src edeposit/amqp/tests/; (cd docs/; make html)"
+    ========================== 8 passed in 14.43 seconds ===========================

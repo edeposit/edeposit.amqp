@@ -10,12 +10,6 @@ And installed from PYPI: https://pypi.python.org/pypi/edeposit.amqp
 
 .. include:: api/edeposit.amqp.rst
 
-Acceptance tests
-----------------
-* :download:`test report <../report.html>`
-
-* :download:`test log <../log.html>`
-
 Indices and tables
 ------------------
 

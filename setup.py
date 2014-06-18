@@ -80,7 +80,6 @@ setup(
     namespace_packages=['edeposit'],
     include_package_data=True,
     zip_safe=False,
-    test_suite='edeposit.amqp.tests',
     install_requires=[
         'setuptools',
         "python-daemon>=1.5.5",
@@ -91,6 +90,16 @@ setup(
         "edeposit.amqp.calibre>=1.0.1",
         "edeposit.amqp.ftp>=0.6.4"
     ],
+    extras_require={
+        "test": [
+            "pytest",
+            "sh"
+        ],
+        "docs": [
+            "sphinx",
+            "sphinxcontrib-napoleon",
+        ]
+    },
 
     cmdclass={'sdist': BuildSphinx}
 )
