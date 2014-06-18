@@ -7,8 +7,9 @@ configuration data to AMQP server and generic daemons, to run the modules.
 
 Installation
 ------------
-Module is hosted at `PYPI <http://pypi.python.org>`_, and can be easily 
-installed using `PIP <http://en.wikipedia.org/wiki/Pip_%28package_manager%29>`_:
+Module is hosted at `PYPI <https://pypi.python.org/pypi/edeposit.amqp>`_, 
+and can be easily installed using `PIP
+<http://en.wikipedia.org/wiki/Pip_%28package_manager%29>`_:
 
 ::
 
