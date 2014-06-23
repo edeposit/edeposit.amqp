@@ -38,7 +38,7 @@ edeposit_amqp_calibre.py
 ++++++++++++++++++++++++
 Daemon providing AMQP communication with the `edeposit.amqp.calibre  <https://github.com/edeposit/edeposit.amqp.calibre>`_ module.
 
-edeposit_amqp_amqp_tool.py
+edeposit_amqp_tool.py
 ++++++++++++++++++++++++++
 
 Script for testing the communication and creating
