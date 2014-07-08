@@ -200,7 +200,7 @@ def _require_host_parameter(args, to):
 
 
 # Main program ================================================================
-if __name__ == '__main__':
+def main():
     # parse arguments
     parser = argparse.ArgumentParser(
         description="""AMQP tool used for debugging and automatic RabbitMQ
@@ -285,8 +285,15 @@ if __name__ == '__main__':
             sys.stderr.write("Can't receive all hosts!\n")
             sys.exit(1)
 
-        try:
-            receive(args.host, args.timeout)
-        except KeyboardInterrupt:
-            print
-            sys.exit(0)
+        receive(args.host, args.timeout)
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except pika.exceptions.AMQPConnectionError:
+        sys.stderr.write("Can't connect to RabbitMQ!\n")
+        sys.exit(1)
+    except KeyboardInterrupt:
+        print
+        sys.exit(0)
