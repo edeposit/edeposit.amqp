@@ -1,6 +1,9 @@
 Changelog
 =========
 
+1.5.0
+-----
+    - Added bindings to edeposit.amqp.antivirus.
 
 1.4.1
 -----
