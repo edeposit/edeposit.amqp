@@ -10,10 +10,11 @@ class FTPMonitorDaemon
 AMQPDaemon -r-> FTPMonitorDaemon
 
 package "Scritps in bin/" as Scripts {
-    class "alephdaemon.py" as alephdaemon <<(S, orchid)>> 
-    class "calibredaemon.py" as calibredaemon <<(S, orchid)>> 
-    class "ftp_managerd.py" as ftp_managerd <<(S, orchid)>> 
-    class "ftp_monitord.py" as ftp_monitord <<(S, orchid)>> 
+    class "alephdaemon.py" as alephdaemon <<(S, orchid)>>
+    class "calibredaemon.py" as calibredaemon <<(S, orchid)>>
+    class "ftp_managerd.py" as ftp_managerd <<(S, orchid)>>
+    class "ftp_monitord.py" as ftp_monitord <<(S, orchid)>>
+    class "antivirusd.py" as antivirusd <<(S, orchid)>>
 }
 
 DaemonRunner ..> DaemonRunnerWrapper
@@ -24,6 +25,7 @@ PikaDaemon --> AMQPDaemon
 AMQPDaemon --* alephdaemon
 AMQPDaemon --* calibredaemon
 AMQPDaemon --* ftp_managerd
+AMQPDaemon --* antivirusd
 FTPMonitorDaemon --* ftp_monitord
 
 package "edeposit.amqp.ftp" as ftp {
@@ -32,8 +34,11 @@ package "edeposit.amqp.aleph" as aleph {
 }
 package "edeposit.amqp.calibre" as calibre {
 }
+package "edeposit.amqp.antivirus" as antivirus {
+}
 
 ftp_managerd -> ftp
 ftp_monitord -> ftp
 alephdaemon -> aleph
 calibredaemon -> calibre
+antivirusd -> antivirus

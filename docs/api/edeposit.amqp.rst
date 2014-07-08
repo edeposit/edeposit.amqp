@@ -10,14 +10,16 @@ service for edeposit project (:class:`amqpdaemon <edeposit.amqp.amqpdaemon>`)
 and also AMQP communication classes for sub-modules used in edeposit
 project:
 
-- :mod:`edeposit_amqp_alephdaemon` (wrapper for the
+- :mod:`edeposit_amqp_alephdaemon` (AMQP wrapper for the
   `edeposit.amqp.aleph <http://edeposit-amqp-aleph.readthedocs.org>`_)
-- :mod:`edeposit_amqp_calibredaemon` (wrapper for the
+- :mod:`edeposit_amqp_calibredaemon` (AMQP wrapper for the
   `edeposit.amqp.calibre <http://edeposit-amqp-calibre.readthedocs.org>`_)
-- :mod:`edeposit_amqp_ftp_managerd` (user management wrapper for the
+- :mod:`edeposit_amqp_ftp_managerd` (user management AMQP wrapper for the
   `edeposit.amqp.ftp <http://edeposit-amqp-ftp.readthedocs.org>`_)
-- :mod:`edeposit_amqp_ftp_monitord` (FTP event monitor for the
+- :mod:`edeposit_amqp_ftp_monitord` (AMQP binding for FTP event monitor -
   `edeposit.amqp.ftp <http://edeposit-amqp-ftp.readthedocs.org>`_)
+- :mod:`edeposit_amqp_antivirusd` (AMQP wrapper for the ClamAV daemon
+  `edeposit.amqp.antivirus <http://edeposit-amqp-antivirus.readthedocs.org>`_)
 
 For example :mod:`edeposit_amqp_alephdaemon` script allows 
 you to send simple requests to get data from Aleph (system used in libraries
@@ -207,6 +209,7 @@ List of scripts
    /api/edeposit.amqp.calibredaemon.rst
    /api/ftp_managerd.rst
    /api/ftp_monitord.rst
+   /api/edeposit.amqp.antivirus.rst
 
 .. toctree::
    :maxdepth: 1
