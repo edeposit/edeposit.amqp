@@ -76,7 +76,8 @@ setup(
         "bin/edeposit_amqp_alephdaemon.py",
         "bin/edeposit_amqp_calibredaemon.py",
         "bin/edeposit_amqp_ftp_monitord.py",
-        "bin/edeposit_amqp_ftp_managerd.py"
+        "bin/edeposit_amqp_ftp_managerd.py",
+        "bin/edeposit_amqp_antivirusd.py"
     ],
 
     namespace_packages=['edeposit'],
@@ -90,7 +91,8 @@ setup(
         "edeposit.amqp.aleph>=1.4.1",
         "edeposit.amqp.serializers>=1.1.1",
         "edeposit.amqp.calibre>=1.0.1",
-        "edeposit.amqp.ftp>=0.6.4"
+        "edeposit.amqp.ftp>=0.6.4",
+        "edeposit.amqp.antivirus>=1.0.0"
     ],
     extras_require={
         "test": [

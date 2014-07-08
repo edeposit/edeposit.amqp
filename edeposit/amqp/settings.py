@@ -58,6 +58,15 @@ RABBITMQ_FTP_EXCHANGE = "ftp"
 RABBITMQ_FTP_INPUT_KEY = "request"  #:
 RABBITMQ_FTP_OUTPUT_KEY = "result"  #:
 
+# settings for edeposit.amqp.antivirus daemon
+RABBITMQ_ANTIVIRUS_VIRTUALHOST = "antivirus"  #: Virtualhost for AV module.
+RABBITMQ_ANTIVIRUS_INPUT_QUEUE = "daemon"     #: Input Queue for AV AMQP daemon.
+RABBITMQ_ANTIVIRUS_OUTPUT_QUEUE = "plone"     #: Queue to put responses
+RABBITMQ_ANTIVIRUS_EXCHANGE = "antivirus"
+
+RABBITMQ_ANTIVIRUS_INPUT_KEY = "request"  #:
+RABBITMQ_ANTIVIRUS_OUTPUT_KEY = "result"  #:
+
 
 def get_amqp_settings():
     """
