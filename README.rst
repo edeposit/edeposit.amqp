@@ -27,20 +27,35 @@ Content can be divided between generic modules to support AMQP communication and
 
 Scripts
 -------
-Scripts should be automatically installed to your ``$PATH``.
+Scripts should be automatically installed to your ``$PATH`` and you can find them in
+``bin/`` directory of this repository.
 
 edeposit_amqp_alephdaemon.py
 ++++++++++++++++++++++++++++
 
 Daemon providing AMQP communication with the `edeposit.amqp.aleph <https://github.com/edeposit/edeposit.amqp.aleph>`_ module.
 
-edeposit_amqp_calibre.py
-++++++++++++++++++++++++
+edeposit_amqp_calibredaemon.py
+++++++++++++++++++++++++++++++
 Daemon providing AMQP communication with the `edeposit.amqp.calibre  <https://github.com/edeposit/edeposit.amqp.calibre>`_ module.
 
-edeposit_amqp_tool.py
-++++++++++++++++++++++++++
+edeposit_amqp_ftp_managerd.py
++++++++++++++++++++++++++++++
+Daemon for management of the ProFTPd_ server.
 
+.. _ProFTPd: https://github.com/edeposit/edeposit.amqp.ftp
+
+edeposit_amqp_ftp_monitord.py
++++++++++++++++++++++++++++++
+Monitor of the changes in user directories of the FTP server.
+
+edeposit_amqp_antivirusd.py
++++++++++++++++++++++++++++
+AMQP binding for ClamAV antivirus. See `edeposit.amqp.antivirus
+<https://github.com/edeposit/edeposit.amqp.antivirus>`_ for details.
+
+edeposit_amqp_tool.py
++++++++++++++++++++++
 Script for testing the communication and creating
 exchanges/queues/routes in `RabbitMQ <https://www.rabbitmq.com/>`_.
 
