@@ -20,6 +20,8 @@ project:
   `edeposit.amqp.ftp <http://edeposit-amqp-ftp.readthedocs.org>`_)
 - :mod:`edeposit_amqp_antivirusd` (AMQP wrapper for the ClamAV daemon
   `edeposit.amqp.antivirus <http://edeposit-amqp-antivirus.readthedocs.org>`_)
+- :mod:`edeposit_amqp_harvester` (AMQP wrapper for the harvester module
+  `edeposit.amqp.harvester <http://edeposit-amqp-harvester.readthedocs.org>`_)
 
 For example :mod:`edeposit_amqp_alephdaemon` script allows 
 you to send simple requests to get data from Aleph (system used in libraries
@@ -202,6 +204,9 @@ List of submodules
 
 List of scripts
 +++++++++++++++
+Following scrips are installed to user's ``/bin`` directory and therefore
+can be called by simply typing their name to the shell:
+
 .. toctree::
    :maxdepth: 1
 
@@ -210,6 +215,7 @@ List of scripts
    /api/ftp_managerd.rst
    /api/ftp_monitord.rst
    /api/edeposit.amqp.antivirus.rst
+   /api/harvester.rst
 
 .. toctree::
    :maxdepth: 1

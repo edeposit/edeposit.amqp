@@ -1,3 +1,4 @@
+@startuml
 package Pika {}
 package "Daemon module" as Daemon {
     class DaemonRunner <<(M, green)>> {
@@ -15,11 +16,14 @@ package "Scritps in bin/" as Scripts {
     class "ftp_managerd.py" as ftp_managerd <<(S, orchid)>>
     class "ftp_monitord.py" as ftp_monitord <<(S, orchid)>>
     class "antivirusd.py" as antivirusd <<(S, orchid)>>
+    class "amqp_tool.py" as amqp_tool <<(S, orchid)>>
+    class "harvester.py" as harvester_sh <<(S, orchid)>>
 }
 
 DaemonRunner ..> DaemonRunnerWrapper
-DaemonRunnerWrapper -> PikaDaemon
+DaemonRunnerWrapper -l-> PikaDaemon
 Pika ..> PikaDaemon
+Pika .r...> amqp_tool
 
 PikaDaemon --> AMQPDaemon
 AMQPDaemon --* alephdaemon
@@ -27,6 +31,7 @@ AMQPDaemon --* calibredaemon
 AMQPDaemon --* ftp_managerd
 AMQPDaemon --* antivirusd
 FTPMonitorDaemon --* ftp_monitord
+amqp_tool -r-* harvester_sh
 
 package "edeposit.amqp.ftp" as ftp {
 }
@@ -36,9 +41,13 @@ package "edeposit.amqp.calibre" as calibre {
 }
 package "edeposit.amqp.antivirus" as antivirus {
 }
+package "edeposit.amqp.harvester" as harvester {
+}
 
 ftp_managerd -> ftp
 ftp_monitord -> ftp
 alephdaemon -> aleph
 calibredaemon -> calibre
 antivirusd -> antivirus
+harvester_sh -> harvester
+@enduml
