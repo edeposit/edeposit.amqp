@@ -3,6 +3,10 @@
 #
 # Interpreter version: python 2.7
 #
+"""
+AMQP interface for edeposit.amqp.harvester
+(https://github.com/edeposit/edeposit.amqp.harvester/)
+"""
 # Imports =====================================================================
 import sys
 import uuid
@@ -18,7 +22,16 @@ from harvester.structures import Publications
 
 
 # Functions & objects =========================================================
-def process_exception(e, body, tb):
+def _process_exception(e, body, tb):
+    """
+    Process informations about exception and send them thru AMQP.
+
+    Args:
+        e (obj): Exception instance.
+        body (str): Text which will be sent over AMQP.
+        tb (obj): Traceback object with informations, which will be put to the
+                  headers.
+    """
     # get informations about message
     msg = e.message if hasattr(e, "message") else str(e)
     exception_type = str(e.__class__)
@@ -63,7 +76,7 @@ if __name__ == '__main__':
         try:
             harvester.self_test()
         except Exception, e:
-            process_exception(e, str(e), traceback.format_exc().strip())
+            _process_exception(e, str(e), traceback.format_exc().strip())
             sys.exit(1)
     elif args.harvest:
         send_message(
