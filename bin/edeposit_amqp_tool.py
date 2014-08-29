@@ -155,7 +155,7 @@ def receive(host, timeout):
         channel.basic_ack(method_frame.delivery_tag)
 
 
-def send_message(host, data, timeout=None):
+def send_message(host, data, timeout=None, properties=None):
     """
     Send message to given `host`.
 
@@ -166,11 +166,12 @@ def send_message(host, data, timeout=None):
     """
     channel = _get_channel(host, timeout)
 
-    properties = pika.BasicProperties(
-        content_type="application/json",
-        delivery_mode=1,
-        headers={"UUID": str(uuid.uuid4())}
-    )
+    if not properties:
+        properties = pika.BasicProperties(
+            content_type="application/json",
+            delivery_mode=2,
+            headers={"UUID": str(uuid.uuid4())}
+        )
 
     parameters = settings.get_amqp_settings()[host]
 
