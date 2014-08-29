@@ -50,8 +50,8 @@ RABBITMQ_CALIBRE_INPUT_KEY = "request"  #:
 RABBITMQ_CALIBRE_OUTPUT_KEY = "result"  #:
 
 # settings for edeposit.amqp.ftp daemon
-RABBITMQ_FTP_VIRTUALHOST = "ftp"     #: Virtualhost for FTP module.
-RABBITMQ_FTP_INPUT_QUEUE = "daemon"  #: Input Queue for FTP AMQP daemon.
+RABBITMQ_FTP_VIRTUALHOST = "ftp"     #: Virtualhost for FTP module
+RABBITMQ_FTP_INPUT_QUEUE = "daemon"  #: Input Queue for FTP AMQP daemon
 RABBITMQ_FTP_OUTPUT_QUEUE = "plone"  #: Queue to put responses from daemon
 RABBITMQ_FTP_EXCHANGE = "ftp"
 
@@ -59,13 +59,22 @@ RABBITMQ_FTP_INPUT_KEY = "request"  #:
 RABBITMQ_FTP_OUTPUT_KEY = "result"  #:
 
 # settings for edeposit.amqp.antivirus daemon
-RABBITMQ_ANTIVIRUS_VIRTUALHOST = "antivirus"  #: Virtualhost for AV module.
-RABBITMQ_ANTIVIRUS_INPUT_QUEUE = "daemon"     #: Input Queue for AV AMQP daemon.
+RABBITMQ_ANTIVIRUS_VIRTUALHOST = "antivirus"  #: Virtualhost for AV module
+RABBITMQ_ANTIVIRUS_INPUT_QUEUE = "daemon"     #: Input Queue for AV AMQP daemon
 RABBITMQ_ANTIVIRUS_OUTPUT_QUEUE = "plone"     #: Queue to put responses
 RABBITMQ_ANTIVIRUS_EXCHANGE = "antivirus"
 
 RABBITMQ_ANTIVIRUS_INPUT_KEY = "request"  #:
 RABBITMQ_ANTIVIRUS_OUTPUT_KEY = "result"  #:
+
+# settings for edeposit.amqp.harvester script
+RABBITMQ_HARVESTER_VIRTUALHOST = "antivirus"  #: Virtualhost for harvester
+RABBITMQ_HARVESTER_INPUT_QUEUE = "daemon"     #: Input Queue for harvester
+RABBITMQ_HARVESTER_OUTPUT_QUEUE = "plone"     #: Queue to put responses
+RABBITMQ_HARVESTER_EXCHANGE = "harvester"
+
+RABBITMQ_HARVESTER_INPUT_KEY = "request"  #:
+RABBITMQ_HARVESTER_OUTPUT_KEY = "result"  #:
 
 
 def get_amqp_settings():
