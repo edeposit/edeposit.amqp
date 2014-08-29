@@ -87,12 +87,13 @@ setup(
         'setuptools',
         "python-daemon>=1.5.5",
         "pika>=0.9.13",
-        "sh",                 # required by edeposit.amqp.ftp for monitor daemon
+        "sh",                # required by edeposit.amqp.ftp for monitor daemon
         "edeposit.amqp.aleph>=1.4.1",
         "edeposit.amqp.serializers>=1.1.1",
         "edeposit.amqp.calibre>=1.0.1",
         "edeposit.amqp.ftp>=0.6.4",
-        "edeposit.amqp.antivirus>=1.0.0"
+        "edeposit.amqp.antivirus>=1.0.0",
+        "edeposit.amqp.harvester"
     ],
     extras_require={
         "test": [

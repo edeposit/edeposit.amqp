@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.5.1
+-----
+    - Added bindings to edeposit.amqp.harvester.
+
 1.5.0
 -----
     - Added bindings to edeposit.amqp.antivirus.
