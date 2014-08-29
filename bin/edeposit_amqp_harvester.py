@@ -4,6 +4,7 @@
 # Interpreter version: python 2.7
 #
 # Imports =====================================================================
+import sys
 import uuid
 import argparse
 import traceback
@@ -51,7 +52,7 @@ if __name__ == '__main__':
         help="Perform unittest."
     )
     parser.add_argument(
-        "-h",
+        "-r",
         "--harvest",
         action="store_true",
         help="Harvest all data and send them to harvester queue."
@@ -62,11 +63,8 @@ if __name__ == '__main__':
         try:
             harvester.self_test()
         except Exception, e:
-            process_exception(
-                e,
-                str(e),
-                traceback.format_exc().strip()
-            )
+            process_exception(e, str(e), traceback.format_exc().strip())
+            sys.exit(1)
     elif args.harvest:
         send_message(
             "harvester",
