@@ -77,7 +77,8 @@ setup(
         "bin/edeposit_amqp_calibredaemon.py",
         "bin/edeposit_amqp_ftp_monitord.py",
         "bin/edeposit_amqp_ftp_managerd.py",
-        "bin/edeposit_amqp_antivirusd.py"
+        "bin/edeposit_amqp_antivirusd.py",
+        "bin/edeposit_amqp_harvester.py"
     ],
 
     namespace_packages=['edeposit'],

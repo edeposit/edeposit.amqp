@@ -1,20 +1,18 @@
 Changelog
 =========
 
-1.5.1
+1.5.2
 -----
-    - Added bindings to edeposit.amqp.harvester.
+    - Fixed bug in setup.py (missing link to script in /bin).
 
-1.5.0
------
+1.5.0 - 1.5.1
+-------------
+    - Added bindings to edeposit.amqp.harvester.
     - Added bindings to edeposit.amqp.antivirus.
 
-1.4.1
------
+1.4.0 - 1.4.1
+-------------
     - Fixed bug in setup.py.
-
-1.4.0
------
     - Scripts moved to /bin directory. They will be put to $PATH when package is installed, so users won't need too call them with full path.
     - Added bindings to edeposit.amqp.ftp.
     - Documentation improved.
