@@ -34,9 +34,9 @@ class DaemonRunnerWrapper(object):
         self.pidfile_timeout = 5
 
         # react to parameters and check if daemon is not already runnig
-        self.daemon_runner = runner.DaemonRunner(self)
         if self.isRunning() and "stop" not in sys.argv and \
            "restart" not in sys.argv:
+            self.daemon_runner = runner.DaemonRunner(self)
             self.onIsRunning()
 
     def run_daemon(self):

@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.5.3
+-----
+    - Experimental change in daemonwrapper module.
+
 1.5.2
 -----
     - Fixed bug in setup.py (missing link to script in /bin).
