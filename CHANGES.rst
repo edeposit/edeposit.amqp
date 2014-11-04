@@ -1,24 +1,22 @@
 Changelog
 =========
 
-1.5.3
+1.6.0
 -----
-    - Experimental change in daemonwrapper module.
+    - Added bindings for https://github.com/edeposit/edeposit.amqp.ltp.
 
-1.5.2
------
-    - Fixed bug in setup.py (missing link to script in /bin).
-
-1.5.0 - 1.5.1
+1.5.0 - 1.5.3
 -------------
-    - Added bindings to edeposit.amqp.harvester.
-    - Added bindings to edeposit.amqp.antivirus.
+    - Added bindings for https://github.com/edeposit/edeposit.amqp.harvester.
+    - Added bindings for https://github.com/edeposit/edeposit.amqp.edeposit.amqp.antivirus.
+    - Fixed bug in setup.py (missing link to script in ``/bin``).
+    - Experimental change in daemonwrapper module.
 
 1.4.0 - 1.4.1
 -------------
     - Fixed bug in setup.py.
-    - Scripts moved to /bin directory. They will be put to $PATH when package is installed, so users won't need too call them with full path.
-    - Added bindings to edeposit.amqp.ftp.
+    - Scripts moved to ``/bin`` directory. They will be put to ``$PATH`` when package is installed, so users won't need too call them with full path.
+    - Added bindings for https://github.com/edeposit/edeposit.amqp.ftp.
     - Documentation improved.
     - Added new amqp tool.
     - Tests migrated to pytest.
@@ -32,9 +30,9 @@ Changelog
     - ``RABBITMQ_ALEPH_DAEMON_KEY`` renamed to ``RABBITMQ_ALEPH_INPUT_KEY``.
     - ``RABBITMQ_ALEPH_PLONE_KEY`` renamed to ``RABBITMQ_ALEPH_OUTPUT_KEY``.
     - Unicode added to allowed types in settings.py.
-    - Added dependency to edeposit.amqp.calibre.
+    - Added bindings for https://github.com/edeposit/edeposit.amqp.calibre.
     - Version of package and documentation is now automatically parsed from this file.
-    - Images in documentation were downloaded to _static.
+    - Images in documentation were downloaded to ``_static``.
     - Changed internal way of handling AMQP communication. This shouldn't change user API.
     - Documentation updated to reflect changes in internal API. Added UML diagrams.
 
@@ -43,7 +41,7 @@ Changelog
     - Documentation updated. Added intersphinx links to edeposit.amqp.serializers.
     - edeposit.amqp.serializers API changed, so this module needed to be adjusted.
     - Serialization is now handled (but not stored) in this module, instead of aleph. It will be used in other modules too.
-    - Added dependency to edeposit.amqp.serializers.
+    - Added bindings for https://github.com/edeposit/edeposit.amqp.serializers.
 
 1.1.5 - 1.1.6
 -------------
