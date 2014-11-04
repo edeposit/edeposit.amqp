@@ -68,13 +68,22 @@ RABBITMQ_ANTIVIRUS_INPUT_KEY = "request"  #:
 RABBITMQ_ANTIVIRUS_OUTPUT_KEY = "result"  #:
 
 # settings for edeposit.amqp.harvester script
-RABBITMQ_HARVESTER_VIRTUALHOST = "antivirus"  #: Virtualhost for harvester
+RABBITMQ_HARVESTER_VIRTUALHOST = "harvester"  #: Virtualhost for harvester
 RABBITMQ_HARVESTER_INPUT_QUEUE = "daemon"     #: Input Queue for harvester
 RABBITMQ_HARVESTER_OUTPUT_QUEUE = "plone"     #: Queue to put responses
 RABBITMQ_HARVESTER_EXCHANGE = "harvester"
 
 RABBITMQ_HARVESTER_INPUT_KEY = "request"  #:
 RABBITMQ_HARVESTER_OUTPUT_KEY = "result"  #:
+
+# settings for edeposit.amqp.ltp script
+RABBITMQ_LTP_VIRTUALHOST = "ltp"     #: Virtualhost for ltp
+RABBITMQ_LTP_INPUT_QUEUE = "daemon"  #: Input Queue for ltp
+RABBITMQ_LTP_OUTPUT_QUEUE = "plone"  #: Queue to put responses
+RABBITMQ_LTP_EXCHANGE = "ltp"
+
+RABBITMQ_LTP_INPUT_KEY = "request"  #:
+RABBITMQ_LTP_OUTPUT_KEY = "result"  #:
 
 
 def get_amqp_settings():
