@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.6.1
+-----
+    - Documentation updated.
+
 1.6.0
 -----
     - Added bindings for https://github.com/edeposit/edeposit.amqp.ltp.

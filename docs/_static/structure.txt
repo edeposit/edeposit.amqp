@@ -18,6 +18,7 @@ package "Scritps in bin/" as Scripts {
     class "antivirusd.py" as antivirusd <<(S, orchid)>>
     class "amqp_tool.py" as amqp_tool <<(S, orchid)>>
     class "harvester.py" as harvester_sh <<(S, orchid)>>
+    class "ltpd.py" as ltpd <<(S, orchid)>>
 }
 
 DaemonRunner ..> DaemonRunnerWrapper
@@ -30,6 +31,7 @@ AMQPDaemon --* alephdaemon
 AMQPDaemon --* calibredaemon
 AMQPDaemon --* ftp_managerd
 AMQPDaemon --* antivirusd
+AMQPDaemon --* ltpd
 FTPMonitorDaemon --* ftp_monitord
 amqp_tool -r-* harvester_sh
 
@@ -43,6 +45,8 @@ package "edeposit.amqp.antivirus" as antivirus {
 }
 package "edeposit.amqp.harvester" as harvester {
 }
+package "edeposit.amqp.ltp" as ltp {
+}
 
 ftp_managerd -> ftp
 ftp_monitord -> ftp
@@ -50,4 +54,5 @@ alephdaemon -> aleph
 calibredaemon -> calibre
 antivirusd -> antivirus
 harvester_sh -> harvester
+ltpd -> ltp
 @enduml

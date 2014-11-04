@@ -22,6 +22,8 @@ project:
   `edeposit.amqp.antivirus <http://edeposit-amqp-antivirus.readthedocs.org>`_)
 - :mod:`edeposit_amqp_harvester` (AMQP wrapper for the harvester module
   `edeposit.amqp.harvester <http://edeposit-amqp-harvester.readthedocs.org>`_)
+- :mod:`edeposit_amqp_ltpd` (AMQP wrapper for the LTP export module
+  `edeposit.amqp.ltp <http://edeposit-amqp-ltp.readthedocs.org>`_)
 
 For example :mod:`edeposit_amqp_alephdaemon` script allows 
 you to send simple requests to get data from Aleph (system used in libraries
@@ -190,6 +192,7 @@ Project structure
 Here is pseudo-UML picture documenting relations between module components.
 
 .. image:: /_static/structure.png
+    :width: 800px
 
 List of submodules
 ++++++++++++++++++
@@ -216,6 +219,7 @@ can be called by simply typing their name to the shell:
    /api/ftp_monitord.rst
    /api/edeposit.amqp.antivirus.rst
    /api/harvester.rst
+   /api/ltpd.rst
 
 .. toctree::
    :maxdepth: 1
