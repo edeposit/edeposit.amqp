@@ -4,6 +4,7 @@ Changelog
 1.6.1
 -----
     - Documentation updated.
+    - Fixed bugs in package system / manifest.
 
 1.6.0
 -----
