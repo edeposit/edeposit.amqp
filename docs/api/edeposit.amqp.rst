@@ -24,6 +24,8 @@ project:
   `edeposit.amqp.harvester <http://edeposit-amqp-harvester.readthedocs.org>`_)
 - :mod:`edeposit_amqp_ltpd` (AMQP wrapper for the LTP export module
   `edeposit.amqp.ltp <http://edeposit-amqp-ltp.readthedocs.org>`_)
+- :mod:`edeposit_amqp_pdfgend` (AMQP binding for PDF generator
+  `edeposit.amqp.pdfgen <http://edeposit-amqp-pdfgen.readthedocs.org>`_)
 
 For example :mod:`edeposit_amqp_alephdaemon` script allows 
 you to send simple requests to get data from Aleph (system used in libraries
@@ -220,6 +222,7 @@ can be called by simply typing their name to the shell:
    /api/edeposit.amqp.antivirus.rst
    /api/harvester.rst
    /api/ltpd.rst
+   /api/pdfgend.rst
 
 .. toctree::
    :maxdepth: 1
