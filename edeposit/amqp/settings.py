@@ -86,6 +86,16 @@ RABBITMQ_LTP_INPUT_KEY = "request"  #:
 RABBITMQ_LTP_OUTPUT_KEY = "result"  #:
 
 
+# settings for edeposit.amqp.pdfgen script
+RABBITMQ_PDFGEN_VIRTUALHOST = "pdfgen"  #: Virtualhost for pdfgen
+RABBITMQ_PDFGEN_INPUT_QUEUE = "daemon"  #: Input Queue for pdfgen
+RABBITMQ_PDFGEN_OUTPUT_QUEUE = "plone"  #: Queue to put responses
+RABBITMQ_PDFGEN_EXCHANGE = "pdfgen"
+
+RABBITMQ_PDFGEN_INPUT_KEY = "request"  #:
+RABBITMQ_PDFGEN_OUTPUT_KEY = "result"  #:
+
+
 def get_amqp_settings():
     """
     Return all settings in dict in following format::
