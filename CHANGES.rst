@@ -1,17 +1,15 @@
 Changelog
 =========
 
-1.6.2
+1.7.0
 -----
-    - Fixed bugs in package system / manifest.
+    - Added AMQP bindings for https://github.com/edeposit/edeposit.amqp.pdfgen.
 
-1.6.1
------
-    - Documentation updated.
-
-1.6.0
------
+1.6.0 - 1.6.2
+-------------
     - Added bindings for https://github.com/edeposit/edeposit.amqp.ltp.
+    - Documentation updated.
+    - Fixed bugs in package system / manifest.
 
 1.5.0 - 1.5.3
 -------------
