@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.7.0
+1.7.1
 -----
     - Added AMQP bindings for https://github.com/edeposit/edeposit.amqp.pdfgen.
 
