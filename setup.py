@@ -80,6 +80,7 @@ setup(
         "bin/edeposit_amqp_antivirusd.py",
         "bin/edeposit_amqp_harvester.py",
         "bin/edeposit_amqp_ltpd.py",
+        "bin/edeposit_amqp_pdfgend.py"
     ],
 
     namespace_packages=['edeposit'],
@@ -87,7 +88,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'setuptools',
-        "python-daemon>=1.5.5",
+        "python-daemon==1.6",
         "pika>=0.9.13",
         "sh",                # required by edeposit.amqp.ftp for monitor daemon
         "edeposit.amqp.aleph>=1.4.1",
