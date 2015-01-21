@@ -1,11 +1,14 @@
 Changelog
 =========
 
-1.7.0 - 1.7.2
--------------
-    - Added AMQP bindings for https://github.com/edeposit/edeposit.amqp.pdfgen.
-    - Fixed problems with virtualenv.
+1.7.2
+-----
     - Dependecy to python-daemon frozen at 1.6 to fix virtualenv problems.
+
+1.7.0 - 1.7.1
+-------------
+    - Fixed problems with virtualenv.
+    - Added AMQP bindings for https://github.com/edeposit/edeposit.amqp.pdfgen.
 
 1.6.0 - 1.6.2
 -------------
