@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.7.3
+-----
+    - Added docstring for AMQPDaemon.process_exception().
+
 1.7.2
 -----
     - Dependecy to python-daemon frozen at 1.6 to fix virtualenv problems.

@@ -158,6 +158,19 @@ class AMQPDaemon(pikadaemon.PikaDaemon):
         return True  # ack message
 
     def process_exception(self, e, uuid, routing_key, body, tb=None):
+        """
+        Callback called when exception was raised.
+
+        This method serializes the exception and sends it over AMQP back
+        to caller.
+
+        Args:
+            e (obj): Instance of the exception.
+            uuid (str): UUID of the message that caused the exception to raise.
+            routing_key (str): Which routing key was used.
+            body (str): Body of the exception - the longer text.
+            tb (str, default None): Traceback (stacktrace)v of the exception.
+        """
         # get informations about message
         msg = e.message if hasattr(e, "message") else str(e)
         exception_type = str(e.__class__)
