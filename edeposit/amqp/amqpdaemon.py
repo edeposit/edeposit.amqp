@@ -24,7 +24,7 @@ import pikadaemon
 import settings
 
 
-#= Functions & objects ========================================================
+# Functions & classes =========================================================
 def getConParams(virtualhost):
     """
     Connection object builder.
