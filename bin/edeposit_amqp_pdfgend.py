@@ -57,7 +57,7 @@ def main(args, stop=False):
 
 # Main program ================================================================
 if __name__ == '__main__':
-    if sys.argv and sys.argv[1] == "stop":
+    if len(sys.argv) > 1 and sys.argv[1] == "stop":
         main(None, stop=True)
         sys.exit(0)
 
