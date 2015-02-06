@@ -67,7 +67,7 @@ RABBITMQ_ANTIVIRUS_EXCHANGE = "antivirus"
 RABBITMQ_ANTIVIRUS_INPUT_KEY = "request"  #:
 RABBITMQ_ANTIVIRUS_OUTPUT_KEY = "result"  #:
 
-# settings for edeposit.amqp.harvester script
+# settings for edeposit.amqp.harvester
 RABBITMQ_HARVESTER_VIRTUALHOST = "harvester"  #: Virtualhost for harvester
 RABBITMQ_HARVESTER_INPUT_QUEUE = "daemon"     #: Input Queue for harvester
 RABBITMQ_HARVESTER_OUTPUT_QUEUE = "plone"     #: Queue to put responses
@@ -76,7 +76,7 @@ RABBITMQ_HARVESTER_EXCHANGE = "harvester"
 RABBITMQ_HARVESTER_INPUT_KEY = "request"  #:
 RABBITMQ_HARVESTER_OUTPUT_KEY = "result"  #:
 
-# settings for edeposit.amqp.ltp script
+# settings for edeposit.amqp.ltp
 RABBITMQ_LTP_VIRTUALHOST = "ltp"     #: Virtualhost for ltp
 RABBITMQ_LTP_INPUT_QUEUE = "daemon"  #: Input Queue for ltp
 RABBITMQ_LTP_OUTPUT_QUEUE = "plone"  #: Queue to put responses
@@ -86,7 +86,7 @@ RABBITMQ_LTP_INPUT_KEY = "request"  #:
 RABBITMQ_LTP_OUTPUT_KEY = "result"  #:
 
 
-# settings for edeposit.amqp.pdfgen script
+# settings for edeposit.amqp.pdfgen
 RABBITMQ_PDFGEN_VIRTUALHOST = "pdfgen"  #: Virtualhost for pdfgen
 RABBITMQ_PDFGEN_INPUT_QUEUE = "daemon"  #: Input Queue for pdfgen
 RABBITMQ_PDFGEN_OUTPUT_QUEUE = "plone"  #: Queue to put responses
@@ -94,6 +94,16 @@ RABBITMQ_PDFGEN_EXCHANGE = "pdfgen"
 
 RABBITMQ_PDFGEN_INPUT_KEY = "request"  #:
 RABBITMQ_PDFGEN_OUTPUT_KEY = "result"  #:
+
+
+# settings for edeposit.amqp.downloader
+RABBITMQ_DOWNER_VIRTUALHOST = "downloader"  #: Virtualhost for downloader
+RABBITMQ_DOWNER_INPUT_QUEUE = "daemon"  #: Input Queue for downloader
+RABBITMQ_DOWNER_OUTPUT_QUEUE = "plone"  #: Queue to put responses
+RABBITMQ_DOWNER_EXCHANGE = "downloader"
+
+RABBITMQ_DOWNER_INPUT_KEY = "request"  #:
+RABBITMQ_DOWNER_OUTPUT_KEY = "result"  #:
 
 
 def get_amqp_settings():
