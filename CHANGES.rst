@@ -1,18 +1,22 @@
 Changelog
 =========
 
+1.8.0
+-----
+    - Added ``send_back()`` callback, which is now given to all ``reactToAMQPMessage()``. All packages was changed to support this. See #40 for details.
+    - Added bindigs for https://github.com/edeposit/edeposit.amqp.downloader.
+    - Fixed sys.argv parsing bug in some of the daemon scripts.
+    - Fixed bug in daemonwrapper.
+
 1.7.3
 -----
     - Added docstring for AMQPDaemon.process_exception().
 
-1.7.2
------
-    - Dependecy to python-daemon frozen at 1.6 to fix virtualenv problems.
-
-1.7.0 - 1.7.1
+1.7.0 - 1.7.2
 -------------
     - Fixed problems with virtualenv.
     - Added AMQP bindings for https://github.com/edeposit/edeposit.amqp.pdfgen.
+    - Dependecy to python-daemon frozen at 1.6 to fix virtualenv problems.
 
 1.6.0 - 1.6.2
 -------------
