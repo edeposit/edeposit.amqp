@@ -8,15 +8,12 @@ Changelog
     - Fixed sys.argv parsing bug in some of the daemon scripts.
     - Fixed bug in daemonwrapper.
 
-1.7.3
------
-    - Added docstring for AMQPDaemon.process_exception().
-
-1.7.0 - 1.7.2
+1.7.0 - 1.7.3
 -------------
     - Fixed problems with virtualenv.
     - Added AMQP bindings for https://github.com/edeposit/edeposit.amqp.pdfgen.
     - Dependecy to python-daemon frozen at 1.6 to fix virtualenv problems.
+    - Added docstring for AMQPDaemon.process_exception().
 
 1.6.0 - 1.6.2
 -------------
