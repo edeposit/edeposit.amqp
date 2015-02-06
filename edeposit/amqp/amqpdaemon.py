@@ -134,28 +134,52 @@ class AMQPDaemon(pikadaemon.PikaDaemon):
             )
             return True  # ack message
 
+        key = self.parseKey(method_frame)
         uuid = properties.headers["UUID"]
         try:
             result = self.react_fn(
                 serializers.deserialize(body, self.globals),
-                uuid
+                self.get_sendback(uuid, key)
             )
-            print "sending response", self.parseKey(method_frame)
+
+            print "sending response", key
+
             self.sendResponse(
                 serializers.serialize(result),
                 uuid,
-                self.parseKey(method_frame)
+                key
             )
         except Exception, e:
             self.process_exception(
                 e,
                 uuid,
-                self.parseKey(method_frame),
+                key,
                 str(e),
                 tb=traceback.format_exc().strip()
             )
 
         return True  # ack message
+
+    def get_sendback(self, uuid, key):
+        """
+        Return function for sending progress messages back to original caller.
+
+        Args:
+            uuid (str): UUID of the received message.
+            key (str): Routing key.
+
+        Returns:
+            fn reference: Reference to function which takes only one data \
+                          argument.
+        """
+        def send_back_callback(data):
+            self.sendResponse(
+                serializers.serialize(data),
+                uuid,
+                key
+            )
+
+        return send_back_callback
 
     def process_exception(self, e, uuid, routing_key, body, tb=None):
         """
