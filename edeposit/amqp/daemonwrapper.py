@@ -28,8 +28,8 @@ class DaemonRunnerWrapper(object):
                                 suffix.
         """
         self.stdin_path = '/dev/null'
-        self.stdout_path = '/dev/tty'
-        self.stderr_path = '/dev/tty'
+        self.stdout_path = '/dev/null'
+        self.stderr_path = '/dev/null'
         self.pidfile_path = '/tmp/' + pid_filename + '.pid'
         self.pidfile_timeout = 5
         self.daemon_runner = runner.DaemonRunner(self)
