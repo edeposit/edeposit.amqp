@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.8.1
+-----
+    - Quick fix of the problem with supervisord and DaemonRunner (see #41).
+
 1.8.0
 -----
     - Added ``send_back()`` callback, which is now given to all ``reactToAMQPMessage()``. All packages was changed to support this. See #40 for details.
