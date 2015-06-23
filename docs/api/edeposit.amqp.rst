@@ -28,13 +28,15 @@ project:
   `edeposit.amqp.pdfgen <http://edeposit-amqp-pdfgen.readthedocs.org>`_)
 - :mod:`edeposit_amqp_downloaderd` (AMQP binding for downloader
   `edeposit.amqp.downloader <http://edeposit-amqp-downloader.readthedocs.org>`_)
+- :mod:`edeposit_amqp_storaged` (AMQP binding for storage subsystem
+  `edeposit.amqp.storage <http://edeposit-amqp-storage.readthedocs.org>`_)
 
 For example :mod:`edeposit_amqp_alephdaemon` script allows 
 you to send simple requests to get data from Aleph (system used in libraries
 all around the world) and in later versions also requests to put data into
 Aleph.
 Details of protocol and communication with Aleph server are handled by
-`edeposit.amqp.aleph <https://github.com/jstavel/edeposit.amqp.aleph>`_ module.
+`edeposit.amqp.aleph <https://github.com/edeposit/edeposit.amqp.aleph>`_ module.
 
 Communication with sub-modules
 ------------------------------
@@ -226,6 +228,7 @@ can be called by simply typing their name to the shell:
    /api/ltpd.rst
    /api/pdfgend.rst
    /api/downloaderd.rst
+   /api/storaged.rst
 
 .. toctree::
    :maxdepth: 1

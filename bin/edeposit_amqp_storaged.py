@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(
         usage='%(prog)s start/stop/restart [-f/--foreground]',
-        description="""AMQP binding for PDF generator."""
+        description="""AMQP binding for storage subsystem."""
     )
     parser.add_argument(
         "action",
