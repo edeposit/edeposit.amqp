@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.8.3
+-----
+    - setup.py improved.
+
 1.8.2
 -----
     - Added bindigs for https://github.com/edeposit/edeposit.amqp.storage.
