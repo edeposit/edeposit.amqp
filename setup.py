@@ -80,7 +80,9 @@ setup(
         "bin/edeposit_amqp_antivirusd.py",
         "bin/edeposit_amqp_harvester.py",
         "bin/edeposit_amqp_ltpd.py",
-        "bin/edeposit_amqp_pdfgend.py"
+        "bin/edeposit_amqp_pdfgend.py",
+        "bin/edeposit_amqp_downloaderd.py",
+        "bin/edeposit_amqp_storaged.py",
     ],
 
     namespace_packages=['edeposit'],

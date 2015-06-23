@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.8.2
+-----
+    - Added bindigs for https://github.com/edeposit/edeposit.amqp.storage.
+    - Added update_templates.sh. Relationship diagram migrated to template system.
+
 1.8.1
 -----
     - Quick fix of the problem with supervisord and DaemonRunner (see #41).
