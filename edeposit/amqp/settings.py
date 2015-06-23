@@ -24,11 +24,12 @@ import os
 import os.path
 
 
-#= module configuration =======================================================
+# module configuration ========================================================
 RABBITMQ_HOST = '127.0.0.1'  #:
 RABBITMQ_PORT = '5672'  #:
 RABBITMQ_USER_NAME = 'guest'  #:
 RABBITMQ_USER_PASSWORD = 'guest'  #:
+
 
 # aleph's settings
 RABBITMQ_ALEPH_VIRTUALHOST = "aleph"   #:
@@ -40,6 +41,7 @@ RABBITMQ_ALEPH_INPUT_KEY = "request"   #:
 RABBITMQ_ALEPH_OUTPUT_KEY = "result"   #:
 RABBITMQ_ALEPH_EXCEPTION_KEY = "exception"  #:
 
+
 # calibre's settings
 RABBITMQ_CALIBRE_VIRTUALHOST = "calibre"  #:
 RABBITMQ_CALIBRE_INPUT_QUEUE = "daemon"   #:
@@ -48,6 +50,7 @@ RABBITMQ_CALIBRE_EXCHANGE = "convert"     #:
 
 RABBITMQ_CALIBRE_INPUT_KEY = "request"  #:
 RABBITMQ_CALIBRE_OUTPUT_KEY = "result"  #:
+
 
 # settings for edeposit.amqp.ftp daemon
 RABBITMQ_FTP_VIRTUALHOST = "ftp"     #: Virtualhost for FTP module
@@ -58,6 +61,7 @@ RABBITMQ_FTP_EXCHANGE = "ftp"
 RABBITMQ_FTP_INPUT_KEY = "request"  #:
 RABBITMQ_FTP_OUTPUT_KEY = "result"  #:
 
+
 # settings for edeposit.amqp.antivirus daemon
 RABBITMQ_ANTIVIRUS_VIRTUALHOST = "antivirus"  #: Virtualhost for AV module
 RABBITMQ_ANTIVIRUS_INPUT_QUEUE = "daemon"     #: Input Queue for AV AMQP daemon
@@ -67,6 +71,7 @@ RABBITMQ_ANTIVIRUS_EXCHANGE = "antivirus"
 RABBITMQ_ANTIVIRUS_INPUT_KEY = "request"  #:
 RABBITMQ_ANTIVIRUS_OUTPUT_KEY = "result"  #:
 
+
 # settings for edeposit.amqp.harvester
 RABBITMQ_HARVESTER_VIRTUALHOST = "harvester"  #: Virtualhost for harvester
 RABBITMQ_HARVESTER_INPUT_QUEUE = "daemon"     #: Input Queue for harvester
@@ -75,6 +80,7 @@ RABBITMQ_HARVESTER_EXCHANGE = "harvester"
 
 RABBITMQ_HARVESTER_INPUT_KEY = "request"  #:
 RABBITMQ_HARVESTER_OUTPUT_KEY = "result"  #:
+
 
 # settings for edeposit.amqp.ltp
 RABBITMQ_LTP_VIRTUALHOST = "ltp"     #: Virtualhost for ltp
@@ -106,6 +112,18 @@ RABBITMQ_DOWNER_INPUT_KEY = "request"  #:
 RABBITMQ_DOWNER_OUTPUT_KEY = "result"  #:
 
 
+# settings for edeposit.amqp.storage
+RABBITMQ_STORAGE_VIRTUALHOST = "storage"  #: Virtualhost for storage
+RABBITMQ_STORAGE_INPUT_QUEUE = "daemon"  #: Input Queue for storage
+RABBITMQ_STORAGE_OUTPUT_QUEUE = "plone"  #: Queue to put responses
+RABBITMQ_STORAGE_EXCHANGE = "storage"
+
+RABBITMQ_STORAGE_INPUT_KEY = "request"  #:
+RABBITMQ_STORAGE_OUTPUT_KEY = "result"  #:
+
+
+
+# Settings parser =============================================================
 def get_amqp_settings():
     """
     Return all settings in dict in following format::
@@ -144,7 +162,7 @@ def get_amqp_settings():
     return amqp_settings
 
 
-#= user configuration reader ==================================================
+# user configuration reader ===================================================
 _ALLOWED = [unicode, str, int, float]
 
 SETTINGS_PATH = "/edeposit/amqp.json"
