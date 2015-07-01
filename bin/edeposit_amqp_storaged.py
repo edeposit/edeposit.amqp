@@ -48,7 +48,7 @@ def main(args, stop=False):
         glob=globals()                # used in deserializer
     )
 
-    if not stop and and args and args.foreground:  # run at foreground
+    if not stop and args and args.foreground:  # run at foreground
         daemon.run()
     else:
         daemon.run_daemon()  # run as daemon
