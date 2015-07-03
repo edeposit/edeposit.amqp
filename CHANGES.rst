@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.8.4
+-----
+    - ``settings.py`` updated.
+
 1.8.3
 -----
     - setup.py improved.
