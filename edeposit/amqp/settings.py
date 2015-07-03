@@ -116,7 +116,7 @@ RABBITMQ_DOWNER_OUTPUT_KEY = "result"  #:
 RABBITMQ_STORAGE_VIRTUALHOST = "storage"  #: Virtualhost for storage
 RABBITMQ_STORAGE_INPUT_QUEUE = "daemon"  #: Input Queue for storage
 RABBITMQ_STORAGE_OUTPUT_QUEUE = "plone"  #: Queue to put responses
-RABBITMQ_STORAGE_EXCHANGE = "storage"
+RABBITMQ_STORAGE_EXCHANGE = "export"
 
 RABBITMQ_STORAGE_INPUT_KEY = "request"  #:
 RABBITMQ_STORAGE_OUTPUT_KEY = "result"  #:
