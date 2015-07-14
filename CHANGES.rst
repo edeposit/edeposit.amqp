@@ -1,22 +1,9 @@
 Changelog
 =========
 
-1.8.4
+1.8.5
 -----
-    - ``settings.py`` updated.
-
-1.8.3
------
-    - setup.py improved.
-
-1.8.2
------
-    - Added bindigs for https://github.com/edeposit/edeposit.amqp.storage.
-    - Added update_templates.sh. Relationship diagram migrated to template system.
-
-1.8.1
------
-    - Quick fix of the problem with supervisord and DaemonRunner (see #41).
+    - Removed dependencies to subprojects. They are now in special meta package `edeposit.amqp.meta <https://github.com/edeposit/edeposit.amqp.meta>`_.
 
 1.8.0
 -----
@@ -24,6 +11,11 @@ Changelog
     - Added bindigs for https://github.com/edeposit/edeposit.amqp.downloader.
     - Fixed sys.argv parsing bug in some of the daemon scripts.
     - Fixed bug in daemonwrapper.
+    - Quick fix of the problem with supervisord and DaemonRunner (see #41).
+    - Added bindigs for https://github.com/edeposit/edeposit.amqp.storage.
+    - Added update_templates.sh. Relationship diagram migrated to template system.
+    - setup.py improved.
+    - ``settings.py`` updated.
 
 1.7.0 - 1.7.3
 -------------
