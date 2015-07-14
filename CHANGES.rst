@@ -5,8 +5,8 @@ Changelog
 -----
     - Removed dependencies to subprojects. They are now in special meta package `edeposit.amqp.meta <https://github.com/edeposit/edeposit.amqp.meta>`_.
 
-1.8.0
------
+1.8.0 - 1.8.4
+-------------
     - Added ``send_back()`` callback, which is now given to all ``reactToAMQPMessage()``. All packages was changed to support this. See #40 for details.
     - Added bindigs for https://github.com/edeposit/edeposit.amqp.downloader.
     - Fixed sys.argv parsing bug in some of the daemon scripts.
