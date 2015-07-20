@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.8.6
+-----
+    - Added bindigs for https://github.com/edeposit/edeposit.amqp.marcxml2mods.
+
 1.8.5
 -----
     - Removed dependencies to subprojects. They are now in special meta package `edeposit.amqp.meta <https://github.com/edeposit/edeposit.amqp.meta>`_.
