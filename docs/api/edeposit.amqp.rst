@@ -232,7 +232,7 @@ can be called by simply typing their name to the shell:
    /api/pdfgend.rst
    /api/downloaderd.rst
    /api/storaged.rst
-   /api/marcxml2modsd.rst.rst
+   /api/marcxml2modsd.rst
 
 .. toctree::
    :maxdepth: 1
