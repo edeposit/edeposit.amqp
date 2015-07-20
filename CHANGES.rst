@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.8.7
+-----
+    - Fixed bug in marcxml2modsd.py.
+
 1.8.6
 -----
     - Added bindigs for https://github.com/edeposit/edeposit.amqp.marcxml2mods.

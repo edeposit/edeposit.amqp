@@ -39,11 +39,11 @@ def main(args, stop=False):
     """
     daemon = AMQPDaemon(
         con_param=getConParams(
-            settings.RABBITMQ_MX2MOD_VIRTUALHOST
+            settings.RABBITMQ_MX2MODS_VIRTUALHOST
         ),
-        queue=settings.RABBITMQ_MX2MOD_INPUT_QUEUE,
-        out_exch=settings.RABBITMQ_MX2MOD_EXCHANGE,
-        out_key=settings.RABBITMQ_MX2MOD_OUTPUT_KEY,
+        queue=settings.RABBITMQ_MX2MODS_INPUT_QUEUE,
+        out_exch=settings.RABBITMQ_MX2MODS_EXCHANGE,
+        out_key=settings.RABBITMQ_MX2MODS_OUTPUT_KEY,
         react_fn=reactToAMQPMessage,
         glob=globals()                # used in deserializer
     )
