@@ -1,5 +1,5 @@
-edeposit_amqp_dowstoraged.py script
-===================================
+edeposit_amqp_storaged.py script
+================================
 
 ..storaged
     :members:
@@ -25,7 +25,7 @@ Help
 
 Example usage::
 
-    ./edeposit_amqp_dowstoraged.py start
+    ./edeposit_amqp_storaged.py start
     started with pid 7195
 
 or::
