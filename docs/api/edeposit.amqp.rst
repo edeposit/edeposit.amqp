@@ -30,6 +30,9 @@ project:
   `edeposit.amqp.downloader <http://edeposit-amqp-downloader.readthedocs.org>`_)
 - :mod:`edeposit_amqp_storaged` (AMQP binding for storage subsystem
   `edeposit.amqp.storage <http://edeposit-amqp-storage.readthedocs.org>`_)
+- :mod:`edeposit_amqp_marcxml2modsd` (AMQP binding for marcxml2mods subsystem
+  `edeposit.amqp.marcxml2mods <http://edeposit-amqp-marcxml2mods.readthedocs.org>`_)
+
 
 For example :mod:`edeposit_amqp_alephdaemon` script allows 
 you to send simple requests to get data from Aleph (system used in libraries
@@ -229,6 +232,7 @@ can be called by simply typing their name to the shell:
    /api/pdfgend.rst
    /api/downloaderd.rst
    /api/storaged.rst
+   /api/marcxml2modsd.rst.rst
 
 .. toctree::
    :maxdepth: 1
