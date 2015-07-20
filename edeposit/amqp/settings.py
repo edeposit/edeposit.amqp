@@ -122,6 +122,16 @@ RABBITMQ_STORAGE_INPUT_KEY = "request"  #:
 RABBITMQ_STORAGE_OUTPUT_KEY = "result"  #:
 
 
+# settings for edeposit.amqp.marcxml2mods
+RABBITMQ_MX2MODS_VIRTUALHOST = "marcxml2mods"  #: Virtualhost for marcxml2mods
+RABBITMQ_MX2MODS_INPUT_QUEUE = "daemon"  #: Input Queue for marcxml2mods
+RABBITMQ_MX2MODS_OUTPUT_QUEUE = "plone"  #: Queue to put responses
+RABBITMQ_MX2MODS_EXCHANGE = "export"
+
+RABBITMQ_MX2MODS_INPUT_KEY = "request"  #:
+RABBITMQ_MX2MODS_OUTPUT_KEY = "result"  #:
+
+
 
 # Settings parser =============================================================
 def get_amqp_settings():
