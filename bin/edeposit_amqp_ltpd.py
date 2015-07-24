@@ -17,7 +17,6 @@ import argparse
 from pika.exceptions import ConnectionClosed
 
 from edeposit.amqp.ltp import *
-from edeposit.amqp.ltp.structures import *
 
 
 # if the amqp module wasn't yet installed at this system, load it from package

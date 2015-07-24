@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.8.8
+-----
+    - Fixed bug in ``edeposit_amqp_ltpd.py``.
+
 1.8.7
 -----
     - Fixed bug in marcxml2modsd.py.
