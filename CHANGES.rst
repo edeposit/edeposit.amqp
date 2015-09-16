@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.8.9
+-----
+    - Fixed bug in ``docs/__init__.py``.
+
 1.8.8
 -----
     - Fixed bug in ``edeposit_amqp_ltpd.py``.
