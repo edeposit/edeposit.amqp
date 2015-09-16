@@ -1,27 +1,11 @@
 Changelog
 =========
 
-1.8.9
------
-    - Fixed bug in ``docs/__init__.py``.
+1.8.10
+------
+    - Fixed missing requirement to edeposit.aqmp.serializers.
 
-1.8.8
------
-    - Fixed bug in ``edeposit_amqp_ltpd.py``.
-
-1.8.7
------
-    - Fixed bug in marcxml2modsd.py.
-
-1.8.6
------
-    - Added bindigs for https://github.com/edeposit/edeposit.amqp.marcxml2mods.
-
-1.8.5
------
-    - Removed dependencies to subprojects. They are now in special meta package `edeposit.amqp.meta <https://github.com/edeposit/edeposit.amqp.meta>`_.
-
-1.8.0 - 1.8.4
+1.8.0 - 1.8.9
 -------------
     - Added ``send_back()`` callback, which is now given to all ``reactToAMQPMessage()``. All packages was changed to support this. See #40 for details.
     - Added bindigs for https://github.com/edeposit/edeposit.amqp.downloader.
@@ -32,6 +16,11 @@ Changelog
     - Added update_templates.sh. Relationship diagram migrated to template system.
     - setup.py improved.
     - ``settings.py`` updated.
+    - Removed dependencies to subprojects. They are now in special meta package `edeposit.amqp.meta <https://github.com/edeposit/edeposit.amqp.meta>`_.
+    - Added bindigs for https://github.com/edeposit/edeposit.amqp.marcxml2mods.
+    - Fixed bug in marcxml2modsd.py.
+    - Fixed bug in ``edeposit_amqp_ltpd.py``.
+    - Fixed bug in ``docs/__init__.py``.
 
 1.7.0 - 1.7.3
 -------------

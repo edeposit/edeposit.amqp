@@ -58,6 +58,7 @@ setup(
     install_requires=[
         'setuptools',
         "python-daemon==1.6",
+        "edeposit.amqp.serializers",
         "pika>=0.9.13",
         "sh",                # required by edeposit.amqp.ftp for monitor daemon
     ],
