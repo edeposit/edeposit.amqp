@@ -133,8 +133,8 @@ RABBITMQ_MX2MODS_OUTPUT_KEY = "result"  #:
 
 
 # settings for edeposit.amqp.aleph_link_export
-RABBITMQ_ALEPH_LINK_EXPORT_VIRTUALHOST = "aleph_link_export"  #: Virtualhost
-RABBITMQ_ALEPH_LINK_EXPORT_INPUT_QUEUE = "daemon"  #: Input Queue
+RABBITMQ_ALEPH_LINK_EXPORT_VIRTUALHOST = "aleph"  #: Virtualhost
+RABBITMQ_ALEPH_LINK_EXPORT_INPUT_QUEUE = "updater"  #: Input Queue
 RABBITMQ_ALEPH_LINK_EXPORT_OUTPUT_QUEUE = "plone"  #: Output Queue
 RABBITMQ_ALEPH_LINK_EXPORT_EXCHANGE = "update-links"
 
