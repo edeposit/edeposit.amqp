@@ -50,6 +50,8 @@ setup(
         "bin/edeposit_amqp_pdfgend.py",
         "bin/edeposit_amqp_downloaderd.py",
         "bin/edeposit_amqp_storaged.py",
+        "bin/edeposit_amqp_marcxml2modsd.py",
+        "bin/edeposit_amqp_aleph_link_exportd.py",
     ],
 
     namespace_packages=['edeposit'],

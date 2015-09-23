@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.8.12
+------
+    - Fixed metadata in setup.py.
+
 1.8.11
 ------
     - Added bindigs for https://github.com/edeposit/edeposit.amqp.aleph_link_export.
