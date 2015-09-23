@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.8.11
+------
+    - Added bindigs for https://github.com/edeposit/edeposit.amqp.aleph_link_export.
+
 1.8.10
 ------
     - Fixed missing requirement to edeposit.aqmp.serializers.

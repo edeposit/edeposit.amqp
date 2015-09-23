@@ -32,7 +32,8 @@ project:
   `edeposit.amqp.storage <http://edeposit-amqp-storage.readthedocs.org>`_)
 - :mod:`edeposit_amqp_marcxml2modsd` (AMQP binding for marcxml2mods subsystem
   `edeposit.amqp.marcxml2mods <http://edeposit-amqp-marcxml2mods.readthedocs.org>`_)
-
+- :mod:`aleph_link_exportd` (AMQP binding for aleph_link_export subsystem
+  `edeposit.amqp.aleph_link_export <http://edeposit-amqp-aleph-link-export.readthedocs.org>`_)
 
 For example :mod:`edeposit_amqp_alephdaemon` script allows 
 you to send simple requests to get data from Aleph (system used in libraries
@@ -233,6 +234,7 @@ can be called by simply typing their name to the shell:
    /api/downloaderd.rst
    /api/storaged.rst
    /api/marcxml2modsd.rst
+   /api/aleph_link_exportd.rst
 
 .. toctree::
    :maxdepth: 1
