@@ -46,7 +46,6 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         self.output_key = output_key
 
         self.ack_sent = False
-        self.ack_delivery_tag = None
 
     def body(self):
         """
@@ -61,11 +60,10 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
         # receive messages and put them to .onMessageReceived() callback
         for method_frame, properties, body in self.channel.consume(self.queue):
             self.ack_sent = False
-            self.ack_delivery_tag = method_frame.delivery_tag
             if self.onMessageReceived(method_frame, properties, body):
-                self.ack()
+                self.ack(method_frame.delivery_tag)
 
-    def ack(self):
+    def ack(self, ack_delivery_tag):
         """
         Acknowledge, that message was received.
 
@@ -74,7 +72,7 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
             the message from the message queue.
         """
         if not self.ack_sent:
-            self.channel.basic_ack(self.ack_delivery_tag)
+            self.channel.basic_ack(ack_delivery_tag)
             self.ack_sent = True
 
     def onMessageReceived(self, method_frame, properties, body):

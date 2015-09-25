@@ -151,10 +151,10 @@ class AMQPDaemon(pikadaemon.PikaDaemon):
             )
         except Exception, e:
             self.process_exception(
-                e,
-                uuid,
-                key,
-                str(e),
+                e=e,
+                uuid=uuid,
+                routing_key=key,
+                body=str(e),
                 tb=traceback.format_exc().strip()
             )
 
@@ -199,6 +199,12 @@ class AMQPDaemon(pikadaemon.PikaDaemon):
         msg = e.message if hasattr(e, "message") else str(e)
         exception_type = str(e.__class__)
         exception_name = str(e.__class__.__name__)
+
+        print "Sending exception %s: %s for UUID %s." % (
+            exception_name,
+            msg,
+            uuid
+        )
 
         self.sendMessage(
             self.output_exchange,

@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.8.14
+------
+    - .ack() now doesn't use shared property to signal ack tag.
+
+1.8.13
+------
+    - Added log output in case of exception.
+
 1.8.12
 ------
     - Fixed metadata in setup.py.
