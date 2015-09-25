@@ -151,10 +151,10 @@ class AMQPDaemon(pikadaemon.PikaDaemon):
             )
         except Exception, e:
             self.process_exception(
-                e,
-                uuid,
-                key,
-                str(e),
+                e=e,
+                uuid=uuid,
+                routing_key=key,
+                body=str(e),
                 tb=traceback.format_exc().strip()
             )
 
