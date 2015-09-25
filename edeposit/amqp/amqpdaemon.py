@@ -200,6 +200,12 @@ class AMQPDaemon(pikadaemon.PikaDaemon):
         exception_type = str(e.__class__)
         exception_name = str(e.__class__.__name__)
 
+        print "Sending exception %s: %s for UUID %s." % (
+            exception_name,
+            msg,
+            uuid
+        )
+
         self.sendMessage(
             self.output_exchange,
             routing_key,

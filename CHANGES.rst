@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.8.13
+------
+    - Added log output in case of exception.
+
 1.8.12
 ------
     - Fixed metadata in setup.py.
