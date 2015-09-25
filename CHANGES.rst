@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.8.14
+1.8.15
 ------
     - .ack() now doesn't use shared property to signal ack tag.
 
