@@ -45,8 +45,6 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
 
         self.output_key = output_key
 
-        self.ack_sent = False
-
     def body(self):
         """
         This method just handles AMQP connection details and receive loop.
@@ -59,7 +57,6 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
 
         # receive messages and put them to .onMessageReceived() callback
         for method_frame, properties, body in self.channel.consume(self.queue):
-            self.ack_sent = False
             if self.onMessageReceived(method_frame, properties, body):
                 self.ack(method_frame.delivery_tag)
 
@@ -71,9 +68,7 @@ class PikaDaemon(daemonwrapper.DaemonRunnerWrapper):
             This will in some cases (depends on settings of RabbitMQ) remove
             the message from the message queue.
         """
-        if not self.ack_sent:
-            self.channel.basic_ack(ack_delivery_tag)
-            self.ack_sent = True
+        self.channel.basic_ack(ack_delivery_tag)
 
     def onMessageReceived(self, method_frame, properties, body):
         """
